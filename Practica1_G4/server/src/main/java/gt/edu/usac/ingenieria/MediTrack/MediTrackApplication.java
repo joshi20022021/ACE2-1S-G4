@@ -136,4 +136,81 @@ public class MediTrackApplication {
 			System.out.println("❌ Error leyendo datos: " + e.getMessage());
 		}
 	}
+
+	@GetMapping("/status")
+	public String getStatus() {
+		System.out.println("[REQUEST ARQUITECTURA 2] REQUEST");
+		return "El servidor está funcionando correctamente 🚀";
+	}
+
+	@PostMapping("/team")
+	public String crearUsuario(@RequestBody Map<String, Object> datos) {
+		String nombre = (String) datos.get("nombre");
+		String lider = (String) datos.get("lider");
+
+		System.out.println("[INGRESO DE EQUIPO] " + nombre + " " + lider);
+		enviarDatosAArduino(nombre + "," + lider);
+
+		return "Bienvenido a Arqui 2, " + nombre;
+	}
+
+	@GetMapping("/ecg")
+	public String getDatosPaciente() {
+		System.out.println("[SOLICITUD] Datos del paciente enviados.");
+		return String.valueOf(ecg);  // Devuelve el último dato recibido desde Arduino
+	}
+
+
+	@GetMapping("/get-datos-sensores")
+	public Map<String, Object> getDatosSensores() {
+		System.out.println("[SOLICITUD] Datos del sensores enviados.");
+		// No debemos devolver el ultimo dato sino un json, con los datos empaquetados
+		// sensor 1 - Fotorresistencia
+		// sensor 2 - ECG
+		// sensor 3 - RFID
+		Map<String, Object> datosSensores = new HashMap<>();
+		datosSensores.put("ecg", ecg);
+		datosSensores.put("foto", foto);
+		datosSensores.put("rfid", rfid);
+
+		// devolvemos un json con los datos
+		// de los sensores
+		// { "ecg": int, "foto": foto, "rfid": bool }
+		return datosSensores;
+	}
+
+	// Tambien podemos enviar datos al arduino
+	/*
+	* NOTA> BODY->  x-www-form-urlencoded
+	* Key> Comando, Value> ON
+	* Key> Comando, Value> OFF
+	* curl -X POST "http://192...:8080/encender" -d "comando=ON"
+	* curl -X POST "http://localhost:8080/encender" -d "comando=ON"
+	*
+	* */
+	@PostMapping("/encender")
+	public String enviarDatosAArduino(@RequestParam String comando) {
+		if (serialPort != null && serialPort.isOpen()) {
+			try {
+				// ✅ Validar el comando antes de enviarlo
+				if (!comando.equalsIgnoreCase("ON") && !comando.equalsIgnoreCase("OFF")) {
+					return "⚠ Comando no válido. Usa 'ON' o 'OFF'.";
+				}
+
+				OutputStream outputStream = serialPort.getOutputStream();
+				String mensaje = comando + "\n";  // Asegurar que el mensaje se envía con salto de línea
+				outputStream.write(mensaje.getBytes(StandardCharsets.UTF_8));
+				outputStream.flush();
+				System.out.println("📤 Mensaje enviado a Arduino: " + mensaje);
+				return "✅ Mensaje enviado a Arduino: " + mensaje;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "❌ Error enviando datos: " + e.getMessage();
+			}
+		} else {
+			return "⚠ El puerto serial no está abierto.";
+		}
+	}
+
+
 }
