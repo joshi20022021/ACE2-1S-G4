@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Ajusta "COM3" al puerto correcto 
-const serial = new SerialPort({ path: 'COM3', baudRate: 9600 });
+const serial = new SerialPort({ path: 'COM4', baudRate: 9600 });
 
 const parser = serial.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
