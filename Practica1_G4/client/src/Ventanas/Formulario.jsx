@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion"; // Importar motion desde framer-motion
+import { motion } from "framer-motion";
 import '../App.css';
 
 const Formulario = () => {
   const navigate = useNavigate();
 
-  // Animaciones
+  // Definición de animaciones
   const formVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
@@ -16,60 +16,59 @@ const Formulario = () => {
   return (
     <Container
       fluid
-      className="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light position-relative"
+      className="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-dark position-relative"
     >
       <h2
         className="text-center mb-5"
         style={{
           fontSize: "50px",
           fontWeight: "bold",
-          color: "#333",
-          textShadow: "2px 2px 5px rgba(0,0,0,0.1)",
+          color: "#FFFFFF",
+          textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
         }}
       >
         FORMULARIO
       </h2>
 
-      {/* Animación para el formulario */}
       <motion.div
         initial="hidden"
         animate="visible"
         variants={formVariants}
         style={{ width: "90%", maxWidth: "1200px" }}
-        className="p-4 bg-white rounded shadow"
+        className="p-4 bg-secondary rounded shadow"
       >
         <Form>
           <Row>
             {/* Columna 1: Campos de texto y selects */}
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Nombres</Form.Label>
-                <Form.Control type="text" required />
+                <Form.Label className="text-light">Nombres</Form.Label>
+                <Form.Control type="text" required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Diagnóstico Principal</Form.Label>
-                <Form.Control type="text" required />
+                <Form.Label className="text-light">Diagnóstico Principal</Form.Label>
+                <Form.Control type="text" required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Edad</Form.Label>
-                <Form.Control type="number" min="0" required />
+                <Form.Label className="text-light">Edad</Form.Label>
+                <Form.Control type="number" min="0" required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Expediente Médico</Form.Label>
-                <Form.Control type="text" required />
+                <Form.Label className="text-light">Expediente Médico</Form.Label>
+                <Form.Control type="text" required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Fecha de Ingreso</Form.Label>
-                <Form.Control type="date" required />
+                <Form.Label className="text-light">Fecha de Ingreso</Form.Label>
+                <Form.Control type="date" required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Sexo</Form.Label>
-                <Form.Select required>
+                <Form.Label className="text-light">Sexo</Form.Label>
+                <Form.Select required className="bg-dark text-light">
                   <option value="">Seleccione...</option>
                   <option value="M">Masculino</option>
                   <option value="F">Femenino</option>
@@ -77,8 +76,8 @@ const Formulario = () => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Tipo de Sangre</Form.Label>
-                <Form.Select required>
+                <Form.Label className="text-light">Tipo de Sangre</Form.Label>
+                <Form.Select required className="bg-dark text-light">
                   <option value="">Seleccione...</option>
                   <option value="O+">O+</option>
                   <option value="O-">O-</option>
@@ -92,33 +91,33 @@ const Formulario = () => {
               </Form.Group>
             </Col>
 
-            {/* Columna 2: Campos que requieren mayor información (textareas) */}
+            {/* Columna 2: Campos de mayor información (textareas) */}
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label>Síntomas Reportados</Form.Label>
-                <Form.Control as="textarea" rows={3} required />
+                <Form.Label className="text-light">Síntomas Reportados</Form.Label>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Antecedentes Médicos</Form.Label>
-                <Form.Control as="textarea" rows={3} required />
+                <Form.Label className="text-light">Antecedentes Médicos</Form.Label>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Plan de Tratamiento Inicial</Form.Label>
-                <Form.Control as="textarea" rows={3} required />
+                <Form.Label className="text-light">Plan de Tratamiento Inicial</Form.Label>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label>Alergias</Form.Label>
-                <Form.Control as="textarea" rows={3} required />
+                <Form.Label className="text-light">Alergias</Form.Label>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
               </Form.Group>
             </Col>
 
-            {/* Columna 3: Checkboxes de condiciones preexistentes */}
+            {/* Columna 3: Checkboxes para condiciones preexistentes */}
             <Col md={4} sm={12} className="mb-3">
               <Form.Group>
-                <Form.Label>Condiciones Preexistentes</Form.Label>
+                <Form.Label className="text-light">Condiciones Preexistentes</Form.Label>
                 {[
                   "Diabetes",
                   "Hipertensión",
@@ -141,7 +140,8 @@ const Formulario = () => {
                     type="checkbox"
                     id={`condition-${index}`}
                     label={condition}
-                    className="mb-2"
+                    className="mb-2 text-light"
+                    style={{ color: "#FFFFFF" }}
                   />
                 ))}
               </Form.Group>
@@ -153,11 +153,7 @@ const Formulario = () => {
             <Button type="submit" variant="primary" size="lg">
               Confirmar Diagnóstico
             </Button>
-            <Button
-              variant="danger"
-              size="lg"
-              onClick={() => navigate("/principal")}
-            >
+            <Button variant="danger" size="lg" onClick={() => navigate("/principal")}>
               Regresar
             </Button>
           </div>
