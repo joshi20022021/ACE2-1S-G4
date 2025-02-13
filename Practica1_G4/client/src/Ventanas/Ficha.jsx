@@ -41,12 +41,12 @@ const Ficha = () => {
     doc.autoTable({
       startY: doc.lastAutoTable.finalY + 5,
       columnStyles: {
-        0: { cellWidth: 40 },  // Apellido Paterno
-        1: { cellWidth: 40 },  // Apellido Materno
-        2: { cellWidth: 40 },  // Nombre
-        3: { cellWidth: 20 },  // Día
-        4: { cellWidth: 20 },  // Mes
-        5: { cellWidth: 20 },  // Año
+        0: { cellWidth: 40 },
+        1: { cellWidth: 40 },
+        2: { cellWidth: 40 },
+        3: { cellWidth: 20 },
+        4: { cellWidth: 20 },
+        5: { cellWidth: 20 },
       },
       body: [
         ["APELLIDO PATERNO", "APELLIDO MATERNO", "NOMBRE(S)", "DÍA", "MES", "AÑO"],
@@ -57,16 +57,24 @@ const Ficha = () => {
         [{ content: "12345", colSpan: 6, styles: { halign: "center" } }],
         [{ content: "DIAGNÓSTICO PRINCIPAL", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
         [{ content: "Fiebre severa", colSpan: 6, styles: { halign: "center" } }],
-        [{ content: "TIPO DE SANGRE", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
-         { content: "ALERGIAS", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "O+", colSpan: 3, styles: { halign: "center" } },
-         { content: "Polvo", colSpan: 3, styles: { halign: "center" } }],
+        [
+          { content: "TIPO DE SANGRE", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
+          { content: "ALERGIAS", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
+        ],
+        [
+          { content: "O+", colSpan: 3, styles: { halign: "center" } },
+          { content: "Polvo", colSpan: 3, styles: { halign: "center" } },
+        ],
         [{ content: "SÍNTOMAS REPORTADOS", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
         [{ content: "Dolor generalizado", colSpan: 6, styles: { halign: "center" } }],
-        [{ content: "ANTECEDENTES MÉDICOS", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
-         { content: "CONDICIONES PREEXISTENTES", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "Tiene VIH", colSpan: 3, styles: { halign: "center" } },
-         { content: "Dolor de cabeza", colSpan: 3, styles: { halign: "center" } }],
+        [
+          { content: "ANTECEDENTES MÉDICOS", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
+          { content: "CONDICIONES PREEXISTENTES", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
+        ],
+        [
+          { content: "Tiene VIH", colSpan: 3, styles: { halign: "center" } },
+          { content: "Dolor de cabeza", colSpan: 3, styles: { halign: "center" } },
+        ],
         [{ content: "PLAN DE TRATAMIENTO INICIAL", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
         [{ content: "Medicamentos y observación", colSpan: 6, styles: { halign: "center" } }],
       ],
@@ -78,7 +86,7 @@ const Ficha = () => {
     doc.save("ficha_paciente.pdf");
   };
 
-  // Animaciones
+  // Animaciones para el contenedor, tabla y botones
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.8 } },
@@ -101,9 +109,7 @@ const Ficha = () => {
       initial="hidden"
       animate="visible"
     >
-      <motion.table
-        variants={tableVariants}
-      >
+      <motion.table variants={tableVariants}>
         <tbody>
           <tr>
             <td className="title" colSpan="6">
@@ -188,10 +194,7 @@ const Ficha = () => {
       </motion.table>
 
       {/* Botones con animaciones */}
-      <motion.div
-        className="buttons d-flex justify-content-between mt-4"
-        variants={buttonVariants}
-      >
+      <motion.div className="buttons d-flex justify-content-between mt-4" variants={buttonVariants}>
         <div className="d-flex gap-3">
           <button className="btn btn-danger">Dar de Alta</button>
           <button className="btn btn-secondary" onClick={generatePDF}>
@@ -216,16 +219,19 @@ const Ficha = () => {
           margin: 0 auto 20px;
           font-size: 14px;
           border: 1px solid #ccc;
+          background-color: #1c1c1c;
         }
         th,
         td {
           border: 1px solid #ccc;
           padding: 6px 10px;
           vertical-align: middle;
-          background-color: rgba(0, 0, 0, 0.57);
+          /* Ajustamos un fondo oscuro con suficiente contraste */
+          background-color: #2e2e2e;
+          color: #fff;
         }
         th {
-          background-color: rgb(0, 0, 0);
+          background-color: #000;
           font-weight: bold;
           text-align: left;
         }
