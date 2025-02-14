@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 
 const Principal = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleButtonClick = (route) => {
     console.log(`Botón ${route} clickeado`);
@@ -15,50 +17,55 @@ const Principal = () => {
     setSelectedOption(event.target.value);
   };
 
+  const handleLogout = () => {
+    setLoading(true);
+    setTimeout(() => {
+      navigate('/');
+    }, 1000); // Tiempo reducido para el logout
+  };
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>M E D I - T R A C K</h1>
-      <div style={styles.buttonContainer}>
-        <button style={styles.button} onClick={() => handleButtonClick('ficha')}>
-          Ficha
-        </button>
-        <button style={styles.button} onClick={() => handleButtonClick('Signos')}>
-          Signos Vitales
-        </button>
-        <button style={styles.button} onClick={() => handleButtonClick('Formulario ')}>
-          Formulario de Registro
-        </button>
-      </div>
-      
-      <div style={styles.selectContainer}>
-        <label style={styles.label}>Pacientes Registrados</label>
-        <select style={styles.select} value={selectedOption} onChange={handleSelectChange}>
-          <option value="">-- Pacientes --</option>
-          <option value="opcion1">Opción 1</option>
-          <option value="opcion2">Opción 2</option>
-          <option value="opcion3">Opción 3</option>
-        </select>
-      </div>
+    <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
+      {loading ? (
+        <div className="position-fixed top-0 start-0 w-100 vh-100 bg-dark d-flex flex-column align-items-center justify-content-center">
+          <div className="spinner-border text-light" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="text-light mt-3">Cerrando sesión...</p>
+        </div>
+      ) : (
+        <>
+          <h1 className="text-light mb-5 display-4 animate__animated animate__fadeIn">M E D I - T R A C K</h1>
+          <div className="d-flex justify-content-center gap-5 mb-4 flex-wrap animate__animated animate__fadeIn">
+            <button style={styles.button} onClick={() => handleButtonClick('ficha')}>
+              Ficha
+            </button>
+            <button style={styles.button} onClick={() => handleButtonClick('Signos')}>
+              Signos Vitales
+            </button>
+            <button style={styles.button} onClick={() => handleButtonClick('Formulario')}>
+              Formulario de Registro
+            </button>
+          </div>
+          
+          <div className="mb-4 animate__animated animate__fadeIn">
+            <label className="form-label text-light">Pacientes Registrados</label>
+            <select className="form-select" value={selectedOption} onChange={handleSelectChange}>
+              <option value="">-- Pacientes --</option>
+              <option value="opcion1">Opción 1</option>
+              <option value="opcion2">Opción 2</option>
+              <option value="opcion3">Opción 3</option>
+            </select>
+          </div>
+
+          <button style={styles.logoutButton} className="animate__animated animate__fadeIn" onClick={handleLogout}>Cerrar Sesión</button>
+        </>
+      )}
     </div>
   );
 };
 
 const styles = {
-  title: {
-    fontSize: '50px',
-    fontWeight: 'bold',
-    marginBottom: '50px',
-    color: '#fff',
-    textShadow: '2px 2px 5px rgba(255, 255, 255, 0.95)',
-  },
-  buttonContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '150px',
-    marginBottom: '20px',
-  },
   button: {
     padding: '13px 10px',
     fontSize: '18px',
@@ -71,24 +78,18 @@ const styles = {
     transition: 'all 0.3s ease',
     width: '230px',
   },
-  selectContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '20px',
-  },
-  label: {
+  logoutButton: {
+    marginTop: '30px',
+    padding: '12px 20px',
     fontSize: '18px',
+    cursor: 'pointer',
+    border: 'none',
+    borderRadius: '28px',
+    backgroundColor: '#cc0000',
     color: '#fff',
-    marginBottom: '5px',
-  },
-  select: {
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '10px',
-    border: '1px solid #ccc',
-    width: '250px',
-  },
+    boxShadow: '0 4px 8px rgb(255, 200, 200)',
+    transition: 'all 0.3s ease',
+  }
 };
 
 export default Principal;

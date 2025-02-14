@@ -40,3 +40,41 @@
 .read-the-docs {
   color: #888;
 }
+/**/
+/* App.css */
+.animate__animated {
+  --animate-duration: 0.5s; /* Duración de las animaciones reducida a 0.5 segundos */
+}
+
+/* Asegurar que los botones sean responsive */
+@media (max-width: 768px) {
+  .d-flex.justify-content-center.gap-5.mb-4 {
+    gap: 1rem !important;
+  }
+
+  .d-flex.justify-content-center.gap-5.mb-4 button {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+/*apartado de graficas*/
+.chart-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.chart-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 300px !important;
+  }
+}
+
+
+/*apartado de menu principal*/
