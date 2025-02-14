@@ -38,6 +38,7 @@ public class MediTrackApplication {
 		new Thread(MediTrackApplication::readDataFromArduino).start();
 	}
 
+	// Métodos de arduino
 	private static void detectPorts() {
 		SerialPort[] puertosDisponibles = SerialPort.getCommPorts();
 
@@ -52,7 +53,7 @@ public class MediTrackApplication {
 		}
 
 		// Seleccionar el primer puerto disponible
-		serialPort = puertosDisponibles[0];  // Antes estaba en el índice 5, ahora toma el primero disponible.
+		serialPort = puertosDisponibles[puertosDisponibles.length-1];  // Antes estaba en el índice 5, ahora toma el primero disponible.
 
 		// Configuración del puerto serial
 		serialPort.setBaudRate(9600);
@@ -69,8 +70,8 @@ public class MediTrackApplication {
 
 	private static void unpackageDataFromArduino() {
 		// "10 0.78 0 | 1"
-		System.out.println(ultimoDato);
-		/* 
+		
+		 
 			if (ultimoDato == null || ultimoDato.trim().isEmpty() || ultimoDato.equals(".")) {
 				System.out.println("⚠ [DEBUG] Dato vacío o inválido recibido. Ignorando...");
 				return;
@@ -91,14 +92,17 @@ public class MediTrackApplication {
 				//System.out.println("hola1");
 				//foto = Float.parseFloat(sensores[1]);
 				//System.out.println("hola2");
+				if(sensores[0].equals("UID")){
+					rfid = sensores[1].trim().equals("A3 B5 18 96"); // Medico
+				}
+				System.out.println(rfid);
 				System.out.println(sensores[1]);
-				rfid = !sensores[0].equals("0");
 	
 				// System.out.println("✅ Datos desempaquetados correctamente -> ECG: " + ecg + ", Foto: " + foto + ", RFID: " + rfid);
 			} catch (NumberFormatException e) {
 				System.out.println("❌ [ERROR] Error al convertir datos: " + e.getMessage());
 			}
-			*/
+		
 		}
 
 	private static void readDataFromArduino() {
@@ -138,6 +142,8 @@ public class MediTrackApplication {
 		}
 	}
 
+
+	// 	Endpoint
 	@GetMapping("/status")
 	public String getStatus() {
 		System.out.println("[REQUEST ARQUITECTURA 2] REQUEST");
@@ -212,6 +218,16 @@ public class MediTrackApplication {
 			return "⚠ El puerto serial no está abierto.";
 		}
 	}
-
+    
+	@GetMapping("/Acceso_Form")
+	public boolean Acceso_Form(){
+		return rfid;
+	}
+	
+	@GetMapping("/Bloqueo_Acceso")
+	public boolean Bloqueo_Acceso(){
+		rfid = !rfid;
+		return rfid;
+	}
 
 }

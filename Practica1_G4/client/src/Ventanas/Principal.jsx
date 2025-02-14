@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
@@ -8,10 +8,35 @@ const Principal = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleButtonClick = (route) => {
+
+  const handleButtonClick = async (route) => {
     console.log(`Botón ${route} clickeado`);
-    navigate(`/${route}`);
+    switch (route) {
+      case "Formulario":
+        try {
+          const response = await fetch("http://localhost:8080/Acceso_Form"); // URL correcta de tu endpoint
+          if (!response.ok) throw new Error("Error en la solicitud");
+    
+          const Estado_Acceso = await response.json();
+          
+          //console.log(Estado_Acceso);
+  
+          if(Estado_Acceso){
+            navigate(`/${route}`);
+          }else{
+            alert("Coloca la llave de acceso")
+          }
+  
+        } catch (error) {
+          console.error("Error al obtener datos:", error);
+        }  
+        break;
+      default:
+        navigate(`/${route}`);
+        break;
+    }
   };
+  
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);

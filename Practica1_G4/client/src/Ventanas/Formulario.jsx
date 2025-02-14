@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,6 +7,57 @@ import '../App.css';
 const Formulario = () => {
   const navigate = useNavigate();
 
+  const [formDatos, setFormDatos] = useState({
+    nombres: "",
+    diagnostico: "",
+    edad: "",
+    expediente: "",
+    fechaIngreso: "",
+    sexo: "",
+    tipoSangre: "",
+    sintomas: "",
+    antecedentes: "",
+    tratamiento: "",
+    alergias: "",
+    condiciones: [], // Se almacena como un array
+  });
+
+    // Manejar cambios en inputs y selects
+    const Cambio = (e) => {
+      const { name, value } = e.target;
+      setFormDatos({
+        ...formDatos,
+        [name]: value,
+      });
+    };
+  
+    // Manejar cambios en checkboxes
+    const CheckCambio = (e) => {
+      const { value, checked } = e.target;
+      setFormDatos((prevState) => ({
+        ...prevState,
+        condiciones: checked
+          ? [...prevState.condiciones, value]
+          : prevState.condiciones.filter((item) => item !== value),
+      }));
+    };
+
+    const Enviar_Datos = async () => {
+      console.log("Datos del formulario:", formDatos); // Debug en consola
+      try {
+        const response = await fetch("http://localhost:8080/Bloqueo_Acceso");
+        if (!response.ok) throw new Error("Error en la solicitud");
+
+        const Estado_Acceso = await response.json();
+        console.log(Estado_Acceso)
+
+        if (!Estado_Acceso){
+          navigate("/principal");
+        }
+      } catch (error) {
+        
+      }
+    };
   // Definición de animaciones
   const formVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -43,32 +94,32 @@ const Formulario = () => {
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Nombres</Form.Label>
-                <Form.Control type="text" required className="bg-dark text-light" />
+                <Form.Control type="text" required className="bg-dark text-light" name="nombres"  value={formDatos.nombres} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Diagnóstico Principal</Form.Label>
-                <Form.Control type="text" required className="bg-dark text-light" />
+                <Form.Control type="text" required className="bg-dark text-light" name="diagnostico" value={formDatos.diagnostico} onChange={Cambio}/>
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Edad</Form.Label>
-                <Form.Control type="number" min="0" required className="bg-dark text-light" />
+                <Form.Control type="number" min="0" required className="bg-dark text-light" name="edad" value={formDatos.edad} onChange={Cambio}/>
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Expediente Médico</Form.Label>
-                <Form.Control type="text" required className="bg-dark text-light" />
+                <Form.Control type="text" required className="bg-dark text-light" name="expediente" value={formDatos.expediente} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Fecha de Ingreso</Form.Label>
-                <Form.Control type="date" required className="bg-dark text-light" />
+                <Form.Control type="date" required className="bg-dark text-light" name="fechaIngreso" value={formDatos.fechaIngreso} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Sexo</Form.Label>
-                <Form.Select required className="bg-dark text-light">
+                <Form.Select required className="bg-dark text-light" name="sexo" value={formDatos.sexo} onChange={Cambio}>
                   <option value="">Seleccione...</option>
                   <option value="M">Masculino</option>
                   <option value="F">Femenino</option>
@@ -77,7 +128,7 @@ const Formulario = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Tipo de Sangre</Form.Label>
-                <Form.Select required className="bg-dark text-light">
+                <Form.Select required className="bg-dark text-light" name="tipoSangre" value={formDatos.tipoSangre} onChange={Cambio}>
                   <option value="">Seleccione...</option>
                   <option value="O+">O+</option>
                   <option value="O-">O-</option>
@@ -95,22 +146,22 @@ const Formulario = () => {
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Síntomas Reportados</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="sintomas"  value={formDatos.sintomas} onChange={Cambio}/>
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Antecedentes Médicos</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="antecedentes" value={formDatos.antecedentes} onChange={Cambio}/>
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Plan de Tratamiento Inicial</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="tratamiento" value={formDatos.tratamiento} onChange={Cambio}/>
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Alergias</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" />
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="alergias" value={formDatos.alergias} onChange={Cambio}/>
               </Form.Group>
             </Col>
 
@@ -136,12 +187,15 @@ const Formulario = () => {
                   "Trastornos Digestivos (Gastritis, Ulceras)",
                 ].map((condition, index) => (
                   <Form.Check
+                    name="condiciones"
                     key={index}
                     type="checkbox"
                     id={`condition-${index}`}
                     label={condition}
                     className="mb-2 text-light"
                     style={{ color: "#FFFFFF" }}
+                    value={condition}
+                    onChange={CheckCambio}
                   />
                 ))}
               </Form.Group>
@@ -150,7 +204,7 @@ const Formulario = () => {
 
           {/* Contenedor para los botones */}
           <div className="text-center mt-4 d-flex justify-content-center gap-3">
-            <Button type="submit" variant="primary" size="lg">
+            <Button  variant="primary" size="lg" onClick={() => Enviar_Datos()}>
               Confirmar Diagnóstico
             </Button>
             <Button variant="danger" size="lg" onClick={() => navigate("/principal")}>
