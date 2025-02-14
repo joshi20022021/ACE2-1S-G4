@@ -2,15 +2,18 @@ package gt.edu.usac.ingenieria.MediTrack;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fazecast.jSerialComm.SerialPort;
+import java.sql.Connection;
 
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -230,4 +233,45 @@ public class MediTrackApplication {
 		return rfid;
 	}
 
+
+	// Configuración de conexión a MySQL
+    private static final String url = "jdbc:mysql://arqui-2.ciir7ihqfr2n.us-east-2.rds.amazonaws.com:3306/ACYE2";
+    private static final String usuario = "ACYE2";
+    private static final String contraseña = "Sucios!344"; // Reemplazar con la contraseña real
+
+    @PostMapping("/guardarPaciente")
+    public ResponseEntity<Void> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
+        String sql = "INSERT INTO pacientes (nombres, diagnostico, edad, expediente, fecha_ingreso, sexo, tipo_sangre, sintomas, antecedentes, tratamiento, alergias, condiciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+             PreparedStatement Contenedor = conn.prepareStatement(sql)) {
+
+            Contenedor.setString(1, (String) datosPaciente.get("nombres"));
+            Contenedor.setString(2, (String) datosPaciente.get("diagnostico"));
+            Contenedor.setInt(3, Integer.parseInt(datosPaciente.get("edad").toString()));
+            Contenedor.setString(4, (String) datosPaciente.get("expediente"));
+            Contenedor.setString(5, (String) datosPaciente.get("fechaIngreso"));
+            Contenedor.setString(6, (String) datosPaciente.get("sexo"));
+            Contenedor.setString(7, (String) datosPaciente.get("tipoSangre"));
+            Contenedor.setString(8, (String) datosPaciente.get("sintomas"));
+            Contenedor.setString(9, (String) datosPaciente.get("antecedentes"));
+            Contenedor.setString(10, (String) datosPaciente.get("tratamiento"));
+            Contenedor.setString(11, (String) datosPaciente.get("alergias"));
+
+            // Pasamos el arreglo de condiciones a cadena
+            Object condicionesObj = datosPaciente.get("condiciones");
+            String condicionesStr = condicionesObj instanceof Iterable ? String.join(",", (Iterable<String>) condicionesObj): condicionesObj.toString();
+                
+            Contenedor.setString(12, condicionesStr);
+
+            Contenedor.executeUpdate(); // Realiza la consulta
+            System.out.println(" Paciente guardado correctamente");
+
+            return ResponseEntity.ok().build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
 }

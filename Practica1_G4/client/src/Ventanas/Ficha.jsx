@@ -49,7 +49,7 @@ const Ficha = () => {
         5: { cellWidth: 20 },
       },
       body: [
-        ["APELLIDO PATERNO", "APELLIDO MATERNO", "NOMBRE(S)", "DÍA", "MES", "AÑO"],
+        [ "NOMBRE(S)", "DÍA", "MES", "AÑO"],
         ["Carta Apena", "Alvizures", "Edgar Josias", "02", "", "2010"],
         [{ content: "EDAD", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
         [{ content: "30", colSpan: 6, styles: { halign: "center" } }],
@@ -117,14 +117,11 @@ const Ficha = () => {
             </td>
           </tr>
           <tr>
-            <th>APELLIDO PATERNO</th>
-            <th>APELLIDO MATERNO</th>
-            <th colSpan="4">NOMBRE(S)</th>
+
+            <th colSpan="6">NOMBRE(S)</th>
           </tr>
           <tr>
-            <td>Carta Apena</td>
-            <td>Alvizures</td>
-            <td colSpan="4">Edgar Josias</td>
+            <td colSpan="6">Edgar Josias</td>
           </tr>
           <tr>
             <th>FECHA DE INGRESO</th>

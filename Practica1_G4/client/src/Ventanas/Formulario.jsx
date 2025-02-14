@@ -7,7 +7,7 @@ import '../App.css';
 const Formulario = () => {
   const navigate = useNavigate();
 
-  const [formDatos, setFormDatos] = useState({
+  let [formDatos, setFormDatos] = useState({
     nombres: "",
     diagnostico: "",
     edad: "",
@@ -43,17 +43,37 @@ const Formulario = () => {
     };
 
     const Enviar_Datos = async () => {
+
       console.log("Datos del formulario:", formDatos); // Debug en consola
       try {
+
+        // Bloqueamos acceso al formulario
         const response = await fetch("http://localhost:8080/Bloqueo_Acceso");
         if (!response.ok) throw new Error("Error en la solicitud");
 
         const Estado_Acceso = await response.json();
         console.log(Estado_Acceso)
 
+        // Guardar pacientes
+        const response1 = await fetch("http://localhost:8080/guardarPaciente", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formDatos) // Convertir el objeto a JSON para enviarlo
+        });
+    
+        if (response1.ok) {
+          alert("Datos guardados exitosamente.");
+        } else {
+          alert("Error al guardar los datos.");
+        }
+
         if (!Estado_Acceso){
           navigate("/principal");
         }
+
+
       } catch (error) {
         
       }
