@@ -14,8 +14,12 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SpringBootApplication
@@ -31,6 +35,7 @@ public class MediTrackApplication {
 
 	private static int ecg = 0;
 	private static float foto = 0;
+	public static String Paciente = ".";
 	private static boolean rfid = false;
 
 	public static void main(String[] args) {
@@ -274,4 +279,37 @@ public class MediTrackApplication {
             return ResponseEntity.status(500).build();
         }
     }
+
+	@GetMapping("/GetPacientes")
+	public List<String> obtenerNombresPacientes() {
+        List<String> nombres = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+                 PreparedStatement pstmt = conn.prepareStatement("SELECT nombres FROM pacientes");
+                 ResultSet rs = pstmt.executeQuery()) {
+
+                // Agregar los nombres a la lista
+                while (rs.next()) {
+                    nombres.add(rs.getString("nombres"));
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println("No se pudo encontrar el driver de MySQL.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener nombres de pacientes.");
+            e.printStackTrace();
+        }
+
+        return nombres;
+    }
+
+	// Datos del paciente para la ficha
+	@PostMapping("/SeleccionarPaciente")
+    public void seleccionarPaciente(@RequestBody Map<String, String> request) {
+        Paciente = request.get("nombre");
+        System.out.println("Paciente seleccionado: " + Paciente);
+    }
+
 }

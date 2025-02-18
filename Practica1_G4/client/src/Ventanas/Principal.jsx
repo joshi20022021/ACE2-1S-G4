@@ -8,6 +8,21 @@ const Principal = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [pacientes, setPacientes] = useState([]);
+  useEffect(() => {
+    // Hacer la petición a la API
+    const fetchPacientes = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/GetPacientes");
+        const data = await response.json();
+        setPacientes(data); // Guardamos los nombres en el estado
+      } catch (error) {
+        console.error("❌ Error al obtener nombres de pacientes:", error);
+      }
+    };
+
+    fetchPacientes();
+  }, []);
 
   const handleButtonClick = async (route) => {
     console.log(`Botón ${route} clickeado`);
@@ -39,7 +54,23 @@ const Principal = () => {
   
 
   const handleSelectChange = (event) => {
+    let nombrePaciente = event.target.value;
     setSelectedOption(event.target.value);
+
+    try {
+       fetch("http://localhost:8080/api/seleccionar-paciente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre: nombrePaciente }),
+      });
+  
+      console.log("Paciente seleccionado enviado al servidor:", nombrePaciente);
+    } catch (error) {
+      console.error("❌ Error al seleccionar paciente:", error);
+    }
+
   };
 
   const handleLogout = () => {
@@ -77,9 +108,9 @@ const Principal = () => {
             <label className="form-label text-light">Pacientes Registrados</label>
             <select className="form-select" value={selectedOption} onChange={handleSelectChange}>
               <option value="">-- Pacientes --</option>
-              <option value="opcion1">Opción 1</option>
-              <option value="opcion2">Opción 2</option>
-              <option value="opcion3">Opción 3</option>
+              {pacientes.map((nombre, index) => (
+                <option key={index} value={nombre}>{nombre}</option>
+              ))}
             </select>
           </div>
 
