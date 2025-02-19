@@ -171,7 +171,7 @@ const Ficha = () => {
             <th colSpan="6">SÍNTOMAS REPORTADOS</th>
           </tr>
           <tr>
-            <td colSpan="6">Le dolía el qlo cuando entró</td>
+            <td colSpan="6">duele todo</td>
           </tr>
           <tr>
             <th colSpan="3">ANTECEDENTES MÉDICOS</th>
@@ -185,7 +185,7 @@ const Ficha = () => {
             <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
           </tr>
           <tr>
-            <td colSpan="6">Meterle el dedo hasta que llore</td>
+            <td colSpan="6">todo</td>
           </tr>
         </tbody>
       </motion.table>
