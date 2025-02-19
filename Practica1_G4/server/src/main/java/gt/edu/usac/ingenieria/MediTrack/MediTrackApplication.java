@@ -28,6 +28,8 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 
 
+
+
 public class MediTrackApplication {
 
 	private static SerialPort serialPort;
@@ -35,8 +37,10 @@ public class MediTrackApplication {
 
 	private static int ecg = 0;
 	private static float foto = 0;
-	public static String paciente = ".";
+	public static String Paciente = ".";
 	private static boolean rfid = false;
+	public static int indicePaciente = 0;
+	public static List<Map<String, Object>> pacientes = new ArrayList<>();
 
 	public static void main(String[] args) {
 		SpringApplication.run(MediTrackApplication.class, args);
@@ -99,7 +103,8 @@ public class MediTrackApplication {
             switch (sensores[0]) {
                 case "ecg" -> ecg = Integer.parseInt(sensores[1]);
                 case "foto" -> foto = Float.parseFloat(sensores[1]);
-                case "UID" -> rfid = sensores[1].trim().equals("A3 B5 18 96"); // Medico
+                case "UID" -> rfid = sensores[1].trim().equals("E0 23 46 10"); // Medico
+				case "Paciente" -> indicePaciente = Integer.parseInt(sensores[1].trim());
             }
 			System.out.println(rfid);
 			System.out.println(sensores[1]);
@@ -243,38 +248,20 @@ public class MediTrackApplication {
     private static final String contraseña = "Sucios!344"; // Reemplazar con la contraseña real
 
     @PostMapping("/guardarPaciente")
-    public ResponseEntity<Void> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
-        String sql = "INSERT INTO pacientes (nombres, diagnostico, edad, expediente, fecha_ingreso, sexo, tipo_sangre, sintomas, antecedentes, tratamiento, alergias, condiciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public ResponseEntity<String> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
+        try {
+            if (datosPaciente == null || datosPaciente.isEmpty()) {
+                return ResponseEntity.badRequest().body("El cuerpo de la solicitud está vacío o es inválido.");
+            }
+            pacientes.add(datosPaciente);
+			int indicePaciente = pacientes.size() - 1; // Último índice agregado
 
-        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
-             PreparedStatement Contenedor = conn.prepareStatement(sql)) {
-
-            Contenedor.setString(1, (String) datosPaciente.get("nombres"));
-            Contenedor.setString(2, (String) datosPaciente.get("diagnostico"));
-            Contenedor.setInt(3, Integer.parseInt(datosPaciente.get("edad").toString()));
-            Contenedor.setString(4, (String) datosPaciente.get("expediente"));
-            Contenedor.setString(5, (String) datosPaciente.get("fechaIngreso"));
-            Contenedor.setString(6, (String) datosPaciente.get("sexo"));
-            Contenedor.setString(7, (String) datosPaciente.get("tipoSangre"));
-            Contenedor.setString(8, (String) datosPaciente.get("sintomas"));
-            Contenedor.setString(9, (String) datosPaciente.get("antecedentes"));
-            Contenedor.setString(10, (String) datosPaciente.get("tratamiento"));
-            Contenedor.setString(11, (String) datosPaciente.get("alergias"));
-
-            // Pasamos el arreglo de condiciones a cadena
-            Object condicionesObj = datosPaciente.get("condiciones");
-            String condicionesStr = condicionesObj instanceof Iterable ? String.join(",", (Iterable<String>) condicionesObj): condicionesObj.toString();
-                
-            Contenedor.setString(12, condicionesStr);
-
-            Contenedor.executeUpdate(); // Realiza la consulta
-            System.out.println(" Paciente guardado correctamente");
-
-            return ResponseEntity.ok().build();
+            enviarDatosAlArduino(indicePaciente);
+			return ResponseEntity.ok("Paciente guardado exitosamente.");
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).build();
+            return ResponseEntity.status(500).body("Error interno del servidor al guardar el paciente.");
         }
     }
 
@@ -306,8 +293,31 @@ public class MediTrackApplication {
 	// Datos del paciente para la ficha
 	@PostMapping("/SeleccionarPaciente")
     public void seleccionarPaciente(@RequestBody Map<String, String> request) {
-        paciente = request.get("nombre");
+        Paciente = request.get("nombre");
         System.out.println("Paciente seleccionado: " + paciente);
     }
 
+	//Funciones
+	public static void enviarDatosAlArduino(int indice) {
+		if (serialPort == null || !serialPort.isOpen()) {
+			System.out.println(" El puerto no está abierto.");
+			return;
+		}
+		try {
+			String mensaje = String.valueOf(indice);
+			serialPort.getOutputStream().write(mensaje.getBytes(StandardCharsets.UTF_8));
+			serialPort.getOutputStream().flush();
+			System.out.println("Índice enviado correctamente: " + indice);
+		} catch (Exception e) {
+			System.out.println("Error enviando datos al Arduino: " + e.getMessage());
+		}
+	}
+
+
 }
+
+/*
+ A3 B5 18 96 --> Tarjeta
+ E0 23 46 10 --> Llavero
+
+ */

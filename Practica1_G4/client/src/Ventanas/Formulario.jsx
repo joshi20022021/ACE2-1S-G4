@@ -64,7 +64,7 @@ const Formulario = () => {
         });
     
         if (response1.ok) {
-          alert("Datos guardados exitosamente.");
+          alert("Datos guardados exitosamente, Acerque su tarjeta del paciente.");
         } else {
           alert("Error al guardar los datos.");
         }
