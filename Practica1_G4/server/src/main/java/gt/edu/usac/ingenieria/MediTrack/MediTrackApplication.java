@@ -294,7 +294,7 @@ public class MediTrackApplication {
 	@PostMapping("/SeleccionarPaciente")
     public void seleccionarPaciente(@RequestBody Map<String, String> request) {
         Paciente = request.get("nombre");
-        System.out.println("Paciente seleccionado: " + paciente);
+        System.out.println("Paciente seleccionado: " + Paciente);
     }
 
 	//Funciones
