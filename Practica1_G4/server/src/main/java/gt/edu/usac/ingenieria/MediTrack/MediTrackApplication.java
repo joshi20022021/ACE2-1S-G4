@@ -35,7 +35,7 @@ public class MediTrackApplication {
 
 	private static int ecg = 0;
 	private static float foto = 0;
-	public static String Paciente = ".";
+	public static String paciente = ".";
 	private static boolean rfid = false;
 
 	public static void main(String[] args) {
@@ -78,40 +78,38 @@ public class MediTrackApplication {
 
 	private static void unpackageDataFromArduino() {
 		// "10 0.78 0 | 1"
-		
-		 
-			if (ultimoDato == null || ultimoDato.trim().isEmpty() || ultimoDato.equals(".")) {
-				System.out.println("⚠ [DEBUG] Dato vacío o inválido recibido. Ignorando...");
-				return;
-			}
-	
-			// System.out.println("✅ [DEBUG] Procesando dato: " + ultimoDato);
-	
-			String[] sensores = ultimoDato.trim().split(":"); // Divide por cualquier cantidad de espacios
-	
-			if (sensores.length < 2) {
-				System.out.println("❌ [ERROR] Formato incorrecto. Se esperaban 3 valores, pero llegaron: " + sensores.length);
-				return;
-			}
-
-	
-			try {
-				//ecg = Integer.parseInt(sensores[0]);
-				//System.out.println("hola1");
-				//foto = Float.parseFloat(sensores[1]);
-				//System.out.println("hola2");
-				if(sensores[0].equals("UID")){
-					rfid = sensores[1].trim().equals("A3 B5 18 96"); // Medico
-				}
-				System.out.println(rfid);
-				System.out.println(sensores[1]);
-	
-				// System.out.println("✅ Datos desempaquetados correctamente -> ECG: " + ecg + ", Foto: " + foto + ", RFID: " + rfid);
-			} catch (NumberFormatException e) {
-				System.out.println("❌ [ERROR] Error al convertir datos: " + e.getMessage());
-			}
-		
+		if (ultimoDato == null || ultimoDato.trim().isEmpty() || ultimoDato.equals(".")) {
+			System.out.println("⚠ [DEBUG] Dato vacío o inválido recibido. Ignorando...");
+			rfid = false;
+			return;
 		}
+
+		// System.out.println("✅ [DEBUG] Procesando dato: " + ultimoDato);
+
+		String[] sensores = ultimoDato.trim().split(":"); // Divide por cualquier cantidad de espacios
+
+		if (sensores.length != 2) {
+			System.out.println("❌ [ERROR] Formato incorrecto. Se esperaban 3 valores, pero llegaron: " + sensores.length);
+			return;
+		}
+
+
+
+		try {
+            switch (sensores[0]) {
+                case "ecg" -> ecg = Integer.parseInt(sensores[1]);
+                case "foto" -> foto = Float.parseFloat(sensores[1]);
+                case "UID" -> rfid = sensores[1].trim().equals("A3 B5 18 96"); // Medico
+            }
+			System.out.println(rfid);
+			System.out.println(sensores[1]);
+
+			// System.out.println("✅ Datos desempaquetados correctamente -> ECG: " + ecg + ", Foto: " + foto + ", RFID: " + rfid);
+		} catch (NumberFormatException e) {
+			System.out.println("❌ [ERROR] Error al convertir datos: " + e.getMessage());
+		}
+
+	}
 
 	private static void readDataFromArduino() {
 		if (serialPort == null || !serialPort.isOpen()) {
@@ -308,8 +306,8 @@ public class MediTrackApplication {
 	// Datos del paciente para la ficha
 	@PostMapping("/SeleccionarPaciente")
     public void seleccionarPaciente(@RequestBody Map<String, String> request) {
-        Paciente = request.get("nombre");
-        System.out.println("Paciente seleccionado: " + Paciente);
+        paciente = request.get("nombre");
+        System.out.println("Paciente seleccionado: " + paciente);
     }
 
 }
