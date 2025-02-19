@@ -102,7 +102,7 @@ public class MediTrackApplication {
 		try {
             switch (sensores[0]) {
                 case "ecg" -> ecg = Integer.parseInt(sensores[1]);
-                case "foto" -> foto = Float.parseFloat(sensores[1]);
+                case "oxigeno" -> foto = Float.parseFloat(sensores[1]);
                 case "UID" -> rfid = sensores[1].trim().equals("E0 23 46 10"); // Medico
 				case "Paciente" -> indicePaciente = Integer.parseInt(sensores[1].trim());
             }

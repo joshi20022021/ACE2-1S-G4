@@ -12,32 +12,28 @@ const SignosVitales = () => {
   const navigate = useNavigate();
   const [fadeIn, setFadeIn] = useState(false);
 
-  useEffect(() => {
-    setFadeIn(true);
-  }, []);
-
-  const data1 = {
-    labels: Array.from({ length: 10 }, (_, i) => i),
+  const [data1, setData1] = useState({
+    labels: Array.from({ length: 10}, (_, i) => i),
     datasets: [
       {
-        label: "Frecuencia Cardiaca (BPM)",
-        data: [75, 110, 50, 70, 85, 100, 90, 80, 65, 75, 110, 50, 60, 70, 105, 80, 95, 65, 85, 70, 105, 110, 55],
-        borderColor: "#FF4D4D",
+        label: "ECG / Frecuencia Cardiaca (BPM)",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        borderColor: "#FF4D4D", 
         backgroundColor: "rgba(255, 77, 77, 0.2)",
         borderWidth: 1,
         pointRadius: 4,
-        pointBackgroundColor: "#FF4D4D",
+        pointBackgroundColor: "#FF4D4D", 
         tension: 0.01,
       },
     ],
-  };
+  });
 
-  const data2 = {
-    labels: Array.from({ length: 10 }, (_, i) => i),
+  const [data2, setData2] = useState({
+    labels: Array.from({ length: 10}, (_, i) => i),
     datasets: [
       {
-        label: "Presión Arterial (mmHg)",
-        data: [75, 110, 50, 70, 85, 100, 90, 80, 65, 75, 110, 50, 60, 70, 105, 80, 95, 65, 85, 70, 105, 110, 55],
+        label: "Oxigeno (SpO2)",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         borderColor: "#4D79FF",
         backgroundColor: "rgba(61, 63, 69, 0.2)",
         borderWidth: 1,
@@ -46,7 +42,9 @@ const SignosVitales = () => {
         tension: 0.01,
       },
     ],
-  };
+  });
+
+
 
   const options = {
     responsive: true,
@@ -84,6 +82,84 @@ const SignosVitales = () => {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 1 } },
   };
+
+  useEffect(() => {
+    setFadeIn(true);
+
+    const intervalId = setInterval(() => {
+      fetch("http://localhost:8080/get-datos-sensores")
+        .then((res) => res.json())
+        .then((data) => {
+          // data tiene la forma: { oxigeno: number, ecg: number }
+          // Actualizamos data1 (ECG/Frecuencia cardiaca)
+          setData1((prev) => {
+            const newLabels = [...prev.labels];
+            const newEcgData = [...prev.datasets[0].data];
+
+            // El siguiente label será el último + 1
+            const nextLabel = newLabels[newLabels.length - 1] + 1;
+
+            // Agregamos nuevo valor
+            newLabels.push(nextLabel);
+            newEcgData.push(data.ecg);
+
+            // Control para no crecer indefinidamente, por ej. límite 30 puntos
+            if (newLabels.length > 30) {
+              newLabels.shift();
+              newEcgData.shift();
+            }
+
+            return {
+              ...prev,
+              labels: newLabels,
+              datasets: [
+                {
+                  ...prev.datasets[0],
+                  data: newEcgData,
+                },
+              ],
+            };
+          });
+
+          // Actualizamos data2 (Oxígeno)
+          setData2((prev) => {
+            const newLabels = [...prev.labels];
+            const newOxData = [...prev.datasets[0].data];
+
+            const nextLabel = newLabels[newLabels.length - 1] + 1;
+
+            // Agregamos nuevo valor
+            newLabels.push(nextLabel);
+            newOxData.push(data.oxigeno);
+
+            // Limitar el tamaño del array
+            if (newLabels.length > 30) {
+              newLabels.shift();
+              newOxData.shift();
+            }
+
+            return {
+              ...prev,
+              labels: newLabels,
+              datasets: [
+                {
+                  ...prev.datasets[0],
+                  data: newOxData,
+                },
+              ],
+            };
+          });
+        })
+        .catch((error) => {
+          console.error("Error al obtener signos vitales:", error);
+        });
+    }, 500);
+
+    // Cuando el componente se desmonte, limpiar el intervalo
+    return () => clearInterval(intervalId);
+  }, []);
+
+
 
   return (
     <motion.div

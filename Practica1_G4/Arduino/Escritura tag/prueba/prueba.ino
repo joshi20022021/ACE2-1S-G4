@@ -52,7 +52,7 @@ void leerECG(){
 }
 
 void escribirDatosEnTarjeta(String mensaje) {
-    byte dataBlock[16]; 
+    byte dataBlock[16];
     int mensajeIndex = 0;
 
     for (byte sector = 1; sector < 16; sector++) {
