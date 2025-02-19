@@ -133,9 +133,9 @@ const Ficha = () => {
             </th>
           </tr>
           <tr>
-            <td></td>
+            <td>s</td>
             <td className="center">02</td>
-            <td className="center"></td>
+            <td className="center">10</td>
             <td className="center">2010</td>
             <td colSpan="2" className="center">
               HUECO

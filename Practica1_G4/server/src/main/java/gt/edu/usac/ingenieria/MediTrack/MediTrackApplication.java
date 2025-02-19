@@ -32,8 +32,6 @@ import java.util.Map;
 
 public class MediTrackApplication {
 
-	
-
 	private static SerialPort serialPort;
 	private static String ultimoDato = ".";
 
@@ -41,6 +39,7 @@ public class MediTrackApplication {
 	private static float foto = 0;
 	public static String Paciente = ".";
 	private static boolean rfid = false;
+	public static int indicePaciente = 0;
 	public static List<Map<String, Object>> pacientes = new ArrayList<>();
 
 	public static void main(String[] args) {
@@ -109,7 +108,7 @@ public class MediTrackApplication {
 				}else if(sensores[0].equals("Mensaje")){
 
 				}else if (sensores[0].equals("Paciente")){
-					//System.out.println(sensores[1].trim());
+					indicePaciente = Integer.parseInt(sensores[1].trim());
 				}
 				//System.out.println(rfid);
 				System.out.println(sensores[1]);
