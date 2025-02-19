@@ -9,6 +9,44 @@ import { motion } from 'framer-motion'; // Importar motion desde framer-motion
 const Ficha = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
+  
+  const [formDatos, setFormDatos] = useState({
+    nombres: "",
+    diagnostico: "",
+    edad: "",
+    expediente: "",
+    fechaIngreso: "",
+    sexo: "",
+    tipoSangre: "",
+    sintomas: "",
+    antecedentes: "",
+    tratamiento: "",
+    alergias: "",
+    condiciones: [],
+  });
+  
+  const handleClick = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/SeleccionarPaciente", {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos");
+      }
+      // Suponiendo que el backend retorna un objeto JSON 
+      // cuyas llaves coinciden con las propiedades de formDatos.
+      const data = await response.json();
+      console.log("Datos obtenidos:", data);
+
+      // Actualizamos el estado con los datos recibidos
+      setFormDatos(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
+
 
   useEffect(() => {
     // Activar la animación después de que el componente se monte
@@ -121,7 +159,7 @@ const Ficha = () => {
             <th colSpan="6">NOMBRE(S)</th>
           </tr>
           <tr>
-            <td colSpan="6">Edgar Josias</td>
+            <td colSpan="6">{formDatos.nombres || "Nada"}</td>
           </tr>
           <tr>
             <th>FECHA DE INGRESO</th>
@@ -133,59 +171,64 @@ const Ficha = () => {
             </th>
           </tr>
           <tr>
-            <td>s</td>
-            <td className="center">02</td>
-            <td className="center">10</td>
-            <td className="center">2010</td>
-            <td colSpan="2" className="center">
-              HUECO
+            <td>{formDatos.fechaIngreso || "Nada"}</td>
+            <td className="center">{formDatos.fechaIngreso || "Nada"}</td>
+            <td className="center">{formDatos.fechaIngreso || "Nada"}</td>
+            <td className="center">{formDatos.fechaIngreso || "Nada"}</td>
+            <td colSpan="2" className="center">{formDatos.fechaIngreso || "Nada"}
             </td>
           </tr>
           <tr>
             <th colSpan="6">EDAD</th>
           </tr>
           <tr>
-            <td colSpan="6">30</td>
+            <td colSpan="6">{formDatos.edad || "Nada"}</td>
           </tr>
           <tr>
             <th colSpan="6">EXPEDIENTE MÉDICO</th>
           </tr>
           <tr>
-            <td colSpan="6">12345</td>
+            <td colSpan="6">{formDatos.expediente || "Nada"}</td>
           </tr>
           <tr>
             <th colSpan="6">DIAGNÓSTICO PRINCIPAL</th>
           </tr>
           <tr>
-            <td colSpan="6">Fiebre severa</td>
+            <td colSpan="6">{formDatos.diagnostico || "Nada"}</td>
           </tr>
           <tr>
             <th colSpan="3">TIPO DE SANGRE</th>
             <th colSpan="3">ALERGIAS</th>
           </tr>
           <tr>
-            <td colSpan="3">O+</td>
-            <td colSpan="3">Polvo</td>
+            <td colSpan="3">{formDatos.tipoSangre || "Nada"}</td>
+            <td colSpan="3">{formDatos.alergias || "Nada"}</td>
           </tr>
           <tr>
             <th colSpan="6">SÍNTOMAS REPORTADOS</th>
           </tr>
           <tr>
-            <td colSpan="6">duele todo</td>
+            <td colSpan="6">{formDatos.sintomas || "Nada"}</td>
           </tr>
           <tr>
             <th colSpan="3">ANTECEDENTES MÉDICOS</th>
             <th colSpan="3">CONDICIONES PREEXISTENTES</th>
           </tr>
           <tr>
-            <td colSpan="3">Tiene VIH</td>
-            <td colSpan="3">Dolor de cabeza</td>
+            <td colSpan="3">{formDatos.antecedentes || "Nada"}</td>
+            <td colSpan="3">
+            {formDatos.condiciones && formDatos.condiciones.length > 0
+              ? formDatos.condiciones.map((condicion, index) => (
+                  <div key={index}>{condicion}</div>
+                ))
+              : "Nada"}
+          </td>
           </tr>
           <tr>
             <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
           </tr>
           <tr>
-            <td colSpan="6">todo</td>
+            <td colSpan="6">{formDatos.tratamiento || "Nada"}</td>
           </tr>
         </tbody>
       </motion.table>
@@ -194,6 +237,7 @@ const Ficha = () => {
       <motion.div className="buttons d-flex justify-content-between mt-4" variants={buttonVariants}>
         <div className="d-flex gap-3">
           <button className="btn btn-danger">Dar de Alta</button>
+          <button className="btn btn-save" onClick={handleClick}>Mostrar Datos</button>
           <button className="btn btn-secondary" onClick={generatePDF}>
             Reporte PDF
           </button>
@@ -253,6 +297,10 @@ const Ficha = () => {
         }
         .btn-danger {
           background-color: #dc3545;
+          border: none;
+        }
+        .btn-save {
+          background-color:rgb(12, 242, 0);
           border: none;
         }
         .btn-secondary {

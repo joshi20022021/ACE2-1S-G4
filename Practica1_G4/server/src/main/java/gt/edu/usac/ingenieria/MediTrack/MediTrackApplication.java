@@ -82,7 +82,7 @@ public class MediTrackApplication {
 
 	private static void unpackageDataFromArduino() {
 		// "10 0.78 0 | 1"
-		//System.out.println("-->"+ultimoDato+"<--");
+		
 			if (ultimoDato == null || ultimoDato.trim().isEmpty() || ultimoDato.equals(".")) {
 				System.out.println("⚠ [DEBUG] Dato vacío o inválido recibido. Ignorando...");
 				return;
@@ -297,10 +297,9 @@ public class MediTrackApplication {
     }
 
 	// Datos del paciente para la ficha
-	@PostMapping("/SeleccionarPaciente")
-    public void seleccionarPaciente(@RequestBody Map<String, String> request) {
-        Paciente = request.get("nombre");
-        System.out.println("Paciente seleccionado: " + Paciente);
+	@GetMapping("/SeleccionarPaciente")
+    public Map<String, Object> seleccionarPaciente() {
+		return pacientes.get(indicePaciente);
     }
 
 	//Funciones
