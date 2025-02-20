@@ -17,6 +17,9 @@ void setup() {
         key.keyByte[i] = 0xFF;
     }
 
+    pinMode(10, INPUT);
+    pinMode(11, INPUT);
+
     Serial.println("Acerque una tarjeta para leer o escribir...");
 }
 
@@ -34,10 +37,22 @@ void loop() {
 
     mfrc522.PICC_HaltA();
     mfrc522.PCD_StopCrypto1();
+
+    leerECG();
+}
+
+void leerECG(){
+   
+  if((digitalRead(10) == 1)||(digitalRead(11) == 1)){
+    Serial.println('!');
+  } else{
+    // send the value of analog input 0:
+    Serial.println("ECG:"analogRead(A0));
+  }
 }
 
 void escribirDatosEnTarjeta(String mensaje) {
-    byte dataBlock[16]; 
+    byte dataBlock[16];
     int mensajeIndex = 0;
 
     for (byte sector = 1; sector < 16; sector++) {
