@@ -32,7 +32,7 @@ const SignosVitales = () => {
     labels: Array.from({ length: 10}, (_, i) => i),
     datasets: [
       {
-        label: "Oxigeno (SpO2)",
+        label: "Calidad del aire",
         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         borderColor: "#4D79FF",
         backgroundColor: "rgba(61, 63, 69, 0.2)",
@@ -57,8 +57,30 @@ const SignosVitales = () => {
         },
       },
       y: {
-        min: -10,
-        max: 150,
+        min: 0,
+        max: 700,
+        ticks: {
+          stepSize: 10,
+        },
+      },
+    },
+    plugins: { legend: { position: "top" } },
+  };
+
+
+  const options2 = {
+    responsive: true,
+    aspectRatio: 1.5, // Controla la relación de aspecto
+    scales: {
+      x: {
+        display: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+      y: {
+        min: 0,
+        max: 200,
         ticks: {
           stepSize: 10,
         },
@@ -193,9 +215,9 @@ const SignosVitales = () => {
           variants={cardVariants}
         >
           <div className="chart-card">
-            <h3 className="text-center">Presión Arterial</h3>
+            <h3 className="text-center">Calidad del Aire</h3>
             <div className="chart-container">
-              <Line data={data2} options={options} />
+              <Line data={data2} options={options2} />
             </div>
           </div>
         </motion.div>

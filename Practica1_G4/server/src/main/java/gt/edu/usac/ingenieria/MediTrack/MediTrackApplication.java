@@ -188,7 +188,7 @@ public class MediTrackApplication {
 		// sensor 3 - RFID
 		Map<String, Object> datosSensores = new HashMap<>();
 		datosSensores.put("ecg", ecg);
-		datosSensores.put("foto", foto);
+		datosSensores.put("oxigeno", foto);
 		datosSensores.put("rfid", rfid);
 
 		// devolvemos un json con los datos
