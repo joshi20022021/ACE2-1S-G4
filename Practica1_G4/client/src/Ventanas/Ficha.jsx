@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'; // Importar motion desde framer-motion
 const Ficha = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  
+  const [indicePaciente, setIndicePaciente] = useState(0);
   const [formDatos, setFormDatos] = useState({
     nombres: "",
     diagnostico: "",
@@ -26,27 +26,54 @@ const Ficha = () => {
   });
   
   const handleClick = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/SeleccionarPaciente", {
-        method: "GET",
-      });
-      if (!response.ok) {
-        throw new Error("Error al obtener los datos");
-      }
-      // Suponiendo que el backend retorna un objeto JSON 
-      // cuyas llaves coinciden con las propiedades de formDatos.
-      const data = await response.json();
-      console.log("Datos obtenidos:", data);
 
-      // Actualizamos el estado con los datos recibidos
-      setFormDatos(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+        try {
+          const response = await fetch("http://localhost:8080/SeleccionarPaciente", {
+            method: "GET",
+          });
+          if (!response.ok) {
+            throw new Error("Error al obtener los datos");
+          }
+          // Suponiendo que el backend retorna un objeto JSON 
+          // cuyas llaves coinciden con las propiedades de formDatos.
+          const data = await response.json();
+          console.log("Datos obtenidos:", data);
+    
+          // Actualizamos el estado con los datos recibidos
+          setFormDatos(data);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+
+        try {
+          const response = await fetch("http://localhost:8080/SeleccionarIndice"); // Ajusta la URL según corresponda
+          const data = await response.json();
+          setIndicePaciente(data);
+        } catch (error) {
+          console.error("Error al obtener el índice:", error);
+        }
+
+
+
   };
 
-
-
+  const borrarPaciente = async () => {
+    if (indicePaciente == null) {
+      console.error("Error: índicePaciente es null o undefined");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:8080/BorrarDatosPaciente?IndicePaciente=${indicePaciente}`, {
+        method: "POST",
+      });
+  
+      const data = await response.text();
+      console.log("Respuesta del backend:", data);
+    } catch (error) {
+      console.error("Error al borrar el paciente:", error);
+    }
+  };
 
   useEffect(() => {
     // Activar la animación después de que el componente se monte
@@ -345,7 +372,7 @@ const Ficha = () => {
       {/* Botones con animaciones */}
       <motion.div className="buttons d-flex justify-content-between mt-4" variants={buttonVariants}>
         <div className="d-flex gap-3">
-          <button className="btn btn-danger">Dar de Alta</button>
+          <button className="btn btn-danger" onClick={borrarPaciente}>Dar de Alta</button>
           <button className="btn btn-save" onClick={handleClick}>Mostrar Datos</button>
           <button className="btn btn-secondary" onClick={generatePDF}>
             Reporte PDF

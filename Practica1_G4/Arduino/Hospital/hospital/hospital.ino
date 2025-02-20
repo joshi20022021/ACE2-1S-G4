@@ -9,6 +9,10 @@
 const int pinMQ135_DO = 2;  // Salida digital del MQ-135 (DO)
 const int pinMQ135_AO = A1; // Salida analógica del MQ-135 (AO)
 const int pinLED = 8;       // LED de advertencia
+
+// EGC
+#define LO_Mas 10
+#define LO_Menos 11
  
 MFRC522 rfid(SS_PIN, RST_PIN);  // Crear objeto para el módulo RC522
 MFRC522::MIFARE_Key key;
@@ -19,8 +23,8 @@ String Leido = "";
 void setup() {
   // initialize the serial communication:
   Serial.begin(9600);
-  pinMode(10, INPUT); // Setup for leads off detection LO +
-  pinMode(11, INPUT); // Setup for leads off detection LO -
+  pinMode(LO_Mas, INPUT); // Setup for leads off detection LO +
+  pinMode(LO_Menos, INPUT); // Setup for leads off detection LO -
 
   pinMode(pinMQ135_DO, INPUT);  // Entrada digital (DO)
 
@@ -188,4 +192,6 @@ String leerDatosDeTarjeta() {
  *   RST       ->  5
  *   GND       ->  GND
  *   3.3V      ->  3.3V 
+ * EGC
+ * A0 -> output
  */

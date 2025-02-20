@@ -80,7 +80,7 @@ const SignosVitales = () => {
       },
       y: {
         min: 0,
-        max: 200,
+        max: 700,
         ticks: {
           stepSize: 10,
         },

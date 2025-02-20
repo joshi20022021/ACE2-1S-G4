@@ -297,6 +297,27 @@ public class MediTrackApplication {
 		return pacientes.get(indicePaciente);
     }
 
+    // Obtener índice
+	@GetMapping("/SeleccionarIndice")
+	public int seleccionarIndice() {
+		return indicePaciente;
+	}
+	
+	// Borrar Datos pacientes
+	@PostMapping("/BorrarDatosPaciente")
+	public String BorrarPaciente(@RequestParam int IndicePaciente) {
+		try {
+			if (IndicePaciente >= 0 && IndicePaciente < pacientes.size()) {
+				pacientes.get(IndicePaciente).clear();
+				return "Paciente de Alta";
+			} else {
+				return "Índice fuera de rango";
+			}
+		} catch (Exception e) {
+			return "Error: " + e.getMessage();
+		}
+	}	
+	
 	//Funciones
 	public static void enviarDatosAlArduino(int indice) {
 		if (serialPort == null || !serialPort.isOpen()) {
@@ -317,7 +338,6 @@ public class MediTrackApplication {
 }
 
 /*
- A3 B5 18 96 --> Tarjeta
- E0 23 46 10 --> Llavero
- 
+ * A3 B5 18 96 --> Tarjeta
+ * E0 23 46 10 --> Llavero
  */
