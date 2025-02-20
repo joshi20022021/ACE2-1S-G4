@@ -80,29 +80,12 @@ function Login() {
 }
 
 const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#1a1a1a',
-    padding: '20px',
-  },
   title: {
-    fontSize: '50px',
+    fontSize: '70px',
     fontWeight: 'bold',
     marginBottom: '50px',
     color: '#fff',
     textShadow: '2px 2px 5px rgba(255, 255, 255, 0.95)',
-  },
-  formContainer: {
-    width: '100%',
-    maxWidth: '400px',
-    backgroundColor: '#333',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(250, 250, 250, 0.2)',
   },
   form: {
     width: '100%',
@@ -118,7 +101,7 @@ const styles = {
     fontWeight: '500',
   },
   input: {
-    width: '90%',
+    width: '100%',
     padding: '10px',
     fontSize: '16px',
     borderRadius: '18px',
@@ -132,6 +115,7 @@ const styles = {
     fontSize: '18px',
     cursor: 'pointer',
     border: 'none',
+    marginTop:20,
     borderRadius: '150px',
     backgroundColor: '#480808',
     color: '#fff',

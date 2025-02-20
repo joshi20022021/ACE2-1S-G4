@@ -87,7 +87,7 @@ const Formulario = () => {
   return (
     <Container
       fluid
-      className="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-dark position-relative"
+      className="min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative"
     >
       <h2
         className="text-center mb-5"
@@ -106,7 +106,7 @@ const Formulario = () => {
         animate="visible"
         variants={formVariants}
         style={{ width: "90%", maxWidth: "1200px" }}
-        className="p-4 bg-secondary rounded shadow"
+        className="p-4  rounded shadow"
       >
         <Form>
           <Row>

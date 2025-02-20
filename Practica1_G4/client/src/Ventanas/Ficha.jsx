@@ -54,8 +54,13 @@ const Ficha = () => {
   }, []);
 
   const generatePDF = () => {
+    // Extraemos año, mes y día del campo fechaIngreso
+    const [year, month, day] = formDatos.fechaIngreso
+      ? formDatos.fechaIngreso.split("-")
+      : ["-", "-", "-"];
+  
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-
+  
     // Título de la ficha
     doc.autoTable({
       startY: 10,
@@ -63,7 +68,7 @@ const Ficha = () => {
         [
           {
             content: "FICHA DE IDENTIFICACIÓN DEL PACIENTE",
-            colSpan: 6,
+            colSpan: 4,
             styles: {
               halign: "center",
               fillColor: [6, 19, 31],
@@ -74,55 +79,167 @@ const Ficha = () => {
           },
         ],
       ],
+      theme: "plain",
     });
-
+  
+    // Estructura de la tabla en base a la plantilla original
+    const tableBody = [
+      // Fila de encabezado para nombre y fecha
+      ["NOMBRE(S)", "DÍA", "MES", "AÑO"],
+      [
+        formDatos.nombres || "-",
+        day || "-",
+        month || "-",
+        year || "-",
+      ],
+      // Fila de EDAD
+      [
+        {
+          content: "EDAD",
+          colSpan: 4,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.edad || "-",
+          colSpan: 4,
+          styles: { halign: "center" },
+        },
+      ],
+      // Fila de EXPEDIENTE MÉDICO
+      [
+        {
+          content: "EXPEDIENTE MÉDICO",
+          colSpan: 4,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.expediente || "-",
+          colSpan: 4,
+          styles: { halign: "center" },
+        },
+      ],
+      // Fila de DIAGNÓSTICO PRINCIPAL
+      [
+        {
+          content: "DIAGNÓSTICO PRINCIPAL",
+          colSpan: 4,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.diagnostico || "-",
+          colSpan: 4,
+          styles: { halign: "center" },
+        },
+      ],
+      // Fila de TIPO DE SANGRE y ALERGIAS
+      [
+        {
+          content: "TIPO DE SANGRE",
+          colSpan: 2,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+        {
+          content: "ALERGIAS",
+          colSpan: 2,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.tipoSangre || "-",
+          colSpan: 2,
+          styles: { halign: "center" },
+        },
+        {
+          content: formDatos.alergias || "-",
+          colSpan: 2,
+          styles: { halign: "center" },
+        },
+      ],
+      // Fila de SÍNTOMAS REPORTADOS
+      [
+        {
+          content: "SÍNTOMAS REPORTADOS",
+          colSpan: 4,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.sintomas || "-",
+          colSpan: 4,
+          styles: { halign: "center" },
+        },
+      ],
+      // Fila de ANTECEDENTES MÉDICOS y CONDICIONES PREEXISTENTES
+      [
+        {
+          content: "ANTECEDENTES MÉDICOS",
+          colSpan: 2,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+        {
+          content: "CONDICIONES PREEXISTENTES",
+          colSpan: 2,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.antecedentes || "-",
+          colSpan: 2,
+          styles: { halign: "center" },
+        },
+        {
+          content:
+            formDatos.condiciones && formDatos.condiciones.length > 0
+              ? formDatos.condiciones.join(", ")
+              : "-",
+          colSpan: 2,
+          styles: { halign: "center" },
+        },
+      ],
+      // Fila de PLAN DE TRATAMIENTO INICIAL
+      [
+        {
+          content: "PLAN DE TRATAMIENTO INICIAL",
+          colSpan: 4,
+          styles: { fontStyle: "bold", halign: "center" },
+        },
+      ],
+      [
+        {
+          content: formDatos.tratamiento || "-",
+          colSpan: 4,
+          styles: { halign: "center" },
+        },
+      ],
+    ];
+  
+    // Ajustamos la tabla con un ancho uniforme para 4 columnas
     doc.autoTable({
-      startY: doc.lastAutoTable.finalY + 5,
+      startY: 25,
+      body: tableBody,
+      theme: "grid",
+      styles: { fontSize: 10, cellPadding: 3, valign: "middle" },
       columnStyles: {
-        0: { cellWidth: 40 },
+        0: { cellWidth: 60 },
         1: { cellWidth: 40 },
         2: { cellWidth: 40 },
-        3: { cellWidth: 20 },
-        4: { cellWidth: 20 },
-        5: { cellWidth: 20 },
+        3: { cellWidth: 40 },
       },
-      body: [
-        [ "NOMBRE(S)", "DÍA", "MES", "AÑO"],
-        ["Carta Apena", "Alvizures", "Edgar Josias", "02", "", "2010"],
-        [{ content: "EDAD", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "30", colSpan: 6, styles: { halign: "center" } }],
-        [{ content: "EXPEDIENTE MÉDICO", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "12345", colSpan: 6, styles: { halign: "center" } }],
-        [{ content: "DIAGNÓSTICO PRINCIPAL", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "Fiebre severa", colSpan: 6, styles: { halign: "center" } }],
-        [
-          { content: "TIPO DE SANGRE", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
-          { content: "ALERGIAS", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
-        ],
-        [
-          { content: "O+", colSpan: 3, styles: { halign: "center" } },
-          { content: "Polvo", colSpan: 3, styles: { halign: "center" } },
-        ],
-        [{ content: "SÍNTOMAS REPORTADOS", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "Dolor generalizado", colSpan: 6, styles: { halign: "center" } }],
-        [
-          { content: "ANTECEDENTES MÉDICOS", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
-          { content: "CONDICIONES PREEXISTENTES", colSpan: 3, styles: { fontStyle: "bold", halign: "center" } },
-        ],
-        [
-          { content: "Tiene VIH", colSpan: 3, styles: { halign: "center" } },
-          { content: "Dolor de cabeza", colSpan: 3, styles: { halign: "center" } },
-        ],
-        [{ content: "PLAN DE TRATAMIENTO INICIAL", colSpan: 6, styles: { fontStyle: "bold", halign: "center" } }],
-        [{ content: "Medicamentos y observación", colSpan: 6, styles: { halign: "center" } }],
-      ],
-      theme: "grid",
-      styles: { fontSize: 10, cellPadding: 2, valign: "middle" },
       headStyles: { fillColor: [6, 19, 31], textColor: 255 },
     });
-
+  
     doc.save("ficha_paciente.pdf");
   };
+  
 
   // Animaciones para el contenedor, tabla y botones
   const containerVariants = {
@@ -163,19 +280,11 @@ const Ficha = () => {
           </tr>
           <tr>
             <th>FECHA DE INGRESO</th>
-            <th className="center">DÍA</th>
-            <th className="center">MES</th>
-            <th className="center">AÑO</th>
-            <th colSpan="2" className="center">
-              SEXO
-            </th>
+            <th colSpan="6" className="center">SEXO</th>
           </tr>
           <tr>
             <td>{formDatos.fechaIngreso || "Nada"}</td>
-            <td className="center">{formDatos.fechaIngreso || "Nada"}</td>
-            <td className="center">{formDatos.fechaIngreso || "Nada"}</td>
-            <td className="center">{formDatos.fechaIngreso || "Nada"}</td>
-            <td colSpan="2" className="center">{formDatos.fechaIngreso || "Nada"}
+            <td colSpan="6" className="center">{formDatos.sexo || "Nada"}
             </td>
           </tr>
           <tr>

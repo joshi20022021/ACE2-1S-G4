@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Principal = () => {
   const navigate = useNavigate();
@@ -29,22 +31,20 @@ const Principal = () => {
     switch (route) {
       case "Formulario":
         try {
-          const response = await fetch("http://localhost:8080/Acceso_Form"); // URL correcta de tu endpoint
+          const response = await fetch("http://localhost:8080/Acceso_Form");
           if (!response.ok) throw new Error("Error en la solicitud");
-    
           const Estado_Acceso = await response.json();
-          
-          //console.log(Estado_Acceso);
-  
-          if(Estado_Acceso){
+
+          if (Estado_Acceso) {
+            toast.success("Acceso concedido, redirigiendo...");
             navigate(`/${route}`);
-          }else{
-            alert("Coloca la llave de acceso")
+          } else {
+            toast.warn("Coloca la llave de acceso");
           }
-  
         } catch (error) {
+          toast.error("❌ Error al obtener datos");
           console.error("Error al obtener datos:", error);
-        }  
+        }
         break;
       default:
         navigate(`/${route}`);
@@ -54,23 +54,23 @@ const Principal = () => {
   
 
   const handleSelectChange = (event) => {
-    let nombrePaciente = event.target.value;
-    setSelectedOption(event.target.value);
+    const nombrePaciente = event.target.value;
+    setSelectedOption(nombrePaciente);
 
     try {
-       fetch("http://localhost:8080/api/seleccionar-paciente", {
+      fetch("http://localhost:8080/api/seleccionar-paciente", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ nombre: nombrePaciente }),
       });
-  
+      toast.info(`Paciente "${nombrePaciente}" seleccionado`);
       console.log("Paciente seleccionado enviado al servidor:", nombrePaciente);
     } catch (error) {
-      console.error("❌ Error al seleccionar paciente:", error);
+      toast.error("❌ Error al seleccionar paciente");
+      console.error("Error al seleccionar paciente:", error);
     }
-
   };
 
   const handleLogout = () => {
@@ -82,6 +82,17 @@ const Principal = () => {
 
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {loading ? (
         <div className="position-fixed top-0 start-0 w-100 vh-100 bg-dark d-flex flex-column align-items-center justify-content-center">
           <div className="spinner-border text-light" role="status">
