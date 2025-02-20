@@ -53,6 +53,8 @@ const Principal = () => {
   };
   
 
+  
+
   const handleSelectChange = (event) => {
     const nombrePaciente = event.target.value;
     setSelectedOption(nombrePaciente);
@@ -79,6 +81,25 @@ const Principal = () => {
       navigate('/');
     }, 1000); // Tiempo reducido para el logout
   };
+
+
+  const enviarTrue = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/enviarBool", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(true), 
+      });
+
+      const data = await response.text();
+      console.log("Respuesta del backend:", data);
+    } catch (error) {
+      console.error("Error enviando booleano:", error);
+    }
+  };
+
 
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
@@ -116,13 +137,10 @@ const Principal = () => {
           </div>
           
           <div className="mb-4 animate__animated animate__fadeIn">
-            <label className="form-label text-light">Pacientes Registrados</label>
-            <select className="form-select" value={selectedOption} onChange={handleSelectChange}>
-              <option value="">-- Pacientes --</option>
-              {pacientes.map((nombre, index) => (
-                <option key={index} value={nombre}>{nombre}</option>
-              ))}
-            </select>
+            
+          <button style={styles.button} onClick={enviarTrue}>
+            Interrupir
+            </button>
           </div>
 
           <button style={styles.logoutButton} className="animate__animated animate__fadeIn" onClick={handleLogout}>Cerrar Sesión</button>

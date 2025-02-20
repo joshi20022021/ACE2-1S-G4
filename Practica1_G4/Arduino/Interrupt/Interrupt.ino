@@ -1,6 +1,19 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
+/*   Conexión con arduino mega
+ *   RFID
+ *   SDA (SS)  ->  53
+ *   SCK       ->  52
+ *   MOSI      ->  51
+ *   MISO      ->  50
+ *   RST       ->  5
+ *   GND       ->  GND
+ *   3.3V      ->  3.3V 
+ * EGC
+ * A0 -> output
+ */
+
 #define SS_PIN 53 
 #define RST_PIN 5 
 
@@ -72,23 +85,30 @@ void loop() {
   // -------------------------------------
 
   // Escribir en tarjeta si Java me manda un dato
-  if (Serial.available() > 0) {
-    int indicePaciente = Serial.parseInt(); // Recibir el índice
-    Serial.println("Mensaje:Esperando Tarjeta");
+if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n'); // Leer el dato completo
+    input.trim();  // Elimina espacios o saltos de línea
 
-    // Esperar hasta que haya una tarjeta presente
-    while (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
-      delay(100); 
-      // Nota: en este 'while' sigues verificando la tarjeta,
-      //       podrías también respetar la pausa aquí si prefieres.
-      //       Habría que chequear si "paused" cambió.
-      if (paused) return; 
+    if (input == "true" || input == "false") {  
+        //  Es un booleano
+        bool estado = (input == "true");
+        Serial.println("Recibido BOOL: " + String(estado));
+        // Lógica para bool aquí
+    } else {
+        //  Es un entero
+        int indicePaciente = input.toInt();
+        Serial.println("Mensaje:Esperando Tarjeta");
+
+        while (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+            delay(100);
+        }
+
+        String mensaje = String(indicePaciente);
+        Serial.println("Mensaje: Indice entrada " + mensaje);
+        escribirDatosEnTarjeta(mensaje);
     }
+}
 
-    String mensaje = String(indicePaciente);
-    Serial.println("Mensaje: Indice entrada " + mensaje);
-    escribirDatosEnTarjeta(mensaje);
-  }
 
   // Manejo del ECG:
   if ((digitalRead(10) == 1) || (digitalRead(11) == 1)) {

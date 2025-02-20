@@ -317,6 +317,21 @@ public class MediTrackApplication {
 			return "Error: " + e.getMessage();
 		}
 	}	
+
+	@PostMapping("/enviarBool")
+    public String enviarBooleano(@RequestBody boolean estado) {
+        if (serialPort == null || !serialPort.isOpen()) {
+            return "Error: El puerto serial no está abierto.";
+        }
+        try {
+            String mensaje = estado ? "true" : "false";  // Convertir booleano a String
+            serialPort.getOutputStream().write(mensaje.getBytes(StandardCharsets.UTF_8));
+            serialPort.getOutputStream().flush();
+            return "Booleano enviado correctamente: " + mensaje;
+        } catch (Exception e) {
+            return "Error enviando datos al Arduino: " + e.getMessage();
+        }
+    }
 	
 	//Funciones
 	public static void enviarDatosAlArduino(int indice) {
@@ -333,6 +348,7 @@ public class MediTrackApplication {
 			System.out.println("Error enviando datos al Arduino: " + e.getMessage());
 		}
 	}
+	
 
 
 }
