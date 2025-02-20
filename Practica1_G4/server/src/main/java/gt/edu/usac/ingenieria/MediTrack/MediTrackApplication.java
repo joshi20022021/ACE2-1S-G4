@@ -291,10 +291,9 @@ public class MediTrackApplication {
     }
 
 	// Datos del paciente para la ficha
-	@PostMapping("/SeleccionarPaciente")
-    public void seleccionarPaciente(@RequestBody Map<String, String> request) {
-        Paciente = request.get("nombre");
-        System.out.println("Paciente seleccionado: " + Paciente);
+	@GetMapping("/SeleccionarPaciente")
+    public Map<String, Object> seleccionarPaciente() {
+		return pacientes.get(indicePaciente);
     }
 
 	//Funciones
@@ -319,5 +318,5 @@ public class MediTrackApplication {
 /*
  A3 B5 18 96 --> Tarjeta
  E0 23 46 10 --> Llavero
-
+ 
  */
