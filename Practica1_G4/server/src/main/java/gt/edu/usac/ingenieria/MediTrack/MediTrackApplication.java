@@ -105,6 +105,7 @@ public class MediTrackApplication {
                 case "oxigeno" -> foto = Float.parseFloat(sensores[1]);
                 case "UID" -> rfid = sensores[1].trim().equals("E0 23 46 10"); // Medico
 				case "Paciente" -> indicePaciente = Integer.parseInt(sensores[1].trim());
+				case "Mensaje" -> System.out.println();
             }
 			System.out.println(rfid);
 			System.out.println(sensores[1]);
@@ -181,7 +182,7 @@ public class MediTrackApplication {
 
 	@GetMapping("/get-datos-sensores")
 	public Map<String, Object> getDatosSensores() {
-		System.out.println("[SOLICITUD] Datos del sensores enviados.");
+		//System.out.println("[SOLICITUD] Datos del sensores enviados.");
 		// No debemos devolver el ultimo dato sino un json, con los datos empaquetados
 		// sensor 1 - Fotorresistencia
 		// sensor 2 - ECG
