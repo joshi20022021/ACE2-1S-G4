@@ -142,8 +142,291 @@ Ficha del paciente, donde el medico podra acceder a ella para poder visualizar l
 aqui iria todo lo relacionado al backend y la comunicacion con el front
 
 ## API Contracts
-### Endpoints
 
+ Descripción de la API de MediTrack, la cual interactúa con un dispositivo Arduino para leer datos de sensores (ECG, oxígeno, RFID) y gestionar información de pacientes.
+
+```yaml
+info:
+  title: MediTrack API
+  version: 0.0.1
+  description: >
+    API para la aplicación MediTrack, que interactúa con un dispositivo Arduino
+    para leer datos de sensores (ECG, oxígeno, RFID), así como gestionar 
+    información básica de pacientes.
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor local
+
+paths:
+  /status:
+    get:
+      summary: Verificar estado del servidor
+      description: Retorna un mensaje indicando si el servidor está funcionando.
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                ejemplo:
+                  value: "El servidor está funcionando correctamente 🚀"
+
+  /ecg:
+    get:
+      summary: Obtener dato de ECG
+      description: Retorna el último valor de ECG recibido desde Arduino.
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                ejemplo:
+                  value: "125"  # Ejemplo de dato ECG
+
+  /get-datos-sensores:
+    get:
+      summary: Obtener datos de sensores
+      description: Retorna un objeto JSON con los valores de ECG, oxígeno y estado RFID.
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ecg:
+                    type: integer
+                    example: 120
+                  oxigeno:
+                    type: number
+                    format: float
+                    example: 0.78
+                  rfid:
+                    type: boolean
+                    example: true
+              examples:
+                ejemplo:
+                  value:
+                    ecg: 127
+                    oxigeno: 0.82
+                    rfid: false
+
+  /encender:
+    post:
+      summary: Enviar comando de encendido/apagado al Arduino
+      description: Envía el comando "ON" o "OFF" al Arduino a través del puerto serial.
+      parameters:
+        - in: query
+          name: comando
+          schema:
+            type: string
+            enum: [ON, OFF]
+          required: true
+          description: Comando para enviar al Arduino.
+      responses:
+        '200':
+          description: Respuesta exitosa (o mensaje de validación)
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                ejemploOn:
+                  value: "✅ Mensaje enviado a Arduino: ON\n"
+                ejemploOff:
+                  value: "✅ Mensaje enviado a Arduino: OFF\n"
+        '400':
+          description: Comando no válido
+
+  /Acceso_Form:
+    get:
+      summary: Verificar acceso
+      description: Retorna un valor booleano que indica si se reconoce la tarjeta RFID autorizada (médico).
+      responses:
+        '200':
+          description: Respuesta exitosa (true = acceso permitido, false = denegado)
+          content:
+            application/json:
+              schema:
+                type: boolean
+              examples:
+                ejemplo:
+                  value: true
+
+  /Bloqueo_Acceso:
+    get:
+      summary: Alternar estado de acceso
+      description: Invierte el estado interno de la variable `rfid` y retorna el valor nuevo.
+      responses:
+        '200':
+          description: Retorna el nuevo estado booleano
+          content:
+            application/json:
+              schema:
+                type: boolean
+              examples:
+                ejemplo:
+                  value: false
+
+  /guardarPaciente:
+    post:
+      summary: Guardar paciente en memoria local
+      description: Recibe datos de un paciente y los almacena temporalmente en la lista `pacientes`. 
+                   Además, envía al Arduino el índice del paciente recién guardado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombres:
+                  type: string
+                  example: "Carlos Mendoza"
+                edad:
+                  type: number
+                  example: 45
+                diagnostico:
+                  type: string
+                  example: "Arritmia leve"
+              additionalProperties: true
+      responses:
+        '200':
+          description: Paciente guardado exitosamente
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                ejemplo:
+                  value: "Paciente guardado exitosamente."
+        '400':
+          description: Cuerpo de solicitud inválido
+        '500':
+          description: Error interno del servidor
+
+  /GetPacientes:
+    get:
+      summary: Obtener lista de nombres de pacientes
+      description: Retorna una lista de strings con los nombres de los pacientes registrados en la base de datos (MySQL).
+      responses:
+        '200':
+          description: Lista de nombres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                ejemplo:
+                  value:
+                    - "Carlos Mendoza"
+                    - "Ana López"
+
+  /SeleccionarPaciente:
+    get:
+      summary: Obtener datos del paciente seleccionado
+      description: Devuelve la información completa (en memoria) del paciente en el índice `indicePaciente`.
+      responses:
+        '200':
+          description: Datos del paciente
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  nombres: "Carlos Mendoza"
+                  edad: 45
+                  diagnostico: "Arritmia leve"
+
+  /SeleccionarIndice:
+    get:
+      summary: Obtener índice del paciente seleccionado
+      description: Retorna el valor de `indicePaciente`.
+      responses:
+        '200':
+          description: Índice actual
+          content:
+            text/plain:
+              schema:
+                type: integer
+              examples:
+                ejemplo:
+                  value: 0
+
+  /BorrarDatosPaciente:
+    post:
+      summary: Borrar datos de un paciente en memoria
+      description: Borra la información del paciente que se encuentra en el índice proporcionado.
+      parameters:
+        - in: query
+          name: IndicePaciente
+          schema:
+            type: integer
+          required: true
+          description: Índice del paciente en la lista `pacientes`.
+      responses:
+        '200':
+          description: Paciente dado de alta o error
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                ejemploAlta:
+                  value: "Paciente de Alta"
+                ejemploFueraDeRango:
+                  value: "Índice fuera de rango"
+
+  /enviarBool:
+    post:
+      summary: Enviar un valor booleano al Arduino
+      description: Envía `true` o `false` al puerto serial.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: boolean
+            examples:
+              ejemploTrue:
+                value: true
+              ejemploFalse:
+                value: false
+      responses:
+        '200':
+          description: Se envía el valor booleano correctamente
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                ejemplo:
+                  value: "Booleano enviado correctamente: true"
+        '500':
+          description: Error al enviar datos al Arduino
+
+components:
+  schemas:
+    Paciente:
+      type: object
+      properties:
+        nombres:
+          type: string
+        edad:
+          type: integer
+        diagnostico:
+          type: string
+      additionalProperties: true
+```
 
 
 
