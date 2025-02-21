@@ -31,13 +31,13 @@ Si se ingresan las credenciales de médico, se visualizará un menú con tres op
 - **Signos vitales**
 - **Formulario de registro**
 
-Cada una de estas opciones tiene una función específica:
+Para acceder al formulario de registro el medico debera de acercar su tag en el sensor para tener acceso a este apartado cada que desee ingresar
 
 ![Vista Principal](https://i.ibb.co/93ZxZvWQ/Captura-de-pantalla-2025-02-14-151936.png)
 
 ### Formulario de Registro
 
-Este apartado permite al médico ingresar un nuevo expediente, llenando los campos correspondientes. Una vez completada la información, el usuario podrá confirmar el nuevo expediente presionando el botón **"Confirmar diagnóstico"**.
+Este apartado permite al médico ingresar un nuevo expediente, llenando los campos correspondientes. Una vez completada la información, el medico podrá confirmar el nuevo expediente presionando el botón **"Confirmar diagnóstico"**. Acercando un tag en el sensor RFID para poder completar dicha accion.
 
 ![Formulario](https://i.ibb.co/7J9ZPfT7/Captura-de-pantalla-2025-02-14-152645.png)
 
@@ -46,16 +46,18 @@ Este apartado permite al médico ingresar un nuevo expediente, llenando los camp
 En esta sección, el médico podrá visualizar en tiempo real los signos vitales del paciente, tales como:
 
 - **Frecuencia Cardíaca**
-- **Presión Arterial**
+- **Condicion del aire dentro de la habitacion**
 
 ![Signos vitales](https://i.ibb.co/N6Xkv5xX/Captura-de-pantalla-2025-02-14-153248.png)
 
 ### Ficha del Paciente
 
-Esta ventana permite al médico visualizar todos los datos del paciente seleccionado. Desde aquí, el médico podrá:
+Esta ventana permite al médico visualizar todos los datos del paciente. Desde aquí, el médico podrá:
 
 - Dar de alta al paciente si lo considera necesario.
 - Generar un PDF con el reporte del paciente.
+
+cada paciente cuenta con un uid unico el cual es proporcionado con el tag.
 
 ![Ficha](https://i.ibb.co/0pMJLFhZ/Captura-de-pantalla-2025-02-14-153650.png)
 
