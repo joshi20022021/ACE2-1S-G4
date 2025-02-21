@@ -10,8 +10,8 @@
 - **Sebastian Vásquez** (Coordinador)  
 - Jens Pablo  
 - Edgar Can  
-- Manuel  
-- Andrés  
+- Manuel Pichiya
+- Andrés Agosto 
  
 
 **Fecha de Entrega:** 21 de febrero de 2025  
@@ -26,7 +26,7 @@ MediTrack es un sistema de monitoreo hospitalario en tiempo real basado en IoT p
 -------
 
 ## Capas del Framework IoT
-1. **Capa de Sensores**: Captura datos de ECG y concentración de oxígeno.
+1. **Capa de Sensores**: Captura datos de ECG y concentración de oxígeno, Tags para acceso de Doctores a formularios.
 2. **Capa de Comunicación**: Transmisión de datos vía UART/USB hacia un servidor local.
 3. **Capa de Procesamiento**: Servidor LAN/WAN que expone los datos a través de una API REST.
 4. **Capa de Presentación**: Interfaz web para visualizar y gestionar la información del paciente.
@@ -34,7 +34,10 @@ MediTrack es un sistema de monitoreo hospitalario en tiempo real basado en IoT p
 -------
 
 ## Fotografías del Prototipo
-fotos de la maqueta
+![Prototipo](https://i.ibb.co/cX30m4T2/prototipo.jpg)
+
+![Prototipo](https://i.ibb.co/PvZv5G8b/maqueta.jpg)
+
 
 ## Mockups de la Aplicación Web/Móvil
 
@@ -52,11 +55,12 @@ fotos de la maqueta
 
 ![Ficha](https://i.ibb.co/0pMJLFhZ/Captura-de-pantalla-2025-02-14-153650.png)
 
-## Diagramas de Desarrollo y Conexiones
+## Diagramas de Conexiones
 
+![Ficha](https://i.ibb.co/HW7vCTJ/conexiones.jpg)
 ## Diagrama de Arquitectura de Software
 
-diagrama
+aqui iria todo lo relacionado al backend y la comunicacion con el front
 
 ## API Contracts
 ### Endpoints
