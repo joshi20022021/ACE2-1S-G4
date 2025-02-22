@@ -73,27 +73,22 @@ Ficha del paciente, donde el medico podra acceder a ella para poder visualizar l
 
 ## App Movil
 
-**LOGIN**
 ![Login2](https://i.ibb.co/DH2Djz0z/LOGIN2.jpg)
 
 -------
 
-**Memu Principal**
 ![Principal2](https://i.ibb.co/C3cL2ZQM/MENU.jpg)
 
 -------
 
-**Fomulario**
 ![Formulario2](https://i.ibb.co/jt01Pjk/FORMULARIO2.jpg)
 
 -------
 
-**Signos Vitales**
 ![Graficas2](https://i.ibb.co/TDBDz3c7/GRAFICAS.jpg)
 
 -------
 
-**Ficha PDF**
 ![PDF2](https://i.ibb.co/0V2PdBXX/ABRIRPDF.jpg)
 
 -------
