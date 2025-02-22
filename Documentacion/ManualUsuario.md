@@ -6,7 +6,6 @@
 
 - ⚛ **React**  
 - 🟨 **JavaScript**  
-- ☁ **AWS**  
 
 ---
 
