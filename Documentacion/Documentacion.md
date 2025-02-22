@@ -48,26 +48,26 @@ MediTrack es un sistema de monitoreo hospitalario en tiempo real basado en IoT p
 
 **LOGIN**
 Login intuitivo para que el doctor acceda de manera amigable al menu pricipal
-![Login](https://i.ibb.co/LD1VjdH5/Captura-de-pantalla-2025-02-14-151659.png)
+![Login](https://i.ibb.co/yc2CmBVr/LOGIN.png)
 
 **Menu principal**
 Menu en el cual el doctor podra acceder a cualquiera de las 3 opciones disponibles, acercando el tag correspondiente para poder acceder al formulario y poder agregar a un nuevo paciente
-![Vista Principal](https://i.ibb.co/93ZxZvWQ/Captura-de-pantalla-2025-02-14-151936.png)
+![Vista Principal](https://i.ibb.co/vxrgW6VJ/MENU-PRINCIPAL.png)
 
 
 **Formulario**
 Formulario en el cual el doctor podra registrar cada paciente almacenandolo en cada tag correspondiente sin problema alguno
-![Formulario](https://i.ibb.co/7J9ZPfT7/Captura-de-pantalla-2025-02-14-152645.png)
+![Formulario](https://i.ibb.co/xthJtGpf/FORMULARIO.png)
 
 
 **Signos vitales**
 Apartado donde el medico podra visualizar en tiempo real las graficas correspondientes de la frecuencia cardiaca y la calidad de aire dentro de la habitacion del paciente
-![Signos vitales](https://i.ibb.co/N6Xkv5xX/Captura-de-pantalla-2025-02-14-153248.png)
+![Signos vitales](https://i.ibb.co/nxKX4RH/SIGNOS.png)
 
 
 **Ficha de identificacion**
 Ficha del paciente, donde el medico podra acceder a ella para poder visualizar los datos del mismo, dar de alta y generar un reporte de los datos del paciente
-![Ficha](https://i.ibb.co/0pMJLFhZ/Captura-de-pantalla-2025-02-14-153650.png)
+![Ficha](https://i.ibb.co/8nWZ63Y3/FICHA.png)
 
 ## Diagramas de Conexiones
 
