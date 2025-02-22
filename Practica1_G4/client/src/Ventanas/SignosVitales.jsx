@@ -109,7 +109,7 @@ const SignosVitales = () => {
     setFadeIn(true);
 
     const intervalId = setInterval(() => {
-      fetch("http://localhost:8080/get-datos-sensores")
+      fetch("http://192.168.137.1:8080/get-datos-sensores")
         .then((res) => res.json())
         .then((data) => {
           // data tiene la forma: { oxigeno: number, ecg: number }

@@ -204,7 +204,7 @@ public class MediTrackApplication {
 	* Key> Comando, Value> ON
 	* Key> Comando, Value> OFF
 	* curl -X POST "http://192...:8080/encender" -d "comando=ON"
-	* curl -X POST "http://localhost:8080/encender" -d "comando=ON"
+	* curl -X POST "http://192.168.137.1:8080/encender" -d "comando=ON"
 	*
 	* */
 	@PostMapping("/encender")

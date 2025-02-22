@@ -28,7 +28,7 @@ const Ficha = () => {
   const handleClick = async () => {
 
         try {
-          const response = await fetch("http://localhost:8080/SeleccionarPaciente", {
+          const response = await fetch("http://192.168.137.1:8080/SeleccionarPaciente", {
             method: "GET",
           });
           if (!response.ok) {
@@ -46,7 +46,7 @@ const Ficha = () => {
         }
 
         try {
-          const response = await fetch("http://localhost:8080/SeleccionarIndice"); // Ajusta la URL según corresponda
+          const response = await fetch("http://192.168.137.1:8080/SeleccionarIndice"); // Ajusta la URL según corresponda
           const data = await response.json();
           setIndicePaciente(data);
         } catch (error) {
@@ -64,7 +64,7 @@ const Ficha = () => {
     }
   
     try {
-      const response = await fetch(`http://localhost:8080/BorrarDatosPaciente?IndicePaciente=${indicePaciente}`, {
+      const response = await fetch(`http://192.168.137.1:8080/BorrarDatosPaciente?IndicePaciente=${indicePaciente}`, {
         method: "POST",
       });
   
