@@ -45,15 +45,21 @@ La plataforma permite la **visualización remota** de datos mediante una **API R
 
 ---
 
-## Fotografías del Prototipo
+## 📷 **Fotografías del Prototipo**  
 
+### 🏗 **Prototipo de Maqueta**  
+Imagen del primer diseño del prototipo físico del sistema.  
 
-**Prototipo de maqueta**
-![Prototipo](https://i.ibb.co/cX30m4T2/prototipo.jpg)
+![🛠 Prototipo](https://i.ibb.co/cX30m4T2/prototipo.jpg)  
 
-**Modelo de maqueta finalizada**
-![Prototipo](https://i.ibb.co/PvZv5G8b/maqueta.jpg)
+---
 
+### 🏥 **Modelo de Maqueta Finalizada**  
+Versión final del prototipo, listo para su implementación y pruebas en un entorno hospitalario.  
+
+![🏗 Maqueta Finalizada](https://i.ibb.co/PvZv5G8b/maqueta.jpg)  
+
+---
 
 ## Mockups de la Aplicación Web/Móvil
 ## Aplicacion Web
@@ -168,24 +174,29 @@ Ficha del paciente donde el médico podrá:
 
 
 
-#### Notas para sensor RFID:
-- Es importante alimentar el módulo **RFID RC522** con **3.3V**, ya que **5V pueden dañarlo**.
-- Asegúrate de usar la librería **MFRC522** para manejar el módulo en Arduino.
+## 📝 **Notas sobre los Sensores**  
 
+### 📡 **Notas para Sensor RFID - RC522**  
+✔ Es importante alimentar el módulo **RFID RC522** con **3.3V**, ya que **5V pueden dañarlo**.  
+✔ Asegúrate de usar la librería **MFRC522** para manejar el módulo en Arduino.  
 
-#### Notas para sensor AD8232:
-- El **pin OUTPUT** del AD8232 debe conectarse a una entrada analógica del Arduino, por defecto **A0**.
-- Los pines **LO+** y **LO-** se pueden usar para detectar si los electrodos están correctamente colocados.
-- Es recomendable usar una resistencia pull-up de **10kΩ** en los pines **LO+** y **LO-** para evitar lecturas erróneas.
-- El sensor **requiere electrodos adhesivos** para obtener mediciones correctas.
+---
 
-#### Notas para MQ-135:
-- El **pin A0** proporciona una **salida analógica** proporcional a la concentración de gases detectados.
-- El **pin D0** ofrece una **salida digital** que se activa cuando la concentración supera un umbral ajustable con el potenciómetro del módulo.
-- Es recomendable dejar el sensor precalentando unos minutos antes de tomar mediciones precisas.
-- Se recomienda usar la librería **MQ135.h** para facilitar la calibración y lectura de datos.
+### ❤️‍🩹 **Notas para Sensor AD8232 - ECG**  
+✔ El **pin OUTPUT** del AD8232 debe conectarse a una **entrada analógica** del Arduino, por defecto **A0**.  
+✔ Los pines **LO+** y **LO-** permiten detectar si los **electrodos están correctamente colocados**.  
+✔ Se recomienda usar una **resistencia pull-up de 10kΩ** en los pines **LO+ y LO-** para evitar lecturas erróneas.  
+✔ El sensor **requiere electrodos adhesivos** para obtener mediciones correctas.  
 
+---
 
+### 🌫 **Notas para Sensor MQ-135 - Calidad del Aire**  
+✔ El **pin A0** proporciona una **salida analógica** proporcional a la concentración de gases detectados.  
+✔ El **pin D0** ofrece una **salida digital**, activada cuando la concentración supera un **umbral ajustable** con el potenciómetro del módulo.  
+✔ Es recomendable dejar el sensor **precalentando unos minutos** antes de tomar mediciones precisas.  
+✔ Se recomienda usar la **librería MQ135.h** para facilitar la calibración y lectura de datos.  
+
+---
 
 
 ## Diagrama de Arquitectura de Software
@@ -481,9 +492,12 @@ components:
 
 
 
-## Repositorio de GitHub
-*https://github.com/joshi20022021/ACE2-1S-G4.git*
+## 🔗 **Repositorio de GitHub**  
 
+📂 Accede al código fuente del proyecto en el siguiente enlace:  
+🔗 [ACE2-1S-G4 - GitHub Repository](https://github.com/joshi20022021/ACE2-1S-G4.git)  
+
+---
 -------
 
 
