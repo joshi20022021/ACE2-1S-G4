@@ -5,7 +5,7 @@
 ## 🛠 **Tecnologías Utilizadas**  
 
 - ⚛ **React**  
-- 🟨 **JavaScript**  
+- **Java Spring**  
 
 ---
 
