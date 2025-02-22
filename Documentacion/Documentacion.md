@@ -69,6 +69,8 @@ Apartado donde el medico podra visualizar en tiempo real las graficas correspond
 Ficha del paciente, donde el medico podra acceder a ella para poder visualizar los datos del mismo, dar de alta y generar un reporte de los datos del paciente
 ![Ficha](https://i.ibb.co/8nWZ63Y3/FICHA.png)
 
+-------
+
 ## App Movil
 
 **LOGIN**
