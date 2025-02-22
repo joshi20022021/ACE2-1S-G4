@@ -1,66 +1,79 @@
-# Manual de Usuario
-
-## Tecnologías utilizadas
-
-- React
-- JavaScript
-- AWS
-
-## Inicio del programa
-
-Para ejecutar la aplicación, siga estos pasos:
-
-1. Diríjase a la carpeta donde se encuentra el proyecto.
-2. Ejecute la aplicación con los siguientes comandos:
-
-    ![Comandos](https://i.ibb.co/rNnQyVj/Captura-de-pantalla-2025-02-14-145046.png)
-
-## Inicio de sesión
-
-Al iniciar el programa, se desplegará la siguiente pantalla de inicio de sesión, donde el usuario podrá ingresar sus credenciales para acceder como médico o paciente.
-
-![Login](https://i.ibb.co/LD1VjdH5/Captura-de-pantalla-2025-02-14-151659.png)
+# 📖 **Manual de Usuario**  
 
 ---
 
-## Apartado Médico
+## 🛠 **Tecnologías Utilizadas**  
 
-Si se ingresan las credenciales de médico, se visualizará un menú con tres opciones principales:
-
-- **Ficha del paciente**
-- **Signos vitales**
-- **Formulario de registro**
-
-Para acceder al formulario de registro el medico debera de acercar su tag en el sensor para tener acceso a este apartado cada que desee ingresar
-
-![Vista Principal](https://i.ibb.co/93ZxZvWQ/Captura-de-pantalla-2025-02-14-151936.png)
-
-### Formulario de Registro
-
-Este apartado permite al médico ingresar un nuevo expediente, llenando los campos correspondientes. Una vez completada la información, el medico podrá confirmar el nuevo expediente presionando el botón **"Confirmar diagnóstico"**. Acercando un tag en el sensor RFID para poder completar dicha accion.
-
-![Formulario](https://i.ibb.co/7J9ZPfT7/Captura-de-pantalla-2025-02-14-152645.png)
-
-### Signos Vitales
-
-En esta sección, el médico podrá visualizar en tiempo real los signos vitales del paciente, tales como:
-
-- **Frecuencia Cardíaca**
-- **Condicion del aire dentro de la habitacion**
-
-![Signos vitales](https://i.ibb.co/N6Xkv5xX/Captura-de-pantalla-2025-02-14-153248.png)
-
-### Ficha del Paciente
-
-Esta ventana permite al médico visualizar todos los datos del paciente. Desde aquí, el médico podrá:
-
-- Dar de alta al paciente si lo considera necesario.
-- Generar un PDF con el reporte del paciente.
-
-cada paciente cuenta con un uid unico el cual es proporcionado con el tag.
-
-![Ficha](https://i.ibb.co/0pMJLFhZ/Captura-de-pantalla-2025-02-14-153650.png)
+- ⚛ **React**  
+- 🟨 **JavaScript**  
+- ☁ **AWS**  
 
 ---
 
+## 🚀 **Inicio del Programa**  
 
+Para ejecutar la aplicación, siga estos pasos:  
+
+1️⃣ Diríjase a la carpeta donde se encuentra el proyecto.  
+2️⃣ Ejecute la aplicación con los siguientes comandos:  
+
+![💻 Comandos](https://i.ibb.co/rNnQyVj/Captura-de-pantalla-2025-02-14-145046.png)  
+
+---
+
+## 🔑 **Inicio de Sesión**  
+
+Al iniciar el programa, se desplegará la siguiente pantalla de inicio de sesión, donde el usuario podrá ingresar sus **credenciales** para acceder como **médico** o **paciente**.  
+
+![🔐 Login](https://i.ibb.co/yc2CmBVr/LOGIN.png)  
+
+---
+
+## 🏥 **Apartado Médico**  
+
+Si se ingresan las credenciales de **médico**, se visualizará un menú con tres opciones principales:  
+
+✅ **Ficha del paciente**  
+✅ **Signos vitales**  
+✅ **Formulario de registro**  
+
+Para acceder al **formulario de registro**, el médico deberá **acercar su tag RFID** al sensor cada vez que desee ingresar.  
+
+![📌 Vista Principal](https://i.ibb.co/vxrgW6VJ/MENU-PRINCIPAL.png)  
+
+---
+
+### 📝 **Formulario de Registro**  
+
+Este apartado permite al médico ingresar un **nuevo expediente**, llenando los campos correspondientes.  
+
+✔ Una vez completada la información, el médico podrá confirmar el nuevo expediente presionando el botón **"Confirmar diagnóstico"**.  
+✔ Para completar esta acción, el médico debe **acercar un tag RFID al sensor**.  
+
+![📄 Formulario](https://i.ibb.co/xthJtGpf/FORMULARIO.png)  
+
+---
+
+### ❤️ **Signos Vitales**  
+
+En esta sección, el médico podrá visualizar en **tiempo real** los **signos vitales** del paciente, tales como:  
+
+💓 **Frecuencia Cardíaca**  
+🌫 **Condición del aire dentro de la habitación**  
+
+![📊 Signos Vitales](https://i.ibb.co/nxKX4RH/SIGNOS.png)  
+
+---
+
+### 🆔 **Ficha del Paciente**  
+
+Esta ventana permite al médico visualizar **todos los datos del paciente**. Desde aquí, el médico podrá:  
+
+✔ **Dar de alta** al paciente si lo considera necesario.  
+✔ **Generar un PDF** con el reporte del paciente.  
+
+Cada paciente cuenta con un **UID único**, el cual es proporcionado mediante su **tag RFID**.  
+
+![📁 Ficha del Paciente](https://i.ibb.co/8nWZ63Y3/FICHA.png)  
+
+---
