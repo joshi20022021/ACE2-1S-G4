@@ -48,14 +48,12 @@ La plataforma permite la **visualización remota** de datos mediante una **API R
 ## 📷 **Fotografías del Prototipo**  
 
 ### 🏗 **Prototipo de Maqueta**  
-Imagen del primer diseño del prototipo físico del sistema.  
 
 ![🛠 Prototipo](https://i.ibb.co/cX30m4T2/prototipo.jpg)  
 
 ---
 
 ### 🏥 **Modelo de Maqueta Finalizada**  
-Versión final del prototipo, listo para su implementación y pruebas en un entorno hospitalario.  
 
 ![🏗 Maqueta Finalizada](https://i.ibb.co/PvZv5G8b/maqueta.jpg)  
 
