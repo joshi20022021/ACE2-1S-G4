@@ -27,6 +27,17 @@
 Utiliza sensores **ECG y RFID** para registrar **signos vitales** y gestionar el **alta de pacientes** de manera eficiente.  
 La plataforma permite la **visualización remota** de datos mediante una **API REST** y una interfaz **web adaptable**.
 
+
+### Estructura del Código
+- **`detectPorts()`** → Detecta y abre un puerto serial disponible.  
+- **`readDataFromArduino()`** → Lee datos en tiempo real desde Arduino.  
+- **`unpackageDataFromArduino()`** → Procesa los datos recibidos (**ECG, oxígeno, RFID**).  
+- **`enviarDatosAArduino(String comando)`** → Envía comandos al Arduino (**ON/OFF**).  
+
+- **Spring Boot** como backend.  
+- **Arduino + Sensores** (ECG, oxígeno, RFID).  
+- **API REST** para interacción con frontend. 
+
 ---
 
 ## ⚙ **Capas del Framework IoT**  
