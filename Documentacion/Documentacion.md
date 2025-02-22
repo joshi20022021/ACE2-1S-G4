@@ -211,10 +211,13 @@ Ficha del paciente donde el médico podrá:
 ---
 
 
-## 🏗 **Diagrama de Arquitectura de Software**  
+## 🏗 **Diagrama de Arquitectura de Software** 
 
-aqui iria todo lo relacionado al backend y la comunicacion con el front
 
+📌 Se usó el microcontrolador arduino con RFID RC522, MD-8232-K Y EL MQ-135, que comunican sus datos a través de la api construida en java spring, con una vista hecha en react, y se hizo una conexión via hotspot
+
+
+![📌 Vista Principal](https://i.ibb.co/N2CQKf2Q/Software.png) 
 ## 🔌 **API Contracts**  
 
  Descripción de la API de MediTrack, la cual interactúa con un dispositivo Arduino para leer datos de sensores (ECG, oxígeno, RFID) y gestionar información de pacientes.
