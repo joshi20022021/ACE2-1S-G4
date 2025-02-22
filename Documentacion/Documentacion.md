@@ -44,7 +44,7 @@ MediTrack es un sistema de monitoreo hospitalario en tiempo real basado en IoT p
 
 
 ## Mockups de la Aplicación Web/Móvil
-
+## Aplicacion Web
 
 **LOGIN**
 Login intuitivo para que el doctor acceda de manera amigable al menu pricipal
@@ -68,6 +68,14 @@ Apartado donde el medico podra visualizar en tiempo real las graficas correspond
 **Ficha de identificacion**
 Ficha del paciente, donde el medico podra acceder a ella para poder visualizar los datos del mismo, dar de alta y generar un reporte de los datos del paciente
 ![Ficha](https://i.ibb.co/8nWZ63Y3/FICHA.png)
+
+## App Movil
+![Login2](https://i.ibb.co/DH2Djz0z/LOGIN2.jpg)
+![Principal2](https://i.ibb.co/C3cL2ZQM/MENU.jpg)
+![Formulario2](https://i.ibb.co/jt01Pjk/FORMULARIO2.jpg)
+![Graficas2](https://i.ibb.co/TDBDz3c7/GRAFICAS.jpg)
+![PDF2](https://i.ibb.co/0V2PdBXX/ABRIRPDF.jpg)
+
 
 ## Diagramas de Conexiones
 
