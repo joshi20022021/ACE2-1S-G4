@@ -7,12 +7,16 @@
 ## 🏥 **Práctica 1 - Grupo 4**  
 ### 🚑 **MediTrack - Monitoreo Inteligente de Camillas y Cubículos de Pacientes**  
 
-### **👥 Integrantes:**  
-- **Sebastian Vásquez** *(Coordinador)*  
-- Jens Pablo  
-- Edgar Can  
-- Manuel Pichiya  
-- Andrés Agosto  
+## 👥 **Integrantes del Proyecto**  
+
+|  **Nombre**                        | **Carné**    |
+|----------------------------------|-------------|
+| **Sebastián Alejandro Vásquez Cartagena** *(Coordinador)* | 202109114   |
+| **Andrés Alejandro Agosto Méndez**    | 202113580   |
+| **Luis Manuel Pichiya Choc**          | 202201312   |
+| **Jens Jeremy Pablo Sosof**           | 202102771   |
+| **Edgar Josías Cán Ajquejay**          | 202112012   |
+
 
 📅 **Fecha de Entrega:** *21 de febrero de 2025*  
 
