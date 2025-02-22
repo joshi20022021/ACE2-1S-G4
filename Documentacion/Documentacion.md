@@ -58,28 +58,45 @@ La plataforma permite la **visualización remota** de datos mediante una **API R
 ## Mockups de la Aplicación Web/Móvil
 ## Aplicacion Web
 
-**LOGIN**
-Login intuitivo para que el doctor acceda de manera amigable al menu pricipal
-![Login](https://i.ibb.co/yc2CmBVr/LOGIN.png)
+## 🔑 **LOGIN**  
+Login intuitivo para que el doctor acceda de manera amigable al menú principal ingresando sus respectivas credenciales.  
 
-**Menu principal**
-Menu en el cual el doctor podra acceder a cualquiera de las 3 opciones disponibles, acercando el tag correspondiente para poder acceder al formulario y poder agregar a un nuevo paciente
-![Vista Principal](https://i.ibb.co/vxrgW6VJ/MENU-PRINCIPAL.png)
+![🖥 Login](https://i.ibb.co/yc2CmBVr/LOGIN.png)  
 
+---
 
-**Formulario**
-Formulario en el cual el doctor podra registrar cada paciente almacenandolo en cada tag correspondiente sin problema alguno
-![Formulario](https://i.ibb.co/xthJtGpf/FORMULARIO.png)
+## 📋 **Menú Principal**  
+Menú en el cual el doctor podrá acceder a cualquiera de las **3 opciones disponibles**, acercando el **tag RFID** correspondiente para acceder al formulario y agregar un nuevo paciente.  
 
+![📌 Vista Principal](https://i.ibb.co/vxrgW6VJ/MENU-PRINCIPAL.png)  
 
-**Signos vitales**
-Apartado donde el medico podra visualizar en tiempo real las graficas correspondientes de la frecuencia cardiaca y la calidad de aire dentro de la habitacion del paciente
-![Signos vitales](https://i.ibb.co/nxKX4RH/SIGNOS.png)
+---
 
+## 📝 **Formulario de Registro**  
+Formulario en el cual el doctor podrá registrar cada paciente, almacenándolo en el **tag RFID correspondiente** sin problema alguno.  
 
-**Ficha de identificacion**
-Ficha del paciente, donde el medico podra acceder a ella para poder visualizar los datos del mismo, dar de alta y generar un reporte de los datos del paciente
-![Ficha](https://i.ibb.co/8nWZ63Y3/FICHA.png)
+![📄 Formulario](https://i.ibb.co/xthJtGpf/FORMULARIO.png)  
+
+---
+
+## ❤️ **Signos Vitales**  
+Apartado donde el médico podrá visualizar en **tiempo real** las gráficas correspondientes a:  
+- **Frecuencia cardíaca** 🫀  
+- **Calidad del aire en la habitación del paciente** 🌫  
+
+![📊 Signos Vitales](https://i.ibb.co/nxKX4RH/SIGNOS.png)  
+
+---
+
+## 🆔 **Ficha de Identificación**  
+Ficha del paciente donde el médico podrá:  
+✅ Visualizar los datos del paciente  
+✅ Dar de **alta médica** al paciente  
+✅ Generar un **reporte** con los datos registrados  
+
+![📁 Ficha del Paciente](https://i.ibb.co/8nWZ63Y3/FICHA.png)  
+
+---
 
 -------
 
@@ -104,46 +121,44 @@ Ficha del paciente, donde el medico podra acceder a ella para poder visualizar l
 ![PDF2](https://i.ibb.co/0V2PdBXX/ABRIRPDF.jpg)
 
 -------
+## 🔌 **Diagramas de Conexiones**  
 
-## Diagramas de Conexiones
+### 📡 **Sensor RFID - RC522**  
 
-**Sensor RFID**
+| 🔗 **Pin RFID RC522** | 🔌 **Pin Arduino Uno** | 📝 **Descripción** |
+|----------------|----------------|------------------------------|
+| **VCC**        | 3.3V           | Alimentación del módulo RFID |
+| **GND**        | GND            | Tierra |
+| **RST**        | 9              | Reinicio del módulo |
+| **SDA (SS)**   | 10             | Selección de esclavo (SPI) |
+| **SCK**        | 13             | Reloj serial SPI |
+| **MOSI**       | 11             | Master Out Slave In (SPI) |
+| **MISO**       | 12             | Master In Slave Out (SPI) |
 
-| Pin RFID RC522 | Pin Arduino Uno | Descripción |
-|--------------|--------------|-------------|
-| VCC          | 3.3V         | Alimentación del módulo RFID |
-| GND          | GND          | Tierra |
-| RST          | 9            | Reinicio del módulo |
-| SDA (SS)     | 10           | Selección de esclavo (SPI) |
-| SCK          | 13           | Reloj serial SPI |
-| MOSI         | 11           | Master Out Slave In (SPI) |
-| MISO         | 12           | Master In Slave Out (SPI) |
+---
 
+### ❤️‍🩹 **Sensor AD8232 - ECG**  
 
-**Sensor AD8232**
+| 🔗 **Pin AD8232** | 🔌 **Pin Arduino Uno** | 📝 **Descripción** |
+|--------------|----------------|------------------------------|
+| **GND**      | GND            | Tierra |
+| **3.3V**     | 3.3V           | Alimentación del módulo |
+| **OUTPUT**   | A0             | Salida de señal analógica (ECG) |
+| **LO-**      | 11             | Detección de desconexión de electrodo (-) |
+| **LO+**      | 10             | Detección de desconexión de electrodo (+) |
 
+---
 
+### 🌫 **Sensor MQ135 - Calidad del Aire**  
 
-| Pin AD8232   | Pin Arduino Uno | Descripción |
-|-------------|----------------|-------------|
-| GND         | GND            | Tierra |
-| 3.3V        | 3.3V           | Alimentación del módulo |
-| OUTPUT      | A0             | Salida de señal analógica (ECG) |
-| LO-         | 11             | Detección de desconexión de electrodo (-) |
-| LO+         | 10             | Detección de desconexión de electrodo (+) |
+| 🔗 **Pin MQ-135** | 🔌 **Pin Arduino Uno** | 📝 **Descripción** |
+|------------|----------------|------------------------------|
+| **VCC**    | 5V             | Alimentación del sensor |
+| **GND**    | GND            | Tierra |
+| **A0**     | A0             | Salida analógica de concentración de gas |
+| **D0**     | 7              | Salida digital |
 
-
-
-**Sensor MQ135**
-| Pin MQ-135  | Pin Arduino Uno | Descripción |
-|------------|----------------|-------------|
-| VCC        | 5V             | Alimentación del sensor |
-| GND        | GND            | Tierra |
-| A0         | A0             | Salida analógica de concentración de gas |
-| D0         | 7    | Salida digital  |
-
-
-
+---
 
 **Conexiones en simulador**
 ![Ficha](https://i.ibb.co/HW7vCTJ/conexiones.jpg)
