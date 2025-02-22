@@ -1,37 +1,49 @@
-# Universidad de San Carlos de Guatemala  
-#### Facultad de Ingeniería - Escuela de Ciencias y Sistemas  
-#### Arquitectura de Computadores y Ensambladores 2  
+# 📌 Universidad de San Carlos de Guatemala  
+### 🏛 Facultad de Ingeniería - Escuela de Ciencias y Sistemas  
+### 🖥 Arquitectura de Computadores y Ensambladores 2  
 
-#### **Práctica 1 - Grupo 4**  
+---
 
-### **MediTrack - Monitoreo Inteligente de Camillas y Cubículos de Pacientes**  
+## 🏥 **Práctica 1 - Grupo 4**  
+### 🚑 **MediTrack - Monitoreo Inteligente de Camillas y Cubículos de Pacientes**  
 
-### **Integrantes:**  
-- **Sebastian Vásquez** (Coordinador)  
+### **👥 Integrantes:**  
+- **Sebastian Vásquez** *(Coordinador)*  
 - Jens Pablo  
 - Edgar Can  
-- Manuel Pichiya
-- Andrés Agosto 
- 
+- Manuel Pichiya  
+- Andrés Agosto  
 
-**Fecha de Entrega:** 21 de febrero de 2025  
+📅 **Fecha de Entrega:** *21 de febrero de 2025*  
 
--------
+---
 
+## 📝 **Descripción de la Solución**  
+**MediTrack** es un sistema de monitoreo hospitalario en tiempo real basado en **IoT** para camillas del **Hospital Roosevelt**.  
+Utiliza sensores **ECG y RFID** para registrar **signos vitales** y gestionar el **alta de pacientes** de manera eficiente.  
+La plataforma permite la **visualización remota** de datos mediante una **API REST** y una interfaz **web adaptable**.
 
+---
 
-## Descripción de la Solución
-MediTrack es un sistema de monitoreo hospitalario en tiempo real basado en IoT para camillas del Hospital Roosevelt. Utiliza sensores ECG y RFID para registrar signos vitales y gestionar el alta de pacientes de manera eficiente. La plataforma permite la visualización remota de datos mediante una API REST y una interfaz web adaptable.
+## ⚙ **Capas del Framework IoT**  
 
--------
+### 🏷 **1. Capa de Sensores**  
+📌 Captura de datos:  
+- **ECG** (Electrocardiograma)  
+- **Concentración de oxígeno**  
+- **Tags RFID** para acceso de médicos a formularios  
 
-## Capas del Framework IoT
-1. **Capa de Sensores**: Captura datos de ECG y concentración de oxígeno, Tags para acceso de Doctores a formularios.
-2. **Capa de Comunicación**: Transmisión de datos vía UART/USB hacia un servidor local.
-3. **Capa de Procesamiento**: Servidor LAN/WAN que expone los datos a través de una API REST.
-4. **Capa de Presentación**: Interfaz web para visualizar y gestionar la información del paciente.
+### 🔗 **2. Capa de Comunicación**  
+📡 Transmisión de datos mediante:  
+- **UART / USB** hacia un servidor local  
 
--------
+### 🖥 **3. Capa de Procesamiento**  
+🖧 Servidor **LAN / WAN** que expone los datos a través de una **API REST**  
+
+### 🖥 **4. Capa de Presentación**  
+🖥 Interfaz **web adaptable** para visualizar y gestionar la información del paciente  
+
+---
 
 ## Fotografías del Prototipo
 
