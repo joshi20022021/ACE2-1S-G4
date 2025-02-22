@@ -108,25 +108,27 @@ Ficha del paciente donde el médico podrá:
 
 -------
 
-## App Movil
+## 📱 **App Móvil**  
 
-![Login2](https://i.ibb.co/DH2Djz0z/LOGIN2.jpg)
+---
 
--------
+![🔐 Login](https://i.ibb.co/DH2Djz0z/LOGIN2.jpg)  
 
-![Principal2](https://i.ibb.co/C3cL2ZQM/MENU.jpg)
+---
 
--------
+![📌 Menú Principal](https://i.ibb.co/C3cL2ZQM/MENU.jpg)  
 
-![Formulario2](https://i.ibb.co/jt01Pjk/FORMULARIO2.jpg)
+---
 
--------
+![📄 Formulario](https://i.ibb.co/jt01Pjk/FORMULARIO2.jpg)  
 
-![Graficas2](https://i.ibb.co/TDBDz3c7/GRAFICAS.jpg)
+---
 
--------
+![📈 Gráficas](https://i.ibb.co/TDBDz3c7/GRAFICAS.jpg)  
 
-![PDF2](https://i.ibb.co/0V2PdBXX/ABRIRPDF.jpg)
+---
+
+![📁 Abrir PDF](https://i.ibb.co/0V2PdBXX/ABRIRPDF.jpg)  
 
 -------
 ## 🔌 **Diagramas de Conexiones**  
@@ -168,13 +170,21 @@ Ficha del paciente donde el médico podrá:
 
 ---
 
-**Conexiones en simulador**
-![Ficha](https://i.ibb.co/HW7vCTJ/conexiones.jpg)
+## 🔌 **Conexiones en Simulador**  
 
-**Conexiones Fisicas de cada sensor**
-![Ficha](https://i.ibb.co/jvfNm6Wh/conexionezzzzzzzzzzzzzzzzzzzzzzzzzzzzz.jpg)
+📌 Representación de las conexiones de los sensores en un **simulador virtual**, mostrando la integración del **RFID, ECG y MQ-135** con Arduino.  
 
+![🖥 Conexiones en Simulador](https://i.ibb.co/HW7vCTJ/conexiones.jpg)  
 
+---
+
+## 🔧 **Conexiones Físicas de Cada Sensor**  
+
+📌 Imagen de las conexiones **reales** de los sensores al **Arduino**, evidenciando la disposición y cableado necesario para el funcionamiento del sistema.  
+
+![🔌 Conexiones Físicas](https://i.ibb.co/jvfNm6Wh/conexionezzzzzzzzzzzzzzzzzzzzzzzzzzzzz.jpg)  
+
+---
 
 ## 📝 **Notas sobre los Sensores**  
 
@@ -201,11 +211,11 @@ Ficha del paciente donde el médico podrá:
 ---
 
 
-## Diagrama de Arquitectura de Software
+## 🏗 **Diagrama de Arquitectura de Software**  
 
 aqui iria todo lo relacionado al backend y la comunicacion con el front
 
-## API Contracts
+## 🔌 **API Contracts**  
 
  Descripción de la API de MediTrack, la cual interactúa con un dispositivo Arduino para leer datos de sensores (ECG, oxígeno, RFID) y gestionar información de pacientes.
 
