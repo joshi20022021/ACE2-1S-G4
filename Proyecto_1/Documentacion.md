@@ -30,9 +30,9 @@
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 19 mm x 17 mm x 19 mm | Óptico          | Dedo, Muñeca    | 0 °C a 50 °C y 20% a 90% HR     | °C y %  | [Proveedor 1](#), [Proveedor 2](#) | ![Sensor de Temperatura y Humedad DHT11](https://tienda.tettsa.gt/wp-content/uploads/2020/05/dht11-A.jpeg) | Q25.00          | (Especificar)         |
+| 19 mm x 17 mm x 19 mm | Óptico          | Dedo, Muñeca    | 0 °C a 50 °C y 20% a 90% HR     | °C y %  | [Proveedor 1](#), [Proveedor 2](#) | ![Sensor de Temperatura y Humedad DHT11]([https://tienda.tettsa.gt/wp-content/uploads/2020/05/dht11-A.jpeg](https://laelectronica.com.gt/image/cache/catalog/Productos/M%C3%B3dulos/Modulo-RFID--RC522-Producto-1200x1200.jpg)) | Q25.00          | (Especificar)         |
 
-**Enlace para comprar**: [Comprar Sensor de Oximetría](#)
+**Enlace para comprar**: [Comprar Sensor de DHT11](#)
 
 ---
 
@@ -40,7 +40,7 @@
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 40mm × 60mm | Electromagnético | Lector RFID     |   0 a 60 mm     | milimetros(mm)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen RFID]([/ruta/a/imagen_rfid1.png](https://laelectronica.com.gt/modulo-sensor-rfid-rc522))| Q50.00          | (Especificar)         |
+| 40mm × 60mm | Electromagnético | Lector RFID     |   0 a 60 mm     | milimetros(mm)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen RFID](https://laelectronica.com.gt/image/cache/catalog/Productos/M%C3%B3dulos/Modulo-RFID--RC522-Producto-1200x1200.jpg)| Q50.00          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar Sensor RFID](https://laelectronica.com.gt/modulo-sensor-rfid-rc522)
 
