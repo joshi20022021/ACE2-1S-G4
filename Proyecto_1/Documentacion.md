@@ -30,9 +30,9 @@
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 19 mm x 17 mm x 19 mm | Óptico          | Dedo, Muñeca    | 0 °C a 50 °C y 20% a 90% HR     | °C y %  | [Proveedor 1](#), [Proveedor 2](#) | ![Sensor de Temperatura y Humedad DHT11]([https://tienda.tettsa.gt/wp-content/uploads/2020/05/dht11-A.jpeg](https://laelectronica.com.gt/image/cache/catalog/Productos/M%C3%B3dulos/Modulo-RFID--RC522-Producto-1200x1200.jpg) | Q25.00          | (Especificar)         |
+| 19 mm x 17 mm x 19 mm | Óptico          | Dedo, Muñeca    | 0 °C a 50 °C y 20% a 90% HR     | °C y %  | [Proveedor 1](#), [Proveedor 2](#) | ![Sensor de Temperatura y Humedad DHT11](https://tienda.tettsa.gt/wp-content/uploads/2020/05/dht11-A.jpeg) | Q25.00          | (Especificar)         |
 
-**Enlace para comprar**: [Comprar Sensor de DHT11](#)
+**Enlace para comprar**: [Comprar Sensor de DHT11](https://tienda.tettsa.gt/producto/sensor-de-temperatura-y-humedad-dht11/)
 
 ---
 
