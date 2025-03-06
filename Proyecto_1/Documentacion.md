@@ -83,8 +83,7 @@
 ### Mockups de la Aplicación Web
 
 #### Login
-![Login](https://i.ibb.co/Fbxdq85m/Captura-de-pantalla-2025-03-04-192406.png)
-
+<img src="https://i.ibb.co/Fbxdq85m/Captura-de-pantalla-2025-03-04-192406.png" alt="Ventana Login" height="300" />
 #### Ventana de Doctores
 <img src="https://i.ibb.co/dwG0JL2q/Captura-de-pantalla-2025-03-06-132635.png" alt="Ventana de Doctores" width="500" />
 
