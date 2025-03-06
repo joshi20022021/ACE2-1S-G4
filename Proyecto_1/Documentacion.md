@@ -3,9 +3,8 @@
 ## Descripción de la Solución
 
 ## Capas del Framework IoT
-# Descripción de los Sensores
 
-## Tabla de Sensores
+# Descripción de los Sensores
 
 ### Sensor MAX30102
 
