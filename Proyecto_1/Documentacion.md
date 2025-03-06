@@ -7,10 +7,11 @@
 # Descripción de los Sensores
 
 ### Sensor MAX30102
+### Sensor MAX30102
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
-|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 14mm x 17mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | ![Imagen MAX30102](https://www.electronicadiy.com/cdn/shop/products/10bb4f_566be73d5f2c49be959a58faff8629b6_mv2_678x397.jpg?v=1592916379)| Q165.00        | (Especificar)         |
+|------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
+| 14mm x 17mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | ![Imagen MAX30102](https://www.electronicadiy.com/cdn/shop/products/10bb4f_566be73d5f2c49be959a58faff8629b6_mv2_678x397.jpg?v=1592916379) | Q165.00        | (Especificar)         |
 
 **Enlace para comprar**: [Comprar MAX30102](https://www.electronicadiy.com/products/max30102-sensor-pulso-y-concentracion-oxigeno)
 
@@ -19,8 +20,8 @@
 ### Sensor ECG
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
-|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 28mm x 35mm  | Eléctrico       | Tórax, Extremidades |   ±1 mV a ±5 mV     | milivoltios (mV)    | ![Imagen ECG](https://tienda.tettsa.gt/wp-content/uploads/2020/12/20201201_112647.jpg)| $165.00          | (Especificar)         |
+|------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
+| 28mm x 35mm  | Eléctrico       | Tórax, Extremidades |   ±1 mV a ±5 mV     | milivoltios (mV)    | ![Imagen ECG](https://tienda.tettsa.gt/wp-content/uploads/2020/12/20201201_112647.jpg) | $165.00          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar Sensor ECG](https://tienda.tettsa.gt/producto/sensor-de-pulso-cardiaco-ad8232-ecg/)
 
@@ -29,8 +30,8 @@
 ### Sensor de Temperatura y Humedad DHT11
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
-|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 19 mm x 17 mm x 19 mm | Óptico          | Dedo, Muñeca    | 0 °C a 50 °C y 20% a 90% HR     | °C y %  | [Proveedor 1](#), [Proveedor 2](#) | ![Sensor de Temperatura y Humedad DHT11](https://tienda.tettsa.gt/wp-content/uploads/2020/05/dht11-A.jpeg) | Q25.00          | (Especificar)         |
+|------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
+| 19 mm x 17 mm x 19 mm | Digital          | Ambiente    | 0 °C a 50 °C y 20% a 90% HR     | °C y %  | ![Sensor de Temperatura y Humedad DHT11](https://tienda.tettsa.gt/wp-content/uploads/2020/05/dht11-A.jpeg) | Q25.00          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar Sensor de DHT11](https://tienda.tettsa.gt/producto/sensor-de-temperatura-y-humedad-dht11/)
 
@@ -39,8 +40,8 @@
 ### Sensor RFID
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
-|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 40mm × 60mm | Electromagnético | Lector RFID     |   0 a 60 mm     | milimetros(mm)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen RFID](https://laelectronica.com.gt/image/cache/catalog/Productos/M%C3%B3dulos/Modulo-RFID--RC522-Producto-1200x1200.jpg)| Q50.00          | (Especificar)         |
+|------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
+| 40mm × 60mm | Electromagnético | Lector RFID     |   0 a 60 mm     | milímetros (mm)    | ![Imagen RFID](https://laelectronica.com.gt/image/cache/catalog/Productos/M%C3%B3dulos/Modulo-RFID--RC522-Producto-1200x1200.jpg) | Q50.00          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar Sensor RFID](https://laelectronica.com.gt/modulo-sensor-rfid-rc522)
 
@@ -49,10 +50,11 @@
 ### Sensor de Presencia
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
-|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| (Especificar) | Infrarrojo/Láser | Camilla, Superficie | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen Presencia](/ruta/a/imagen_presencia1.png), ![Imagen Presencia](/ruta/a/imagen_presencia2.png) | $XX.XX          | (Especificar)         |
+|------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
+| (Especificar) | Infrarrojo/Láser | Camilla, Superficie | (Especificar)     | (Especificar)    | ![Imagen Presencia](/ruta/a/imagen_presencia1.png), ![Imagen Presencia](/ruta/a/imagen_presencia2.png) | $XX.XX          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar Sensor de Presencia](#)
+
 ## Mockups del Prototipo
 
 ## Fotografías del Prototipo
