@@ -76,6 +76,12 @@
 ---
 
 ## Mockups del Prototipo
+### Boceto del prototipo
+
+<img src="https://i.ibb.co/mCnGM3V5/Captura-de-pantalla-2025-03-06-173829.png" alt="Boceto de la maqueta" width="500" />
+
+### Ubicacion de cada componente
+<img src="https://i.ibb.co/QFWSWYGj/Captura-de-pantalla-2025-03-06-174232.png" alt="Ubicacion de componentes" width="500" />
 
 ## Fotografías del Prototipo
 
