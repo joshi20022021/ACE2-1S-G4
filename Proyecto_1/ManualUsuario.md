@@ -61,16 +61,19 @@ unicamente el medico especialista podra acceder a este formulario y podra realiz
 ### 🆔 **Ventanas de pacientes**  
 
 al ingresar como paciente este podra visualizar 2 opciones las cuales son actualizar sus datos o bien verificar el historial que tiene de sus diagnosticos medicos
+
 ![alt text](https://i.ibb.co/wrwjk2sm/Captura-de-pantalla-2025-03-06-134328.png)
 
 
 ## Actualizacion de datos del paciente incluida la foto
 
 El paciente tiene la opcion de actualizar sus datos por si ha cometido algun error de tipado, tambien tiene la opcion de agregar su respectiva foto para poder verificar quien es.
+
 ![alt text](https://i.ibb.co/HLjfNCtV/Captura-de-pantalla-2025-03-06-134837.png)
 
 ## Vista de historial medico    
-Se desplegara la siguiente ventana en la cual el paciente podra buscar en la lista el historial medico que desaea generar un reporte pdf donde se detalla las veces que ha sido dado de alta y poder visualizarlo en un pdf               
+Se desplegara la siguiente ventana en la cual el paciente podra buscar en la lista el historial medico que desaea generar un reporte pdf donde se detalla las veces que ha sido dado de alta y poder visualizarlo en un pdf        
+       
 ![alt text](https://i.ibb.co/C5Xr8RDD/Captura-de-pantalla-2025-03-06-135957.png)
 
 ---
