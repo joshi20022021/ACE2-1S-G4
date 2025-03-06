@@ -10,7 +10,7 @@
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 10 x 10 x 10 mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen MAX30102](/ruta/a/imagen1.png), ![Imagen MAX30102](https://tienda.tettsa.gt/wp-content/uploads/2020/12/20201201_112647.jpg) | $XX.XX          | (Especificar)         |
+| 10 x 10 x 10 mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen MAX30102](https://www.electronicadiy.com/cdn/shop/products/10bb4f_566be73d5f2c49be959a58faff8629b6_mv2_678x397.jpg?v=1592916379)| Q165.00        | (Especificar)         |
 
 **Enlace para comprar**: [Comprar MAX30102](#)
 
@@ -20,7 +20,7 @@
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| (Especificar) | Eléctrico       | Tórax, Extremidades | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen ECG](/ruta/a/imagen_ecg1.png), ![Imagen ECG](/ruta/a/imagen_ecg2.png) | $XX.XX          | (Especificar)         |
+| (Especificar) | Eléctrico       | Tórax, Extremidades | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen ECG]([/ruta/a/imagen_ecg1.png](https://tienda.tettsa.gt/wp-content/uploads/2020/12/20201201_112647.jpg))| $XX.XX          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar Sensor ECG](#)
 
