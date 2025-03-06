@@ -4,6 +4,35 @@
 
 ## Capas del Framework IoT
 
+# Smart Apps (Aplicaciones Inteligentes)
+
+- **Aplicación Web**: Permite a los médicos visualizar datos en tiempo real, gestionar diagnósticos y controlar las camillas.
+- **Grafana**: Se utiliza para crear dashboards de monitoreo en tiempo real, mostrando datos como ocupación de camillas y signos vitales.
+- **Reportes PDF**: Generación automática de reportes personalizados, incluyendo el historial médico y certificados de alta.
+
+# Analytics (Análisis de Datos)
+
+- **Base de Datos Relacional**: Uso de PostgreSQL o MySQL para almacenar y procesar datos de pacientes, diagnósticos y sensores.
+- **Tendencias y Métricas**: Análisis de tendencias en ocupación hospitalaria y signos vitales utilizando Grafana.
+- **Cálculo de Métricas**: Cálculo de métricas como promedio, mínimo y máximo de mediciones de ECG y oximetría.
+
+# Connectivity (Conectividad)
+
+- **Protocolo MQTT**: Comunicación en tiempo real entre sensores y la aplicación web mediante el protocolo MQTT.
+- **Backend con Spring Boot**: Recepción de datos, autenticación y gestión de la lógica del sistema.
+- **Autenticación con RFID**: Conexión segura de médicos mediante tarjetas RFID para acceder al sistema.
+
+# Sensors (Sensores)
+
+- **Sensores ECG**: Medición de la actividad cardíaca de los pacientes.
+- **Sensores de Oximetría**: Medición de la saturación de oxígeno en la sangre.
+- **Sensores en Camillas**: Detección de la presencia de pacientes en las camillas.
+
+# Product Infrastructure (Infraestructura del Producto)
+
+- **Dispositivos Arduino/ESP32**: Captura de datos desde los sensores y envío al backend.
+- **Red Local (Hotspot)**: Conexión del dashboard y dispositivos a través de una red local.
+- **Autenticación Segura**: Implementación de un sistema seguro basado en RFID para la autenticación de médicos y personal autorizado.
 # Descripción de los Sensores
 
 ### Sensor MAX30102
