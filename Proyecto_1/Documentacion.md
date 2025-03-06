@@ -7,7 +7,6 @@
 # Descripción de los Sensores
 
 ### Sensor MAX30102
-### Sensor MAX30102
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
@@ -46,14 +45,6 @@
 **Enlace para comprar**: [Comprar Sensor RFID](https://laelectronica.com.gt/modulo-sensor-rfid-rc522)
 
 ---
-
-### Sensor de Presencia
-
-| **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
-|------------|---------------------|-----------------|-----------------------|----------------------|--------------|---------------------|---------------------------|
-| (Especificar) | Infrarrojo/Láser | Camilla, Superficie | (Especificar)     | (Especificar)    | ![Imagen Presencia](/ruta/a/imagen_presencia1.png), ![Imagen Presencia](/ruta/a/imagen_presencia2.png) | $XX.XX          | (Especificar)         |
-
-**Enlace para comprar**: [Comprar Sensor de Presencia](#)
 
 ## Mockups del Prototipo
 
