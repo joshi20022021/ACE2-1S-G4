@@ -102,8 +102,8 @@
 #### Ventana para Pacientes
 <img src="https://i.ibb.co/wrwjk2sm/Captura-de-pantalla-2025-03-06-134328.png" alt="Ventana para Pacientes" width="500" />
 
-#### Actualización de Datos del Paciente (Incluyendo Foto)
-<img src="https://i.ibb.co/HLjfNCtV/Captura-de-pantalla-2025-03-06-134837.png" alt="Actualización de Datos del Paciente (Incluyendo Foto)" width="500" />
+#### Actualización de Datos del Paciente
+<img src="https://i.ibb.co/HLjfNCtV/Captura-de-pantalla-2025-03-06-134837.png" alt="Actualización de Datos del Paciente" width="500" />
 
 #### Vista de Historial Médico
 <img src="https://i.ibb.co/C5Xr8RDD/Captura-de-pantalla-2025-03-06-135957.png" alt="Vista de Historial Médico" width="500" />
