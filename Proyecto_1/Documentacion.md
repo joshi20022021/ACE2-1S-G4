@@ -80,35 +80,28 @@
 ## Fotografías del Prototipo
 
 ## Mockups de la Aplicación Web/Móvil
+### Mockups de la Aplicación Web
 
-### Mockups de la aplicacion web
+#### Login
+![Login](https://i.ibb.co/Fbxdq85m/Captura-de-pantalla-2025-03-04-192406.png)
 
+#### Ventana de Doctores
+<img src="https://i.ibb.co/dwG0JL2q/Captura-de-pantalla-2025-03-06-132635.png" alt="Ventana de Doctores" width="500" />
 
-Login
+#### Registro de Pacientes
+<img src="https://i.ibb.co/n8CkBSL5/Captura-de-pantalla-2025-03-06-133735.png" alt="Registro de Pacientes" width="500" />
 
-![imagen](https://i.ibb.co/Fbxdq85m/Captura-de-pantalla-2025-03-04-192406.png)
+#### Actualización de Datos del Paciente
+<img src="https://i.ibb.co/W4q8Cjxm/Captura-de-pantalla-2025-03-06-133423.png" alt="Actualización de Datos del Paciente" width="500" />
 
-Ventana de Doctores
+#### Ventana para Pacientes
+<img src="https://i.ibb.co/wrwjk2sm/Captura-de-pantalla-2025-03-06-134328.png" alt="Ventana para Pacientes" width="500" />
 
-![alt text](https://i.ibb.co/dwG0JL2q/Captura-de-pantalla-2025-03-06-132635.png)
+#### Actualización de Datos del Paciente (Incluyendo Foto)
+<img src="https://i.ibb.co/HLjfNCtV/Captura-de-pantalla-2025-03-06-134837.png" alt="Actualización de Datos del Paciente (Incluyendo Foto)" width="500" />
 
-Registro de pacientes
-
-![alt text](https://i.ibb.co/n8CkBSL5/Captura-de-pantalla-2025-03-06-133735.png)
-
-
-Actualizacion de datos del paciente
-![alt text](https://i.ibb.co/W4q8Cjxm/Captura-de-pantalla-2025-03-06-133423.png)
-
-
-Ventana para pacientes
-![alt text](https://i.ibb.co/wrwjk2sm/Captura-de-pantalla-2025-03-06-134328.png)
-
-Actualizacion de datos del paciente incluida la foto
-![alt text](https://i.ibb.co/HLjfNCtV/Captura-de-pantalla-2025-03-06-134837.png)
-
-Vista de historial medico                   
-![alt text](https://i.ibb.co/C5Xr8RDD/Captura-de-pantalla-2025-03-06-135957.png)
+#### Vista de Historial Médico
+<img src="https://i.ibb.co/C5Xr8RDD/Captura-de-pantalla-2025-03-06-135957.png" alt="Vista de Historial Médico" width="500" />
 
 ## Diagrama de Conexiones
 
