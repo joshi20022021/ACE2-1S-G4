@@ -10,7 +10,7 @@
 
 | **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
-| 10 x 10 x 10 mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen MAX30102](/ruta/a/imagen1.png), ![Imagen MAX30102](/ruta/a/imagen2.png) | $XX.XX          | (Especificar)         |
+| 10 x 10 x 10 mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen MAX30102](/ruta/a/imagen1.png), ![Imagen MAX30102](https://tienda.tettsa.gt/wp-content/uploads/2020/12/20201201_112647.jpg) | $XX.XX          | (Especificar)         |
 
 **Enlace para comprar**: [Comprar MAX30102](#)
 
