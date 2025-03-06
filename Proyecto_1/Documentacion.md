@@ -7,13 +7,53 @@
 
 ## Tabla de Sensores
 
-| Sensor       | Tamaño         | Tipo de Lectura | Instalación           | Rango de Medición | Unidad de Medida | Proveedores                                                                 | Imágenes                                                                 | Precio Estimado | Fechas de Importación |
-|--------------|----------------|-----------------|-----------------------|-------------------|------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------|-----------------|-----------------------|
-| **MAX30102** | 10 x 10 x 10 mm| Óptico          | Dedo, Muñeca, Tórax   | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#)                                          | ![Imagen MAX30102](/ruta/a/imagen1.png), ![Imagen MAX30102](/ruta/a/imagen2.png) | $XX.XX          | (Especificar)         |
-| **ECG**      | (Especificar)  | Eléctrico       | Tórax, Extremidades   | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#)                                          | ![Imagen ECG](/ruta/a/imagen_ecg1.png), ![Imagen ECG](/ruta/a/imagen_ecg2.png)   | $XX.XX          | (Especificar)         |
-| **Oximetría**| (Especificar)  | Óptico          | Dedo, Muñeca          | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#)                                          | ![Imagen Oximetría](/ruta/a/imagen_oxi1.png), ![Imagen Oximetría](/ruta/a/imagen_oxi2.png) | $XX.XX          | (Especificar)         |
-| **RFID**     | (Especificar)  | Electromagnético| Lector RFID           | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#)                                          | ![Imagen RFID](/ruta/a/imagen_rfid1.png), ![Imagen RFID](/ruta/a/imagen_rfid2.png) | $XX.XX          | (Especificar)         |
-| **Presencia**| (Especificar)  | Infrarrojo/Láser| Camilla, Superficie   | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#)                                          | ![Imagen Presencia](/ruta/a/imagen_presencia1.png), ![Imagen Presencia](/ruta/a/imagen_presencia2.png) | $XX.XX          | (Especificar)         |
+### Sensor MAX30102
+
+| **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
+|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
+| 10 x 10 x 10 mm | Óptico          | Dedo, Muñeca, Tórax | 870nm a 900nm     | HR y SpO₂       | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen MAX30102](/ruta/a/imagen1.png), ![Imagen MAX30102](/ruta/a/imagen2.png) | $XX.XX          | (Especificar)         |
+
+**Enlace para comprar**: [Comprar MAX30102](#)
+
+---
+
+### Sensor ECG
+
+| **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
+|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
+| (Especificar) | Eléctrico       | Tórax, Extremidades | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen ECG](/ruta/a/imagen_ecg1.png), ![Imagen ECG](/ruta/a/imagen_ecg2.png) | $XX.XX          | (Especificar)         |
+
+**Enlace para comprar**: [Comprar Sensor ECG](#)
+
+---
+
+### Sensor de Oximetría
+
+| **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
+|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
+| (Especificar) | Óptico          | Dedo, Muñeca    | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen Oximetría](/ruta/a/imagen_oxi1.png), ![Imagen Oximetría](/ruta/a/imagen_oxi2.png) | $XX.XX          | (Especificar)         |
+
+**Enlace para comprar**: [Comprar Sensor de Oximetría](#)
+
+---
+
+### Sensor RFID
+
+| **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
+|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
+| (Especificar) | Electromagnético | Lector RFID     | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen RFID](/ruta/a/imagen_rfid1.png), ![Imagen RFID](/ruta/a/imagen_rfid2.png) | $XX.XX          | (Especificar)         |
+
+**Enlace para comprar**: [Comprar Sensor RFID](#)
+
+---
+
+### Sensor de Presencia
+
+| **Tamaño** | **Tipo de Lectura** | **Instalación** | **Rango de Medición** | **Unidad de Medida** | **Proveedores** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
+|------------|---------------------|-----------------|-----------------------|----------------------|-----------------|--------------|---------------------|---------------------------|
+| (Especificar) | Infrarrojo/Láser | Camilla, Superficie | (Especificar)     | (Especificar)    | [Proveedor 1](#), [Proveedor 2](#) | ![Imagen Presencia](/ruta/a/imagen_presencia1.png), ![Imagen Presencia](/ruta/a/imagen_presencia2.png) | $XX.XX          | (Especificar)         |
+
+**Enlace para comprar**: [Comprar Sensor de Presencia](#)
 ## Mockups del Prototipo
 
 ## Fotografías del Prototipo
