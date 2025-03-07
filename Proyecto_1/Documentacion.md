@@ -84,25 +84,22 @@
 <img src="https://i.ibb.co/QFWSWYGj/Captura-de-pantalla-2025-03-06-174232.png" alt="Ubicacion de componentes" width="500" />
 
 ## Fotografías del Prototipo
-- RFID
-![Imagen 1](img/img1.jpg)
 
-- MQ-135
-![Imagen 2](img/img2.jpg)
+### RFID
+<img src="img/img1.jpg" alt="RFID" width="500" height="500" />
 
-- AD8232
-![Imagen 3](img/img3.jpg)
+### MQ-135
+<img src="img/img2.jpg" alt="MQ-135" width="500" height="500" />
 
-- Desarrollo
-![Imagen 5](img/img5.jpg)
+### AD8232
+<img src="img/img3.jpg" alt="AD8232" width="500" height="500" />
 
-![Imagen 6](img/img6.jpg)
-
-![Imagen 7](img/img7.jpg)
-
-![Imagen 8](img/img8.jpg)
-
-![Imagen 9](img/img9.jpg)
+### Desarrollo
+<img src="img/img5.jpg" alt="Desarrollo 1" width="500" height="500" />
+<img src="img/img6.jpg" alt="Desarrollo 2" width="500" height="500" />
+<img src="img/img7.jpg" alt="Desarrollo 3" width="500" height="500" />
+<img src="img/img8.jpg" alt="Desarrollo 4" width="500" height="500" />
+<img src="img/img9.jpg" alt="Desarrollo 5" width="500" height="500" />
 
 ## Mockups de la Aplicación Web/Móvil
 ### Mockups de la Aplicación Web
