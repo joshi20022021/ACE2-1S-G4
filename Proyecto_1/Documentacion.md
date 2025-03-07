@@ -126,12 +126,12 @@
 <img src="https://i.ibb.co/C5Xr8RDD/Captura-de-pantalla-2025-03-06-135957.png" alt="Vista de Historial Médico" width="500" />
 
 ## Diagrama de Conexiones
-![Diagrama Conexiones](img/DC.png)
+<img src="img/DC.png" alt="Diagrama de Conexiones" width="800" height="600" />
 
 ## Diagrama de Arquitectura de Software
 
 ## Diagrama de Bloques y Estructuras del RFID
-![Diagrama Bloque RFID](img/DB_RFID.png)
+<img src="img/DB_RFID.png" alt="Diagrama Bloque RFID" width="800" height="600" />
 
 
 ## Diagrama de Flujo de la Solución del Prototipo
