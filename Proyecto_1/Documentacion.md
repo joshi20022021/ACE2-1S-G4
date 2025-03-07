@@ -84,6 +84,25 @@
 <img src="https://i.ibb.co/QFWSWYGj/Captura-de-pantalla-2025-03-06-174232.png" alt="Ubicacion de componentes" width="500" />
 
 ## Fotografías del Prototipo
+- RFID
+![Imagen 1](img/img1.jpg)
+
+- MQ-135
+![Imagen 2](img/img2.jpg)
+
+- AD8232
+![Imagen 3](img/img3.jpg)
+
+- Desarrollo
+![Imagen 5](img/img5.jpg)
+
+![Imagen 6](img/img6.jpg)
+
+![Imagen 7](img/img7.jpg)
+
+![Imagen 8](img/img8.jpg)
+
+![Imagen 9](img/img9.jpg)
 
 ## Mockups de la Aplicación Web/Móvil
 ### Mockups de la Aplicación Web
@@ -110,10 +129,12 @@
 <img src="https://i.ibb.co/C5Xr8RDD/Captura-de-pantalla-2025-03-06-135957.png" alt="Vista de Historial Médico" width="500" />
 
 ## Diagrama de Conexiones
+![Diagrama Conexiones](img/DC.png)
 
 ## Diagrama de Arquitectura de Software
 
 ## Diagrama de Bloques y Estructuras del RFID
+![Diagrama Bloque RFID](img/DB_RFID.png)
 
 
 ## Diagrama de Flujo de la Solución del Prototipo
