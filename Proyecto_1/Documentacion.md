@@ -130,6 +130,8 @@
 
 ## Diagrama de Arquitectura de Software
 
+<img src="img/Arquitectura_Software.png" alt="Diagrama Bloque RFID" width="800" height="600" />
+
 ## Diagrama de Bloques y Estructuras del RFID
 <img src="img/DB_RFID.png" alt="Diagrama Bloque RFID" width="800" height="600" />
 
