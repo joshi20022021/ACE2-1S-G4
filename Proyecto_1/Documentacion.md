@@ -139,5 +139,31 @@
 
 ## Modelo Entidad-Relación de la Base de Datos
 
+<img src="img/ER.png" alt="Diagrama Bloque RFID" width="800" height="600" />
 
 ## Listado y Descripción de Consultas SQL
+### Verificar Inicio
+##### SELECT * FROM usuarios WHERE UID = 'UID_Consultado';
+
+### Declarar Camillas
+
+##### INSERT INTO Camilla (Estado , Fecha) VALUES (Alta_Baja,fecha);
+
+### Llenar Formulario
+
+##### INSERT INTO Pacientes (Nombre Completo,Fotografía, Estado,Historial_Médico, Camilla_id, Fecha) VALUES (Texto, Foto,Alta_Baja,texto,Numero_id,fecha);
+
+##### INSERT INTO Diagnósticos (Pacientes_id, Usuarios_id,Estado,Observaciones,Recomendaciones) VALUES (Numero_id, Numero_id_Usuarios,Alta_Baja,texto,texto,fecha);
+
+
+### Registros de signos vitales
+##### INSERT INTO ecg (Pacientes_id, dato,Fecha) VALUES (Numero_id, Numero_dato,fecha);
+
+##### INSERT INTO Oximetría (Pacientes_id, Oxigenación,Frecuencia_pulso,Fecha) VALUES (Numero_id, Numero_Oxigeno,Numero_Pulso,fecha);
+
+##### INSERT INTO Signos_Vitales (Pacientes_id, Oxigenación,Frecuencia_cardica,Fecha) VALUES (Numero_id, Numero_Oxigeno,Numero_Cardiaca,fecha);
+
+### Datos Pacientes
+
+##### SELECT * FROM Pacientes WHERE id = 'id_consultado';
+
