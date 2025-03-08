@@ -262,22 +262,6 @@ Un dispositivo o sistema recibe datos en tiempo real de un topic.
 client.subscribe("sensores/ecg")
 ```
 
-Ejemplo en Python (usando `paho-mqtt`):
-
-```python
-import paho.mqtt.client as mqtt
-
-def on_message(client, userdata, message):
-    print(f"Mensaje recibido en {message.topic}: {message.payload.decode()}")
-
-client = mqtt.Client()
-client.on_message = on_message
-client.connect("broker.hivemq.com", 1883)
-client.subscribe("sensores/datos")
-client.loop_forever()
-```
-
-
 ### 4. Calidad de Servicio (QoS)
 
 El **QoS (Quality of Service)** en MQTT define cómo se entregan los mensajes:
