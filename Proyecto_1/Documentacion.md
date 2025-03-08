@@ -295,7 +295,7 @@ client.publish("sensores/oxigeno", "97%", qos=1)
 
 ```yaml
 info:
-  title: MediTrack API
+  title: Monitoreo Hospital API
   version: 0.0.1
   description: >
     API para la aplicación, que interactúa con un dispositivo Arduino
