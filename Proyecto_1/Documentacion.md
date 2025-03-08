@@ -289,4 +289,647 @@ client.publish("sensores/oxigeno", "97%", qos=1)
 - **Facilidad de integración** con bases de datos y dashboards como **Grafana**.
 
 
+## 🔌 **API Contracts**  
+
+ Descripción de la API, la cual interactúa con un dispositivo Arduino para leer datos de sensores (ECG, oxígeno, RFID) y gestionar información de pacientes.
+
+```yaml
+info:
+  title: MediTrack API
+  version: 0.0.1
+  description: >
+    API para la aplicación, que interactúa con un dispositivo Arduino
+    para leer datos de sensores (ECG, oxígeno, RFID), así como gestionar 
+    información básica de pacientes.
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor local
+
+paths:
+  /login:
+    post:
+      summary: Autenticar médico con RFID
+      description: Verifica la tarjeta RFID del médico y devuelve un token de sesión.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  type: string
+                  example: "A1B2C3D4"
+      responses:
+        '200':
+          description: Autenticación exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '401':
+          description: RFID no reconocido o no autorizado
+
+  /pacientes:
+    get:
+      summary: Obtener lista de pacientes
+      description: Retorna una lista con los datos básicos de todos los pacientes registrados.
+      responses:
+        '200':
+          description: Lista de pacientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    nombre:
+                      type: string
+                      example: "Juan Pérez"
+                    estado:
+                      type: string
+                      enum: [alta, tratamiento]
+                      example: "tratamiento"
+                    camilla:
+                      type: integer
+                      example: 3
+
+
+  /pacientes/{id}:
+    get:
+      summary: Obtener información de un paciente
+      description: Retorna los datos personales de un paciente, incluyendo su historial de diagnósticos.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID del paciente
+      responses:
+        '200':
+          description: Información del paciente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paciente'
+
+    put:
+      summary: Actualizar datos personales del paciente
+      description: Permite a un médico Especialista modificar la información personal del paciente.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                fecha_nacimiento:
+                  type: string
+                  format: date
+                tipo_sangre:
+                  type: string
+                  enum: [A+, A-, B+, B-, O+, O-, AB+, AB-]
+      responses:
+        '200':
+          description: Datos del paciente actualizados correctamente
+        '403':
+          description: Acceso denegado para Residentes
+
+
+  /pacientes/{id}/fotografia:
+    put:
+      summary: Actualizar fotografía del paciente
+      description: Permite la actualización de la imagen del paciente mediante carga de archivo o webcam.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                imagen:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Imagen actualizada correctamente
+
+
+  /pacientes/{id}/historial:
+    get:
+      summary: Obtener historial médico del paciente
+      description: Retorna la información completa del historial médico del paciente, incluyendo datos personales, diagnóstico actual, registros previos y estadísticas.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID del paciente
+      responses:
+        '200':
+          description: Historial médico del paciente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paciente:
+                    $ref: '#/components/schemas/Paciente'
+                  historial_diagnosticos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Diagnostico'
+                  estadisticas:
+                    type: object
+                    properties:
+                      promedio_ecg:
+                        type: number
+                        format: float
+                      promedio_oxigeno:
+                        type: number
+                        format: float
+                      frecuencia_cardiaca_maxima:
+                        type: integer
+                      frecuencia_cardiaca_minima:
+                        type: integer
+  /pacientes/{id}/alta:
+    get:
+      summary: Obtener información de alta médica del paciente
+      description: Retorna los detalles del alta médica de un paciente si ha sido dado de alta, incluyendo la firma digital del médico responsable.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID del paciente
+      responses:
+        '200':
+          description: Información de alta médica del paciente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paciente:
+                    $ref: '#/components/schemas/Paciente'
+                  alta_medica:
+                    type: object
+                    properties:
+                      fecha_alta:
+                        type: string
+                        format: date
+                      medico_responsable:
+                        type: string
+                      indicaciones_alta:
+                        type: string
+                      firma_digital:
+                        type: string
+                        example: "data:image/png;base64,iVBORw0KGgo..."
+        '404':
+          description: El paciente aún no ha sido dado de alta
+
+/diagnosticos/{id}/alta:
+    post:
+      summary: Dar de alta a un paciente
+      description: Permite a un médico Especialista dar de alta un paciente y registrar estadísticas finales.
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID del diagnóstico
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fecha_alta:
+                  type: string
+                  format: date
+                medico_responsable:
+                  type: string
+                indicaciones_alta:
+                  type: string
+      responses:
+        '200':
+          description: Paciente dado de alta exitosamente
+        '403':
+          description: Acceso denegado para Residentes
+
+
+
+  /medicos:
+    get:
+      summary: Obtener lista de médicos
+      description: Retorna una lista con los datos de los médicos registrados en el sistema.
+      responses:
+        '200':
+          description: Lista de médicos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medico'
+
+
+  /diagnosticos:
+    post:
+      summary: Registrar un diagnóstico
+      description: Permite a un médico Especialista registrar un diagnóstico para un paciente.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paciente_id:
+                  type: integer
+                sintomas:
+                  type: string
+                observaciones:
+                  type: string
+                inicio_timestamp:
+                  type: string
+                  format: date-time
+      responses:
+        '201':
+          description: Diagnóstico registrado con éxito
+        '403':
+          description: Acceso denegado para Residentes
+
+  /signos-vitales:
+    post:
+      summary: Registrar signos vitales
+      description: Registra una nueva medición de signos vitales para un paciente.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paciente_id:
+                  type: integer
+                  example: 1
+                frecuencia_cardiaca:
+                  type: integer
+                  example: 72
+                oxigenacion:
+                  type: number
+                  format: float
+                  example: 0.98
+      responses:
+        '201':
+          description: Registro de signos vitales guardado con éxito
+
+  /ecg:
+    post:
+      summary: Registrar electrocardiograma
+      description: Guarda un nuevo electrocardiograma para un paciente.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paciente_id:
+                  type: integer
+                  example: 1
+                datos:
+                  type: array
+                  items:
+                    type: integer
+                  example: [120, 125, 130, 118]
+      responses:
+        '201':
+          description: ECG registrado con éxito
+
+  /camillas:
+    get:
+      summary: Obtener disponibilidad de camillas
+      description: Retorna una lista con el estado de cada camilla en la clínica.
+      responses:
+        '200':
+          description: Lista de camillas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    disponible:
+                      type: boolean
+                      example: false
+
+  /mqtt/publicar:
+    post:
+      summary: Publicar datos en MQTT
+      description: Publica datos en el broker MQTT bajo el topic `sensores/datos`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topic:
+                  type: string
+                  example: "sensores/datos"
+                payload:
+                  type: object
+      responses:
+        '200':
+          description: Datos publicados exitosamente
+        '400':
+          description: Error en el formato del mensaje
+
+  /mqtt/suscripcion:
+    get:
+      summary: Suscribirse a un topic MQTT
+      description: Permite que el backend reciba datos en tiempo real desde un topic MQTT.
+      parameters:
+        - in: query
+          name: topic
+          schema:
+            type: string
+          required: true
+          description: Topic MQTT al que suscribirse
+      responses:
+        '200':
+          description: Suscripción exitosa
+        '400':
+          description: Error en la suscripción
+
+  /monitoreo/camillas:
+    get:
+      summary: Obtener ocupación de camillas
+      description: Devuelve el estado de ocupación de todas las camillas en el hospital.
+      responses:
+        '200':
+          description: Lista de camillas con su estado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    camilla_id:
+                      type: integer
+                    ocupada:
+                      type: boolean
+                    paciente_id:
+                      type: integer
+                      nullable: true
+
+  /monitoreo/camillas/{id}:
+    get:
+      summary: Obtener estadísticas de signos vitales por camilla
+      description: Devuelve estadísticas de ECG y oximetría para una camilla específica.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID de la camilla
+        - in: query
+          name: intervalo
+          schema:
+            type: string
+            enum: [ultima_hora, 24_horas, ultima_semana]
+          description: Intervalo de tiempo para las estadísticas
+      responses:
+        '200':
+          description: Estadísticas de signos vitales
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  minimo_ecg:
+                    type: number
+                  maximo_ecg:
+                    type: number
+                  promedio_ecg:
+                    type: number
+                  minimo_oxigeno:
+                    type: number
+                  maximo_oxigeno:
+                    type: number
+                  promedio_oxigeno:
+                    type: number
+
+  /monitoreo/ocupacion:
+    get:
+      summary: Obtener porcentaje de ocupación del hospital
+      description: Devuelve el porcentaje de ocupación de camillas en tiempo real.
+      responses:
+        '200':
+          description: Nivel de ocupación del hospital
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ocupacion_porcentaje:
+                    type: number
+                    format: float
+                  camillas_ocupadas:
+                    type: integer
+                  camillas_totales:
+                    type: integer
+
+  /monitoreo/ocupacion/nivel:
+    get:
+      summary: Obtener porcentaje de ocupación por nivel
+      description: Devuelve el porcentaje de ocupación de camillas en cada nivel del hospital.
+      responses:
+        '200':
+          description: Porcentaje de ocupación por nivel
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nivel_1:
+                    type: number
+                    format: float
+                  nivel_2:
+                    type: number
+                    format: float
+
+  /monitoreo/tiempo_estadia:
+    get:
+      summary: Obtener tiempo promedio de estadía de pacientes
+      description: Devuelve el tiempo promedio que los pacientes han estado internados antes de recibir el alta.
+      responses:
+        '200':
+          description: Tiempo promedio de estadía
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tiempo_promedio_estadia:
+                    type: string
+                    example: "3 días 6 horas"
+
+  /monitoreo/alertas:
+    get:
+      summary: Obtener alertas de signos vitales críticos
+      description: Devuelve una lista de pacientes que presentan valores anómalos de ECG u oximetría.
+      responses:
+        '200':
+          description: Lista de alertas activas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    paciente_id:
+                      type: integer
+                    nombre:
+                      type: string
+                    valor_ecg:
+                      type: number
+                      nullable: true
+                    valor_oxigeno:
+                      type: number
+                      nullable: true
+                    alerta_generada:
+                      type: string
+                      example: "ECG crítico"
+
+  /monitoreo/ingresos_altas:
+    get:
+      summary: Obtener tendencia de ingresos y altas médicas
+      description: Devuelve datos sobre ingresos y altas médicas en distintos períodos de tiempo.
+      parameters:
+        - in: query
+          name: intervalo
+          schema:
+            type: string
+            enum: [dia, semana, mes]
+          required: true
+          description: Intervalo de tiempo a consultar
+      responses:
+        '200':
+          description: Datos de ingresos y altas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ingresos:
+                    type: integer
+                  altas:
+                    type: integer
+
+
+
+components:
+  schemas:
+    Medico:
+      type: object
+      properties:
+        uid:
+          type: string
+        id_interno:
+          type: integer
+        nombre:
+          type: string
+        apellido:
+          type: string
+        rol:
+          type: string
+          enum: [RESIDENTE, ESPECIALISTA]
+        fecha_nacimiento:
+          type: string
+          format: date
+        fecha_registro:
+          type: string
+          format: date
+        firma_digital:
+          type: string
+          description: Representación de la firma digital, puede ser una URL o base64
+
+    Paciente:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        edad:
+          type: integer
+        fecha_nacimiento:
+          type: string
+          format: date
+        tipo_sangre:
+          type: string
+          enum: [A+, A-, B+, B-, O+, O-, AB+, AB-]
+        estado:
+          type: string
+          enum: [alta, tratamiento]
+        fotografia:
+          type: string
+          format: binary
+        historial_diagnosticos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diagnostico'
+
+    Diagnostico:
+      type: object
+      properties:
+        sintomas:
+          type: string
+        observaciones:
+          type: string
+        estado:
+          type: string
+          enum: [alta, en proceso]
+
+securitySchemes:
+  BearerAuth:
+    type: http
+    scheme: bearer
+
+
+
+```
+
 
