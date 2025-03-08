@@ -174,7 +174,7 @@ La información recopilada se visualiza en un dashboard web, y se complementa co
 
 
 ## Diagrama de Flujo de la Solución del Prototipo
-
+<img src="https://ibb.co/bMWgjSZj" alt="Diagrama de flujo de la solucion" width="800" height="600" />
 
 ## Modelo Entidad-Relación de la Base de Datos
 
