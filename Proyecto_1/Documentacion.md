@@ -201,7 +201,7 @@ paths:
                 type: string
               examples:
                 ejemplo:
-                  value: "El servidor está funcionando correctamente 🚀"
+                  value: "El servidor está funcionando correctamente "
 
   /ecg:
     get:
@@ -268,9 +268,9 @@ paths:
                 type: string
               examples:
                 ejemploOn:
-                  value: "✅ Mensaje enviado a Arduino: ON\n"
+                  value: "Mensaje enviado a Arduino: ON\n"
                 ejemploOff:
-                  value: "✅ Mensaje enviado a Arduino: OFF\n"
+                  value: "Mensaje enviado a Arduino: OFF\n"
         '400':
           description: Comando no válido
 
@@ -665,7 +665,6 @@ components:
           format: date-time
         camillaId:
           type: integer
-        # ... otros campos del modelo
 
     Diagnostico:
       type: object
