@@ -293,6 +293,12 @@ client.publish("sensores/oxigeno", "97%", qos=1)
 
  Descripción de la API, la cual interactúa con un dispositivo Arduino para leer datos de sensores (ECG, oxígeno, RFID) y gestionar información de pacientes.
 
+ ![image](https://github.com/user-attachments/assets/d42b8e50-7a88-4561-80f6-05ba347e07af)
+ ![image](https://github.com/user-attachments/assets/e4375021-5da0-4a2f-bde2-19d4ed19445a)
+![image](https://github.com/user-attachments/assets/e2d944f7-b940-4551-b428-6b84e63fc5e2)
+
+
+
 ```yaml
 info:
   title: Monitoreo Hospital API
