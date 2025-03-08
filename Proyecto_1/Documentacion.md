@@ -205,3 +205,104 @@ La información recopilada se visualiza en un dashboard web, y se complementa co
 ### Datos Pacientes
 
 ##### SELECT * FROM Pacientes WHERE id = 'id_consultado';
+
+## Explicación del Broker MQTT
+
+El protocolo **MQTT (Message Queuing Telemetry Transport)** es un estándar ligero de comunicación basado en **publicación/suscripción**, ideal para sistemas IoT como el que estás desarrollando.
+
+En este proyecto, el **broker MQTT** maneja la comunicación entre los dispositivos médicos (Arduino/ESP32) y el servidor/backend, que almacena los datos en la base de datos.
+
+
+## 🔹 Conceptos Claves de MQTT
+
+### 1. Broker MQTT
+
+El **broker** es el servidor que administra los mensajes enviados por los dispositivos IoT y los distribuye a los suscriptores.
+
+### Funciones del broker:
+
+- Recibe datos de los sensores médicos (RFID, ECG, oximetría).
+- Distribuye los datos a los clientes suscriptores (backend, Grafana, frontend web).
+- Asegura la entrega de mensajes según diferentes niveles de calidad de servicio (**QoS**).
+- Maneja múltiples conexiones IoT de forma eficiente.
+
+
+### 2. Topics en MQTT
+
+Los **topics** en MQTT son los "canales" donde se publican y reciben los mensajes. En el proyecto, los topics pueden organizarse de la siguiente manera:
+
+| **Topic**               | **Descripción**                                         |
+| ----------------------- | ------------------------------------------------------- |
+| `sensores/datos`        | Publica los datos en tiempo real de todos los sensores. |
+| `sensores/oxigeno`      | Publica los niveles de oxígeno de cada paciente.        |
+| `sensores/ecg`          | Publica los datos del electrocardiograma.               |
+| `diagnostico/realizado` | Notifica cuando un diagnóstico ha sido registrado.      |
+
+Ejemplo de publicación de datos en un topic:
+
+```python
+client.publish("sensores/ecg", "Paciente_1: 78 BPM")
+```
+
+### 3. Métodos Principales en MQTT
+
+#### 🔹 Publicar (`publish`)
+
+Un dispositivo envía datos a un topic.
+
+```python
+client.publish("sensores/datos", "Paciente_1: ECG OK")
+```
+
+#### 🔹 Suscribirse (`subscribe`)
+
+Un dispositivo o sistema recibe datos en tiempo real de un topic.
+
+```python
+client.subscribe("sensores/ecg")
+```
+
+Ejemplo en Python (usando `paho-mqtt`):
+
+```python
+import paho.mqtt.client as mqtt
+
+def on_message(client, userdata, message):
+    print(f"Mensaje recibido en {message.topic}: {message.payload.decode()}")
+
+client = mqtt.Client()
+client.on_message = on_message
+client.connect("broker.hivemq.com", 1883)
+client.subscribe("sensores/datos")
+client.loop_forever()
+```
+
+
+### 4. Calidad de Servicio (QoS)
+
+El **QoS (Quality of Service)** en MQTT define cómo se entregan los mensajes:
+
+| **Nivel QoS**         | **Descripción**                                          |
+| --------------------- | -------------------------------------------------------- |
+| **0 (At most once)**  | Mensaje enviado sin confirmación (puede perderse).       |
+| **1 (At least once)** | Mensaje garantizado al menos una vez (puede duplicarse). |
+| **2 (Exactly once)**  | Mensaje entregado solo una vez (más lento pero seguro).  |
+
+Ejemplo de publicación con QoS 1:
+
+```python
+client.publish("sensores/oxigeno", "97%", qos=1)
+```
+
+
+### 5. Utilidades del MQTT en el Proyecto
+
+#### 📌 Beneficios de usar MQTT en el sistema hospitalario:
+
+- **Comunicación en tiempo real** entre sensores y la plataforma de monitoreo.
+- **Bajo consumo de energía** y ancho de banda, ideal para dispositivos IoT.
+- **Fiabilidad y entrega garantizada** de datos médicos sensibles.
+- **Facilidad de integración** con bases de datos y dashboards como **Grafana**.
+
+
+
