@@ -9,35 +9,67 @@ La información recopilada se visualiza en un dashboard web, y se complementa co
 
 ## Capas del Framework IoT
 
-# Smart Apps (Aplicaciones Inteligentes)
+## 1. Capa de Hardware
+- **Sensores biomédicos:**
+  - ECG (electrocardiograma) para medir actividad cardíaca.
+  - Sensor de oximetría para niveles de oxígeno en sangre.
+  - Sensores de presencia en camillas (final de carrera, infrarrojos, etc.).
+- **Dispositivos de control:**
+  - Arduino/ESP32: Lectura de sensores, gestión de RFID y comunicación con el backend.
+  - Lectores RFID MFRC522: Autenticación de médicos mediante tarjetas.
+- **Infraestructura:**
+  - Camillas equipadas con sensores.
+  - Hotspot local para acceso al dashboard de Grafana.
 
-- **Aplicación Web**: Permite a los médicos visualizar datos en tiempo real, gestionar diagnósticos y controlar las camillas.
-- **Grafana**: Se utiliza para crear dashboards de monitoreo en tiempo real, mostrando datos como ocupación de camillas y signos vitales.
-- **Reportes PDF**: Generación automática de reportes personalizados, incluyendo el historial médico y certificados de alta.
+## 2. Capa de Software
+- **Firmware en Arduino/ESP32:**
+  - Lectura de datos de sensores en tiempo real.
+  - Comunicación serial/UART con el backend (Spring Boot).
+- **Backend (Spring Boot):**
+  - Autenticación de médicos via RFID.
+  - Procesamiento de datos médicos (ECG, oximetría).
+  - Gestión de base de datos relacional (PostgreSQL/MySQL).
+  - Integración con MQTT para publicación/suscripción de datos.
+- **Frontend Web:**
+  - Dashboard interactivo para visualización de pacientes.
+  - Formularios clínicos y gestión de diagnósticos.
+  - Generación de reportes PDF con firmas digitales.
 
-# Analytics (Análisis de Datos)
+## 3. Capa de Comunicación
+- **Protocolo MQTT:**
+  - **Topics principales:**
+    - `sensores/datos`: Datos crudos de ECG y oximetría.
+    - `diagnostico/realizado`: Notificaciones de diagnósticos completados.
+    - `camillas/estado`: Estado de ocupación de camillas.
+  - **Configuración:**
+    - Broker: HiveMQ.
+    - QoS 1 para garantizar entrega de datos críticos.
+- **Red Local:**
+  - Hotspot para acceso al dashboard de Grafana.
+  - Conexión UART entre Arduino y backend.
 
-- **Base de Datos Relacional**: Uso de PostgreSQL o MySQL para almacenar y procesar datos de pacientes, diagnósticos y sensores.
-- **Tendencias y Métricas**: Análisis de tendencias en ocupación hospitalaria y signos vitales utilizando Grafana.
-- **Cálculo de Métricas**: Cálculo de métricas como promedio, mínimo y máximo de mediciones de ECG y oximetría.
+## 4. Plataforma en la Nube
+- **Almacenamiento:**
+  - Base de datos relacional en la nube (ej: AWS RDS, Azure SQL).
+  - Historial médico con dimensión temporal.
+- **Broker MQTT en la nube:**
+  - HiveMQ Cloud para gestión escalable de mensajes.
+- **Servicios de seguridad:**
+  - Encriptación TLS/SSL para datos sensibles (ECG, RFID).
+  - Autenticación OAuth2 para médicos.
 
-# Connectivity (Conectividad)
+## 5. Aplicaciones en la Nube
+- **Grafana Cloud:**
+  - Dashboards en tiempo real:
+    - Gráficos de signos vitales por camilla.
+    - Porcentaje de ocupación del hospital.
+    - Alertas automáticas para valores críticos (ej: ECG anómalo).
+  - Integración directa con MQTT y bases de datos.
+- **Aplicación Web Responsive:**
+  - Acceso multiplataforma (móvil, desktop) vía navegador.
+  - Gestión remota de pacientes y diagnósticos.
+  - Descarga de certificados de alta médica en PDF.
 
-- **Protocolo MQTT**: Comunicación en tiempo real entre sensores y la aplicación web mediante el protocolo MQTT.
-- **Backend con Spring Boot**: Recepción de datos, autenticación y gestión de la lógica del sistema.
-- **Autenticación con RFID**: Conexión segura de médicos mediante tarjetas RFID para acceder al sistema.
-
-# Sensors (Sensores)
-
-- **Sensores ECG**: Medición de la actividad cardíaca de los pacientes.
-- **Sensores de Oximetría**: Medición de la saturación de oxígeno en la sangre.
-- **Sensores en Camillas**: Detección de la presencia de pacientes en las camillas.
-
-# Product Infrastructure (Infraestructura del Producto)
-
-- **Dispositivos Arduino/ESP32**: Captura de datos desde los sensores y envío al backend.
-- **Red Local (Hotspot)**: Conexión del dashboard y dispositivos a través de una red local.
-- **Autenticación Segura**: Implementación de un sistema seguro basado en RFID para la autenticación de médicos y personal autorizado.
 # Descripción de los Sensores
 
 ### Sensor MAX30102
