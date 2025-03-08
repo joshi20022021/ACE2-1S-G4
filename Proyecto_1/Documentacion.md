@@ -59,16 +59,16 @@ La información recopilada se visualiza en un dashboard web, y se complementa co
   - Autenticación OAuth2 para médicos.
 
 ## 5. Aplicaciones en la Nube
-- **Grafana Cloud:**
+- **Grafana:**
   - Dashboards en tiempo real:
     - Gráficos de signos vitales por camilla.
     - Porcentaje de ocupación del hospital.
-    - Alertas automáticas para valores críticos (ej: ECG anómalo).
+    - Alertas automáticas para valores críticos.
   - Integración directa con MQTT y bases de datos.
-- **Aplicación Web Responsive:**
-  - Acceso multiplataforma (móvil, desktop) vía navegador.
-  - Gestión remota de pacientes y diagnósticos.
-  - Descarga de certificados de alta médica en PDF.
+- **Base de datos AWS**
+  - Recopilacion de datos detectados por los sensores.
+  - distribucion de los datos para la graficacion.
+  - interaccion a traves de una API que captura los datos del frontend.
 
 # Descripción de los Sensores
 
