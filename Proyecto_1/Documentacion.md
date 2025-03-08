@@ -13,12 +13,12 @@ La información recopilada se visualiza en un dashboard web, y se complementa co
 - **Sensores biomédicos:**
   - ECG (electrocardiograma) para medir actividad cardíaca.
   - Sensor de oximetría para niveles de oxígeno en sangre.
-  - Sensores de presencia en camillas (final de carrera, infrarrojos, etc.).
+  - Sensores de presencia en camillas.
 - **Dispositivos de control:**
   - Arduino/ESP32: Lectura de sensores, gestión de RFID y comunicación con el backend.
-  - Lectores RFID MFRC522: Autenticación de médicos mediante tarjetas.
+  - Lector RFID: Autenticación de médicos mediante tarjetas.
 - **Infraestructura:**
-  - Camillas equipadas con sensores.
+  - Camillas con sensores.
   - Hotspot local para acceso al dashboard de Grafana.
 
 ## 2. Capa de Software
