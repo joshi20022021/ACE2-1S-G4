@@ -443,16 +443,242 @@ paths:
         '500':
           description: Error al enviar datos al Arduino
 
+  /auth/rfid:
+    post:
+      summary: Autenticación RFID
+      description: Verifica el UID de la tarjeta RFID y devuelve el rol del médico.
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "RFID_UID_12345"
+      responses:
+        '200':
+          description: Rol del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rol:
+                    type: string
+                    enum: [RESIDENTE, ESPECIALISTA]
+                  nombre:
+                    type: string
+                    example: "Dr. Juan Pérez"
+              example:
+                rol: "ESPECIALISTA"
+                nombre: "Dr. Ana López"
+        '403':
+          description: Acceso denegado
+
+  /pacientes:
+    get:
+      summary: Listar todos los pacientes
+      description: Retorna lista de pacientes con datos básicos (filtrables por nombre/CUI).
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Búsqueda por nombre o CUI
+      responses:
+        '200':
+          description: Lista de pacientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Paciente'
+
+    post:
+      summary: Crear nuevo paciente
+      description: Registra un paciente en la base de datos (solo para especialistas).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+      responses:
+        '201':
+          description: Paciente creado
+
+  /pacientes/{id}:
+    put:
+      summary: Actualizar datos del paciente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+      responses:
+        '200':
+          description: Datos actualizados
+
+  /diagnosticos:
+    post:
+      summary: Registrar nuevo diagnóstico
+      description: Crea un diagnóstico asociado a un paciente (timestamp automático).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pacienteId:
+                  type: integer
+                observaciones:
+                  type: string
+                sintomas:
+                  type: array
+                  items:
+                    type: string
+              example:
+                pacienteId: 101
+                observaciones: "Arritmia detectada"
+                sintomas: ["Taquicardia", "Mareos"]
+      responses:
+        '201':
+          description: Diagnóstico registrado
+
+  /diagnosticos/{id}/alta:
+    post:
+      summary: Dar de alta a paciente
+      description: Cierra un diagnóstico y genera reporte PDF automático.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reporte generado
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+  /reportes/historial/{pacienteId}:
+    get:
+      summary: Generar historial médico PDF
+      parameters:
+        - in: path
+          name: pacienteId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: PDF descargable
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+  /camillas:
+    get:
+      summary: Estado de camillas
+      description: Retorna estado de ocupación de todas las camillas.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    ocupada:
+                      type: boolean
+                    pacienteId:
+                      type: integer
+                      nullable: true
+
+  /estadisticas/signos-vitales:
+    get:
+      summary: Datos para Grafana
+      description: Retorna métricas de ECG y oximetría para dashboards.
+      parameters:
+        - in: query
+          name: intervalo
+          schema:
+            type: string
+            enum: [1h, 24h, 7d]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ecg_promedio:
+                    type: number
+                    format: float
+                  oximetria_min:
+                    type: integer
+
+  /firma-digital:
+    post:
+      summary: Subir firma digital
+      description: Almacena firma digital del médico (QR/base64) en la base de datos.
+      requestBody:
+        required: true
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Firma almacenada
+
 components:
   schemas:
     Paciente:
       type: object
       properties:
-        nombres:
-          type: string
-        edad:
+        id:
           type: integer
-        diagnostico:
+        nombre:
           type: string
-      additionalProperties: true
+        cui:
+          type: string
+        fechaIngreso:
+          type: string
+          format: date-time
+        camillaId:
+          type: integer
+        # ... otros campos del modelo
+
+    Diagnostico:
+      type: object
+      properties:
+        timestampInicio:
+          type: string
+          format: date-time
+        timestampFin:
+          type: string
+          format: date-time
+        estadisticas:
+          type: object
+          properties:
+            ecg_max:
+              type: number
 ```
