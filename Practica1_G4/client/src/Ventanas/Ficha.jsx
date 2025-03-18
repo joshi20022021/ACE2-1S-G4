@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { motion } from 'framer-motion'; // Importar motion desde framer-motion
+import { motion } from 'framer-motion'; 
 
 const Ficha = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,19 +34,18 @@ const Ficha = () => {
           if (!response.ok) {
             throw new Error("Error al obtener los datos");
           }
-          // Suponiendo que el backend retorna un objeto JSON 
-          // cuyas llaves coinciden con las propiedades de formDatos.
+         
           const data = await response.json();
           console.log("Datos obtenidos:", data);
     
-          // Actualizamos el estado con los datos recibidos
+          
           setFormDatos(data);
         } catch (error) {
           console.error("Error:", error);
         }
 
         try {
-          const response = await fetch("http://192.168.137.1:8080/SeleccionarIndice"); // Ajusta la URL según corresponda
+          const response = await fetch("http://192.168.137.1:8080/SeleccionarIndice"); 
           const data = await response.json();
           setIndicePaciente(data);
         } catch (error) {

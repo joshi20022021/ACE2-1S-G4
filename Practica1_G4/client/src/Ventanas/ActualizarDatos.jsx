@@ -217,14 +217,14 @@ const ActualizarLDatos = () => {
         Regresar
       </Link>
 
-      {/* Contenedor principal */}
+      {}
       <div style={styles.container}>
-        {/* Título centrado y en una sola línea */}
+        {}
         <h1 style={styles.title}>A C T U A L I Z A R - D A T O S</h1>
 
-        {/* Contenedor para el formulario y la foto */}
+        {}
         <div style={styles.content}>
-          {/* Formulario */}
+          {}
           <div style={styles.formContainer}>
             <form onSubmit={handleSubmit}>
               <div style={styles.formGroup}>
@@ -279,9 +279,9 @@ const ActualizarLDatos = () => {
             </form>
           </div>
 
-          {/* Sección para la foto */}
+          {}
           <div style={styles.photoSection}>
-            {/* Contenedor para la foto */}
+            {}
             <div style={styles.photoContainer}>
               {cameraActive ? (
                 <>
@@ -297,7 +297,7 @@ const ActualizarLDatos = () => {
               )}
             </div>
 
-            {/* Botón para seleccionar foto desde el dispositivo */}
+            {}
             <input
               type="file"
               id="foto"
@@ -309,7 +309,7 @@ const ActualizarLDatos = () => {
               Subir Foto
             </label>
 
-            {/* Botón para activar la cámara */}
+            {}
             <button onClick={activateCamera} style={styles.button}>
               Tomar Foto con la Cámara
             </button>
@@ -317,7 +317,7 @@ const ActualizarLDatos = () => {
         </div>
       </div>
 
-      {/* Canvas oculto para capturar la foto */}
+      {}
       <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
   );
