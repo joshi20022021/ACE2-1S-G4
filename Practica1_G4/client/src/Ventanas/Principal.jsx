@@ -100,6 +100,8 @@ const Principal = () => {
     }
   };
 
+  
+
 
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
@@ -132,7 +134,10 @@ const Principal = () => {
               Signos Vitales
             </button>
             <button style={styles.button} onClick={() => handleButtonClick('Formulario')}>
-              Formulario de Registro
+              Registrar un Diagnostico
+            </button>
+            <button style={styles.button} onClick={() => handleButtonClick('/RegistroPaciente')}>
+              Registrar un paciente
             </button>
           </div>
           

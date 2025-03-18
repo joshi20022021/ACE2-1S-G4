@@ -10,12 +10,16 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    
     if (email === 'zobadillas@gmail.com' && password === '123456') {
       navigate('/principal');
+    } else if (email === 'ola@gmail.com' && password === '123456') {
+      navigate('/ApartadoU');
     } else {
       alert('Email o contraseña incorrectos');
     }
   };
+  
 
   // Animaciones
   const containerVariants = {

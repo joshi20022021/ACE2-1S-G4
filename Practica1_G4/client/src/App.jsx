@@ -4,6 +4,8 @@ import Principal from './Ventanas/Principal';
 import Ficha from './Ventanas/Ficha';
 import SignosVitales from './Ventanas/SignosVitales';
 import Formulario from './Ventanas/Formulario';
+import ApartadoU from './Ventanas/ApartadoU';
+import RegistroPaciente from './Ventanas/RegistroPaciente';
 
 
 
@@ -15,6 +17,8 @@ const AppRouter = () => (
       <Route path="/principal" element={<Principal />} />
       <Route path="/ficha" element={<Ficha />} />
       <Route path="/Signos" element={<SignosVitales />} />
+      <Route path="/ApartadoU" element={<ApartadoU />} />
+      <Route path="/RegistroPaciente" element={<RegistroPaciente />} />
       <Route path="/Formulario" element={<Formulario />} />
     </Routes>
   </Router>
