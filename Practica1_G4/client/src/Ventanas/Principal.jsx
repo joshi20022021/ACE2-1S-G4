@@ -46,6 +46,9 @@ const Principal = () => {
           console.error("Error al obtener datos:", error);
         }
         break;
+      case "ActualizarDatos":
+        navigate(`/${route}`);
+        break;
       default:
         navigate(`/${route}`);
         break;
@@ -56,9 +59,6 @@ const Principal = () => {
   
 
   const handleSelectChange = (event) => {
-    const nombrePaciente = event.target.value;
-    setSelectedOption(nombrePaciente);
-
     try {
       fetch("http://192.168.137.1:8080/api/seleccionar-paciente", {
         method: "POST",

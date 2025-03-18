@@ -6,7 +6,8 @@ import SignosVitales from './Ventanas/SignosVitales';
 import Formulario from './Ventanas/Formulario';
 import ApartadoU from './Ventanas/ApartadoU';
 import RegistroPaciente from './Ventanas/RegistroPaciente';
-
+import ActualizarDatos from './Ventanas/ActualizarDatos';
+import './App.css';
 
 
 
@@ -14,6 +15,7 @@ const AppRouter = () => (
   <Router>
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/ActualizarDatos" element={<ActualizarDatos />} />
       <Route path="/principal" element={<Principal />} />
       <Route path="/ficha" element={<Ficha />} />
       <Route path="/Signos" element={<SignosVitales />} />

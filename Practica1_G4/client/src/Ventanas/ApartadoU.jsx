@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 
 const ApartadoU = () => {
+  const navigate = useNavigate(); // Hook para navegar entre rutas
+
   const handleClick = (botonNum) => {
-    alert(`Has clickeado el Botón ${botonNum}`);
+    if (botonNum === 1) {
+      navigate('/ActualizarDatos'); // Redirigir a la ruta de ActualizarDatos
+    } else {
+      alert(`Has clickeado el Botón ${botonNum}`);
+    }
   };
 
   return (
