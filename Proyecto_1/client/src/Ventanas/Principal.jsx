@@ -29,7 +29,7 @@ const Principal = () => {
   const handleButtonClick = async (route) => {
     console.log(`Botón ${route} clickeado`);
     switch (route) {
-      case "Formulario":
+      case "Formulario1":
         try {
           const response = await fetch("http://192.168.137.1:8080/Acceso_Form");
           if (!response.ok) throw new Error("Error en la solicitud");
@@ -49,14 +49,14 @@ const Principal = () => {
       case "ActualizarDatos":
         navigate(`/${route}`);
         break;
+      case "RegistroPacientes":
+        navigate(`/${route}`);
+        break;
       default:
         navigate(`/${route}`);
         break;
     }
   };
-  
-
-  
 
   const handleSelectChange = (event) => {
     try {
@@ -81,27 +81,6 @@ const Principal = () => {
       navigate('/');
     }, 1000); // Tiempo reducido para el logout
   };
-
-
-  const enviarTrue = async () => {
-    try {
-      const response = await fetch("http://192.168.137.1:8080/enviarBool", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(true), 
-      });
-
-      const data = await response.text();
-      console.log("Respuesta del backend:", data);
-    } catch (error) {
-      console.error("Error enviando booleano:", error);
-    }
-  };
-
-  
-
 
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
@@ -130,21 +109,11 @@ const Principal = () => {
             <button style={styles.button} onClick={() => handleButtonClick('ficha')}>
               Ficha
             </button>
-            <button style={styles.button} onClick={() => handleButtonClick('Signos')}>
-              Signos Vitales
-            </button>
             <button style={styles.button} onClick={() => handleButtonClick('Formulario')}>
-              Registrar un Diagnostico
+              Registro de diagnostico
             </button>
-            <button style={styles.button} onClick={() => handleButtonClick('/RegistroPaciente')}>
-              Registrar un paciente
-            </button>
-          </div>
-          
-          <div className="mb-4 animate__animated animate__fadeIn">
-            
-          <button style={styles.button} onClick={enviarTrue}>
-            Interrupir
+            <button style={styles.button} onClick={() => handleButtonClick('RegistroPacientes')}>
+              Registro de Camillas
             </button>
           </div>
 

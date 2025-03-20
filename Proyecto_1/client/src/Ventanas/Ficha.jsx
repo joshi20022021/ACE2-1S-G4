@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { motion } from 'framer-motion'; 
+import { motion } from 'framer-motion';
 
 const Ficha = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const [indicePaciente, setIndicePaciente] = useState(0);
+  const [pacientes, setPacientes] = useState([
+    { nombres: "Juan Pérez", diagnostico: "Gripe", edad: "30", expediente: "12345", fechaIngreso: "2023-10-01", sexo: "Masculino", tipoSangre: "O+", sintomas: "Fiebre, dolor de cabeza", antecedentes: "Ninguno", tratamiento: "Reposo", alergias: "Ninguna", condiciones: [] },
+    { nombres: "María López", diagnostico: "Dolor de espalda", edad: "25", expediente: "67890", fechaIngreso: "2023-09-15", sexo: "Femenino", tipoSangre: "A+", sintomas: "Dolor lumbar", antecedentes: "Ninguno", tratamiento: "Fisioterapia", alergias: "Ninguna", condiciones: [] },
+    { nombres: "Carlos Sánchez", diagnostico: "Hipertensión", edad: "45", expediente: "54321", fechaIngreso: "2023-08-20", sexo: "Masculino", tipoSangre: "B+", sintomas: "Dolor de cabeza, mareos", antecedentes: "Familiares con hipertensión", tratamiento: "Medicación", alergias: "Ninguna", condiciones: ["Hipertensión"] }
+  ]);
   const [formDatos, setFormDatos] = useState({
     nombres: "",
     diagnostico: "",
@@ -24,36 +29,44 @@ const Ficha = () => {
     alergias: "",
     condiciones: [],
   });
-  
-  const handleClick = async () => {
 
-        try {
-          const response = await fetch("http://192.168.137.1:8080/SeleccionarPaciente", {
-            method: "GET",
-          });
-          if (!response.ok) {
-            throw new Error("Error al obtener los datos");
-          }
-         
-          const data = await response.json();
-          console.log("Datos obtenidos:", data);
-    
-          
-          setFormDatos(data);
-        } catch (error) {
-          console.error("Error:", error);
-        }
+  useEffect(() => {
+    // Activar la animación después de que el componente se monte
+    setIsVisible(true);
+    fetchPacientes();
+  }, []);
 
-        try {
-          const response = await fetch("http://192.168.137.1:8080/SeleccionarIndice"); 
-          const data = await response.json();
-          setIndicePaciente(data);
-        } catch (error) {
-          console.error("Error al obtener el índice:", error);
-        }
+  const fetchPacientes = async () => {
+    try {
+      const response = await fetch("http://192.168.137.1:8080/ListarPacientes", {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos");
+      }
+      const data = await response.json();
+      setPacientes(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
+  const handlePacienteChange = async (event) => {
+    const selectedIndex = event.target.value;
+    setIndicePaciente(selectedIndex);
 
-
+    try {
+      const response = await fetch(`http://192.168.137.1:8080/SeleccionarPaciente?IndicePaciente=${selectedIndex}`, {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos");
+      }
+      const data = await response.json();
+      setFormDatos(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const borrarPaciente = async () => {
@@ -61,33 +74,27 @@ const Ficha = () => {
       console.error("Error: índicePaciente es null o undefined");
       return;
     }
-  
+
     try {
       const response = await fetch(`http://192.168.137.1:8080/BorrarDatosPaciente?IndicePaciente=${indicePaciente}`, {
         method: "POST",
       });
-  
+
       const data = await response.text();
       console.log("Respuesta del backend:", data);
+      fetchPacientes(); // Refrescar la lista de pacientes después de borrar
     } catch (error) {
       console.error("Error al borrar el paciente:", error);
     }
   };
 
-  useEffect(() => {
-    // Activar la animación después de que el componente se monte
-    setIsVisible(true);
-  }, []);
-
   const generatePDF = () => {
-    // Extraemos año, mes y día del campo fechaIngreso
     const [year, month, day] = formDatos.fechaIngreso
       ? formDatos.fechaIngreso.split("-")
       : ["-", "-", "-"];
-  
+
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  
-    // Título de la ficha
+
     doc.autoTable({
       startY: 10,
       head: [
@@ -107,148 +114,42 @@ const Ficha = () => {
       ],
       theme: "plain",
     });
-  
-    // Estructura de la tabla en base a la plantilla original
+
     const tableBody = [
-      // Fila de encabezado para nombre y fecha
       ["NOMBRE(S)", "DÍA", "MES", "AÑO"],
+      [formDatos.nombres || "-", day || "-", month || "-", year || "-"],
+      [{ content: "EDAD", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.edad || "-", colSpan: 4, styles: { halign: "center" } }],
+      [{ content: "EXPEDIENTE MÉDICO", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.expediente || "-", colSpan: 4, styles: { halign: "center" } }],
+      [{ content: "DIAGNÓSTICO PRINCIPAL", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.diagnostico || "-", colSpan: 4, styles: { halign: "center" } }],
       [
-        formDatos.nombres || "-",
-        day || "-",
-        month || "-",
-        year || "-",
-      ],
-      // Fila de EDAD
-      [
-        {
-          content: "EDAD",
-          colSpan: 4,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
+        { content: "TIPO DE SANGRE", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
+        { content: "ALERGIAS", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
       ],
       [
-        {
-          content: formDatos.edad || "-",
-          colSpan: 4,
-          styles: { halign: "center" },
-        },
+        { content: formDatos.tipoSangre || "-", colSpan: 2, styles: { halign: "center" } },
+        { content: formDatos.alergias || "-", colSpan: 2, styles: { halign: "center" } },
       ],
-      // Fila de EXPEDIENTE MÉDICO
+      [{ content: "SÍNTOMAS REPORTADOS", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.sintomas || "-", colSpan: 4, styles: { halign: "center" } }],
       [
-        {
-          content: "EXPEDIENTE MÉDICO",
-          colSpan: 4,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
+        { content: "ANTECEDENTES MÉDICOS", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
+        { content: "CONDICIONES PREEXISTENTES", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
       ],
       [
+        { content: formDatos.antecedentes || "-", colSpan: 2, styles: { halign: "center" } },
         {
-          content: formDatos.expediente || "-",
-          colSpan: 4,
-          styles: { halign: "center" },
-        },
-      ],
-      // Fila de DIAGNÓSTICO PRINCIPAL
-      [
-        {
-          content: "DIAGNÓSTICO PRINCIPAL",
-          colSpan: 4,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-      ],
-      [
-        {
-          content: formDatos.diagnostico || "-",
-          colSpan: 4,
-          styles: { halign: "center" },
-        },
-      ],
-      // Fila de TIPO DE SANGRE y ALERGIAS
-      [
-        {
-          content: "TIPO DE SANGRE",
-          colSpan: 2,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-        {
-          content: "ALERGIAS",
-          colSpan: 2,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-      ],
-      [
-        {
-          content: formDatos.tipoSangre || "-",
-          colSpan: 2,
-          styles: { halign: "center" },
-        },
-        {
-          content: formDatos.alergias || "-",
+          content: formDatos.condiciones && formDatos.condiciones.length > 0 ? formDatos.condiciones.join(", ") : "-",
           colSpan: 2,
           styles: { halign: "center" },
         },
       ],
-      // Fila de SÍNTOMAS REPORTADOS
-      [
-        {
-          content: "SÍNTOMAS REPORTADOS",
-          colSpan: 4,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-      ],
-      [
-        {
-          content: formDatos.sintomas || "-",
-          colSpan: 4,
-          styles: { halign: "center" },
-        },
-      ],
-      // Fila de ANTECEDENTES MÉDICOS y CONDICIONES PREEXISTENTES
-      [
-        {
-          content: "ANTECEDENTES MÉDICOS",
-          colSpan: 2,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-        {
-          content: "CONDICIONES PREEXISTENTES",
-          colSpan: 2,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-      ],
-      [
-        {
-          content: formDatos.antecedentes || "-",
-          colSpan: 2,
-          styles: { halign: "center" },
-        },
-        {
-          content:
-            formDatos.condiciones && formDatos.condiciones.length > 0
-              ? formDatos.condiciones.join(", ")
-              : "-",
-          colSpan: 2,
-          styles: { halign: "center" },
-        },
-      ],
-      // Fila de PLAN DE TRATAMIENTO INICIAL
-      [
-        {
-          content: "PLAN DE TRATAMIENTO INICIAL",
-          colSpan: 4,
-          styles: { fontStyle: "bold", halign: "center" },
-        },
-      ],
-      [
-        {
-          content: formDatos.tratamiento || "-",
-          colSpan: 4,
-          styles: { halign: "center" },
-        },
-      ],
+      [{ content: "PLAN DE TRATAMIENTO INICIAL", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.tratamiento || "-", colSpan: 4, styles: { halign: "center" } }],
     ];
-  
-    // Ajustamos la tabla con un ancho uniforme para 4 columnas
+
     doc.autoTable({
       startY: 25,
       body: tableBody,
@@ -262,12 +163,10 @@ const Ficha = () => {
       },
       headStyles: { fillColor: [6, 19, 31], textColor: 255 },
     });
-  
+
     doc.save("ficha_paciente.pdf");
   };
-  
 
-  // Animaciones para el contenedor, tabla y botones
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.8 } },
@@ -290,96 +189,125 @@ const Ficha = () => {
       initial="hidden"
       animate="visible"
     >
-      <motion.table variants={tableVariants}>
-        <tbody>
-          <tr>
-            <td className="title" colSpan="6">
-              FICHA DE IDENTIFICACIÓN DEL PACIENTE
-            </td>
-          </tr>
-          <tr>
+      <div className="d-flex gap-4">
+        <div className="w-25">
+          <label htmlFor="pacientes" className="form-label" style={{ fontWeight: 'bold', color: '#fff', marginBottom: '10px' }}>
+            Pacientes
+          </label>
+          <select
+            id="pacientes"
+            className="form-select"
+            onChange={handlePacienteChange}
+          >
+            <option value="">Seleccione un paciente</option>
+            {pacientes.map((paciente, index) => (
+              <option key={index} value={index}>
+                {paciente.nombres}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-75">
+          <motion.table variants={tableVariants}>
+            <tbody>
+              <tr>
+                <td className="title" colSpan="6">
+                  FICHA DE IDENTIFICACIÓN DEL PACIENTE
+                </td>
+              </tr>
+              <tr>
+                <th colSpan="6">NOMBRE(S)</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.nombres || "Nada"}</td>
+              </tr>
+              <tr>
+                <th>FECHA DE INGRESO</th>
+                <th colSpan="6" className="center">
+                  SEXO
+                </th>
+              </tr>
+              <tr>
+                <td>{formDatos.fechaIngreso || "Nada"}</td>
+                <td colSpan="6" className="center">
+                  {formDatos.sexo || "Nada"}
+                </td>
+              </tr>
+              <tr>
+                <th colSpan="6">EDAD</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.edad || "Nada"}</td>
+              </tr>
+              <tr>
+                <th colSpan="6">EXPEDIENTE MÉDICO</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.expediente || "Nada"}</td>
+              </tr>
+              <tr>
+                <th colSpan="6">DIAGNÓSTICO PRINCIPAL</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.diagnostico || "Nada"}</td>
+              </tr>
+              <tr>
+                <th colSpan="3">TIPO DE SANGRE</th>
+                <th colSpan="3">ALERGIAS</th>
+              </tr>
+              <tr>
+                <td colSpan="3">{formDatos.tipoSangre || "Nada"}</td>
+                <td colSpan="3">{formDatos.alergias || "Nada"}</td>
+              </tr>
+              <tr>
+                <th colSpan="6">SÍNTOMAS REPORTADOS</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.sintomas || "Nada"}</td>
+              </tr>
+              <tr>
+                <th colSpan="3">ANTECEDENTES MÉDICOS</th>
+                <th colSpan="3">CONDICIONES PREEXISTENTES</th>
+              </tr>
+              <tr>
+                <td colSpan="3">{formDatos.antecedentes || "Nada"}</td>
+                <td colSpan="3">
+                  {formDatos.condiciones && formDatos.condiciones.length > 0
+                    ? formDatos.condiciones.map((condicion, index) => (
+                        <div key={index}>{condicion}</div>
+                      ))
+                    : "Nada"}
+                </td>
+              </tr>
+              <tr>
+                <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.tratamiento || "Nada"}</td>
+              </tr>
+            </tbody>
+          </motion.table>
+        </div>
+        <div className="w-25">
+          <div className="fotografia">
+            <h3>Fotografía</h3>
+            <div className="foto-placeholder"></div>
+          </div>
+        </div>
+      </div>
 
-            <th colSpan="6">NOMBRE(S)</th>
-          </tr>
-          <tr>
-            <td colSpan="6">{formDatos.nombres || "Nada"}</td>
-          </tr>
-          <tr>
-            <th>FECHA DE INGRESO</th>
-            <th colSpan="6" className="center">SEXO</th>
-          </tr>
-          <tr>
-            <td>{formDatos.fechaIngreso || "Nada"}</td>
-            <td colSpan="6" className="center">{formDatos.sexo || "Nada"}
-            </td>
-          </tr>
-          <tr>
-            <th colSpan="6">EDAD</th>
-          </tr>
-          <tr>
-            <td colSpan="6">{formDatos.edad || "Nada"}</td>
-          </tr>
-          <tr>
-            <th colSpan="6">EXPEDIENTE MÉDICO</th>
-          </tr>
-          <tr>
-            <td colSpan="6">{formDatos.expediente || "Nada"}</td>
-          </tr>
-          <tr>
-            <th colSpan="6">DIAGNÓSTICO PRINCIPAL</th>
-          </tr>
-          <tr>
-            <td colSpan="6">{formDatos.diagnostico || "Nada"}</td>
-          </tr>
-          <tr>
-            <th colSpan="3">TIPO DE SANGRE</th>
-            <th colSpan="3">ALERGIAS</th>
-          </tr>
-          <tr>
-            <td colSpan="3">{formDatos.tipoSangre || "Nada"}</td>
-            <td colSpan="3">{formDatos.alergias || "Nada"}</td>
-          </tr>
-          <tr>
-            <th colSpan="6">SÍNTOMAS REPORTADOS</th>
-          </tr>
-          <tr>
-            <td colSpan="6">{formDatos.sintomas || "Nada"}</td>
-          </tr>
-          <tr>
-            <th colSpan="3">ANTECEDENTES MÉDICOS</th>
-            <th colSpan="3">CONDICIONES PREEXISTENTES</th>
-          </tr>
-          <tr>
-            <td colSpan="3">{formDatos.antecedentes || "Nada"}</td>
-            <td colSpan="3">
-            {formDatos.condiciones && formDatos.condiciones.length > 0
-              ? formDatos.condiciones.map((condicion, index) => (
-                  <div key={index}>{condicion}</div>
-                ))
-              : "Nada"}
-          </td>
-          </tr>
-          <tr>
-            <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
-          </tr>
-          <tr>
-            <td colSpan="6">{formDatos.tratamiento || "Nada"}</td>
-          </tr>
-        </tbody>
-      </motion.table>
-
-      {/* Botones con animaciones */}
-      <motion.div className="buttons d-flex justify-content-between mt-4" variants={buttonVariants}>
+      <motion.div className="buttons d-flex justify-content-end mt-4" variants={buttonVariants}>
         <div className="d-flex gap-3">
-          <button className="btn btn-danger" onClick={borrarPaciente}>Dar de Alta</button>
-          <button className="btn btn-save" onClick={handleClick}>Mostrar Datos</button>
+          <button className="btn btn-danger" onClick={borrarPaciente}>
+            Dar de Alta
+          </button>
           <button className="btn btn-secondary" onClick={generatePDF}>
             Reporte PDF
           </button>
+          <button className="btn btn-primary" onClick={() => navigate('/principal')}>
+            Regresar a Principal
+          </button>
         </div>
-        <button className="btn btn-primary" onClick={() => navigate('/principal')}>
-          Regresar a Principal
-        </button>
       </motion.div>
 
       <style jsx>{`
@@ -402,7 +330,6 @@ const Ficha = () => {
           border: 1px solid #ccc;
           padding: 6px 10px;
           vertical-align: middle;
-          /* Ajustamos un fondo oscuro con suficiente contraste */
           background-color: #2e2e2e;
           color: #fff;
         }
@@ -434,14 +361,9 @@ const Ficha = () => {
           background-color: #dc3545;
           border: none;
         }
-        .btn-save {
-          background-color:rgb(12, 242, 0);
-          border: none;
-        }
         .btn-secondary {
           background-color: #6c757d;
           border: none;
-          margin-right: 20px;
         }
         .btn-primary {
           background-color: #0d6efd;
@@ -449,6 +371,20 @@ const Ficha = () => {
         }
         .btn:hover {
           opacity: 0.9;
+        }
+        .fotografia {
+          border: 1px solid #ccc;
+          padding: 10px;
+          text-align: center;
+          background-color: #2e2e2e;
+          color: #fff;
+        }
+        .foto-placeholder {
+          width: 100%;
+          height: 200px;
+          background-color: #1c1c1c;
+          border: 1px dashed #ccc;
+          margin-top: 10px;
         }
       `}</style>
     </motion.div>
