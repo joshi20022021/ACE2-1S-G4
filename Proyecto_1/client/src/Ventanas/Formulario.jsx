@@ -30,25 +30,25 @@ const Formulario = () => {
     // Agrega más pacientes según sea necesario
   ];
 
-    // Manejar cambios en inputs y selects
-    const Cambio = (e) => {
-      const { name, value } = e.target;
-      setFormDatos({
-        ...formDatos,
-        [name]: value,
-      });
-    };
-  
-    // Manejar cambios en checkboxes
-    const CheckCambio = (e) => {
-      const { value, checked } = e.target;
-      setFormDatos((prevState) => ({
-        ...prevState,
-        condiciones: checked
-          ? [...prevState.condiciones, value]
-          : prevState.condiciones.filter((item) => item !== value),
-      }));
-    };
+  // Manejar cambios en inputs y selects
+  const Cambio = (e) => {
+    const { name, value } = e.target;
+    setFormDatos({
+      ...formDatos,
+      [name]: value,
+    });
+  };
+
+  // Manejar cambios en checkboxes
+  const CheckCambio = (e) => {
+    const { value, checked } = e.target;
+    setFormDatos((prevState) => ({
+      ...prevState,
+      condiciones: checked
+        ? [...prevState.condiciones, value]
+        : prevState.condiciones.filter((item) => item !== value),
+    }));
+  };
 
   const Enviar_Datos = async () => {
     console.log("Datos del formulario:", formDatos); // Debug en consola

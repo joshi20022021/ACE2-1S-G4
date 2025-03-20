@@ -177,7 +177,7 @@ const RegistroPaciente = () => {
 
           <div className="text-center mt-4 d-flex justify-content-center gap-3">
             <Button variant="primary" size="lg">Guardar Datos</Button>
-            <Button variant="danger" size="lg" onClick={() => navigate('/principal')}>Regresar</Button>
+            <Button variant="danger" size="lg" onClick={() => navigate(`/RegistroPacientes`)}>Regresar</Button>
           </div>
         </Form>
       </motion.div>

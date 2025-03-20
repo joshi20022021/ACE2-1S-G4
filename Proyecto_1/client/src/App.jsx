@@ -8,7 +8,7 @@ import ApartadoU from './Ventanas/ApartadoU';
 import RegistroPaciente from './Ventanas/RegistroPaciente';
 import ActualizarDatos from './Ventanas/ActualizarDatos';
 import HistorialMedico from './Ventanas/HistorialMedico';
-import RegistroPacientes from "./Ventanas/RegistroPacientes";
+import RegistroCamillas from "./Ventanas/RegistroCamillas";
 import './App.css';
 
 
@@ -19,7 +19,7 @@ const AppRouter = () => (
       <Route path="/" element={<Login />} />
       <Route path="/ActualizarDatos" element={<ActualizarDatos />} />
       <Route path="/principal" element={<Principal />} />
-      <Route path="/RegistroPacientes" element={<RegistroPacientes />} />
+      <Route path="/RegistroPacientes" element={<RegistroCamillas/>} />
       <Route path="/ficha" element={<Ficha />} />
       <Route path="/Signos" element={<SignosVitales />} />
       <Route path="/ApartadoU" element={<ApartadoU />} />

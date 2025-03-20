@@ -296,7 +296,7 @@ const Ficha = () => {
         </div>
       </div>
 
-      <motion.div className="buttons d-flex justify-content-end mt-4" variants={buttonVariants}>
+      <motion.div className="buttons d-flex justify-content-center mt-4" variants={buttonVariants}>
         <div className="d-flex gap-3">
           <button className="btn btn-danger" onClick={borrarPaciente}>
             Dar de Alta

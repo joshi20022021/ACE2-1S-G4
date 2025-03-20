@@ -82,7 +82,7 @@ const styles = {
   },
 };
 
-const RegistroPacientes = () => {
+const RegistroCamillas = () => {
   const navigate = useNavigate(); // Hook para redireccionar
 
   // Estado para almacenar los pacientes registrados
@@ -151,7 +151,7 @@ const RegistroPacientes = () => {
       </button>
 
       <div style={styles.container}>
-        <h1 style={styles.title}>Registro de Pacientes</h1>
+        <h1 style={styles.title}>Registro de Camillas</h1>
 
         <div style={styles.content}>
           {/* Formulario */}
@@ -215,4 +215,4 @@ const RegistroPacientes = () => {
   );
 };
 
-export default RegistroPacientes;
+export default RegistroCamillas;

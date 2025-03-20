@@ -82,27 +82,6 @@ const Principal = () => {
     }, 1000); // Tiempo reducido para el logout
   };
 
-
-  const enviarTrue = async () => {
-    try {
-      const response = await fetch("http://192.168.137.1:8080/enviarBool", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(true), 
-      });
-
-      const data = await response.text();
-      console.log("Respuesta del backend:", data);
-    } catch (error) {
-      console.error("Error enviando booleano:", error);
-    }
-  };
-
-  
-
-
   return (
     <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
       <ToastContainer 
@@ -133,15 +112,8 @@ const Principal = () => {
             <button style={styles.button} onClick={() => handleButtonClick('Formulario')}>
               Registro de diagnostico
             </button>
-            <button style={styles.button} onClick={() => handleButtonClick('/RegistroPaciente')}>
-              Registrar un paciente
-            </button>
-          </div>
-          
-          <div className="mb-4 animate__animated animate__fadeIn">
-            
-          <button style={styles.button} onClick={enviarTrue}>
-            Interrupir
+            <button style={styles.button} onClick={() => handleButtonClick('RegistroPacientes')}>
+              Registro de Camillas
             </button>
           </div>
 
