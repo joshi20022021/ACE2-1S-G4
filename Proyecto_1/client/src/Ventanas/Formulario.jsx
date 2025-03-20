@@ -19,6 +19,7 @@ const Formulario = () => {
     antecedentes: "",
     tratamiento: "",
     alergias: "",
+    recomendaciones: "",
     condiciones: [], // Se almacena como un array
   });
 
@@ -245,7 +246,7 @@ const Formulario = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Observaciones</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="condiciones" value={formDatos.condiciones} onChange={Cambio} />
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="condiciones" value={formDatos.recomendaciones} onChange={Cambio} />
               </Form.Group>
             </Col>
 
