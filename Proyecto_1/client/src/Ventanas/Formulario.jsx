@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -8,13 +8,13 @@ const Formulario = () => {
   const navigate = useNavigate();
 
   let [formDatos, setFormDatos] = useState({
-    nombres: "",
-    diagnostico: "",
-    edad: "",
-    expediente: "",
-    fechaIngreso: "",
-    sexo: "",
-    tipoSangre: "",
+    paciente: "", // Nuevo campo para el paciente seleccionado
+    ecgMaximos: "",
+    ecgMinimos: "",
+    ecgPromedio: "",
+    oximetroMaximos: "",
+    oximetroMinimos: "",
+    oximetroPromedio: "",
     sintomas: "",
     antecedentes: "",
     tratamiento: "",
@@ -22,14 +22,22 @@ const Formulario = () => {
     condiciones: [], // Se almacena como un array
   });
 
+  // Lista de pacientes (puedes obtenerla de una API o base de datos)
+  const pacientes = [
+    { id: 1, nombre: "Juan Pérez" },
+    { id: 2, nombre: "María López" },
+    { id: 3, nombre: "Carlos Sánchez" },
+    // Agrega más pacientes según sea necesario
+  ];
+
     // Manejar cambios en inputs y selects
-const Cambio = (e) => {
+    const Cambio = (e) => {
       const { name, value } = e.target;
       setFormDatos({
         ...formDatos,
         [name]: value,
       });
-};
+    };
   
     // Manejar cambios en checkboxes
     const CheckCambio = (e) => {
@@ -42,42 +50,40 @@ const Cambio = (e) => {
       }));
     };
 
-    const Enviar_Datos = async () => {
+  const Enviar_Datos = async () => {
+    console.log("Datos del formulario:", formDatos); // Debug en consola
+    try {
+      // Bloqueamos acceso al formulario
+      const response = await fetch("http://192.168.137.1:8080/Bloqueo_Acceso");
+      if (!response.ok) throw new Error("Error en la solicitud");
 
-      console.log("Datos del formulario:", formDatos); // Debug en consola
-      try {
+      const Estado_Acceso = await response.json();
+      console.log(Estado_Acceso);
 
-        // Bloqueamos acceso al formulario
-        const response = await fetch("http://192.168.137.1:8080/Bloqueo_Acceso");
-        if (!response.ok) throw new Error("Error en la solicitud");
+      // Guardar pacientes
+      const response1 = await fetch("http://192.168.137.1:8080/guardarPaciente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formDatos) // Convertir el objeto a JSON para enviarlo
+      });
 
-        const Estado_Acceso = await response.json();
-        console.log(Estado_Acceso)
-
-        // Guardar pacientes
-        const response1 = await fetch("http://192.168.137.1:8080/guardarPaciente", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(formDatos) // Convertir el objeto a JSON para enviarlo
-        });
-    
-        if (response1.ok) {
-          alert("Datos guardados exitosamente, Acerque su tarjeta del paciente.");
-        } else {
-          alert("Error al guardar los datos.");
-        }
-
-        if (!Estado_Acceso){
-          navigate("/principal");
-        }
-
-
-      } catch (error) {
-        
+      if (response1.ok) {
+        alert("Datos guardados exitosamente, Acerque su tarjeta del paciente.");
+      } else {
+        alert("Error al guardar los datos.");
       }
-    };
+
+      if (!Estado_Acceso) {
+        navigate("/principal");
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   // Definición de animaciones
   const formVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -98,7 +104,7 @@ const Cambio = (e) => {
           textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
         }}
       >
-        FORMULARIO
+        F O R M U L A R I O
       </h2>
 
       <motion.div
@@ -106,59 +112,112 @@ const Cambio = (e) => {
         animate="visible"
         variants={formVariants}
         style={{ width: "90%", maxWidth: "1200px" }}
-        className="p-4  rounded shadow"
+        className="p-4 rounded shadow"
       >
         <Form>
           <Row>
-            {/* Columna 1: Campos de texto y selects */}
+            {/* Columna 1: Combo box para seleccionar paciente y campos para ECG y Oximetro */}
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
-                <Form.Label className="text-light">Nombres</Form.Label>
-                <Form.Control type="text" required className="bg-dark text-light" name="nombres"  value={formDatos.nombres} onChange={Cambio} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="text-light">Diagnóstico Principal</Form.Label>
-                <Form.Control type="text" required className="bg-dark text-light" name="diagnostico" value={formDatos.diagnostico} onChange={Cambio}/>
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="text-light">Edad</Form.Label>
-                <Form.Control type="number" min="0" required className="bg-dark text-light" name="edad" value={formDatos.edad} onChange={Cambio}/>
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="text-light">Expediente Médico</Form.Label>
-                <Form.Control type="text" required className="bg-dark text-light" name="expediente" value={formDatos.expediente} onChange={Cambio} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="text-light">Fecha de Ingreso</Form.Label>
-                <Form.Control type="date" required className="bg-dark text-light" name="fechaIngreso" value={formDatos.fechaIngreso} onChange={Cambio} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="text-light">Sexo</Form.Label>
-                <Form.Select required className="bg-dark text-light" name="sexo" value={formDatos.sexo} onChange={Cambio}>
-                  <option value="">Seleccione...</option>
-                  <option value="M">Masculino</option>
-                  <option value="F">Femenino</option>
+                <Form.Label className="text-light">Pacientes</Form.Label>
+                <Form.Select required className="bg-dark text-light" name="paciente" value={formDatos.paciente} onChange={Cambio}>
+                  <option value="">Seleccione un paciente...</option>
+                  {pacientes.map((paciente) => (
+                    <option key={paciente.id} value={paciente.id}>
+                      {paciente.nombre}
+                    </option>
+                  ))}
                 </Form.Select>
               </Form.Group>
 
+              {/* Campos para ECG */}
               <Form.Group className="mb-3">
-                <Form.Label className="text-light">Tipo de Sangre</Form.Label>
-                <Form.Select required className="bg-dark text-light" name="tipoSangre" value={formDatos.tipoSangre} onChange={Cambio}>
-                  <option value="">Seleccione...</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                </Form.Select>
+                <Form.Label className="text-light">ECG</Form.Label>
+                <Row className="mb-2">
+                  <Col>
+                    <Form.Label className="text-light">Máximos</Form.Label>
+                  </Col>
+                  <Col>
+                    <Form.Label className="text-light">Mínimos</Form.Label>
+                  </Col>
+                  <Col>
+                    <Form.Label className="text-light">Promedio</Form.Label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      className="bg-dark text-light"
+                      name="ecgMaximos"
+                      value={formDatos.ecgMaximos}
+                      onChange={Cambio}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      className="bg-dark text-light"
+                      name="ecgMinimos"
+                      value={formDatos.ecgMinimos}
+                      onChange={Cambio}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      className="bg-dark text-light"
+                      name="ecgPromedio"
+                      value={formDatos.ecgPromedio}
+                      onChange={Cambio}
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+
+              {/* Campos para Oximetro */}
+              <Form.Group className="mb-3">
+                <Form.Label className="text-light">Oximetro</Form.Label>
+                <Row className="mb-2">
+                  <Col>
+                    <Form.Label className="text-light">Máximos</Form.Label>
+                  </Col>
+                  <Col>
+                    <Form.Label className="text-light">Mínimos</Form.Label>
+                  </Col>
+                  <Col>
+                    <Form.Label className="text-light">Promedio</Form.Label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      className="bg-dark text-light"
+                      name="oximetroMaximos"
+                      value={formDatos.oximetroMaximos}
+                      onChange={Cambio}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      className="bg-dark text-light"
+                      name="oximetroMinimos"
+                      value={formDatos.oximetroMinimos}
+                      onChange={Cambio}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      className="bg-dark text-light"
+                      name="oximetroPromedio"
+                      value={formDatos.oximetroPromedio}
+                      onChange={Cambio}
+                    />
+                  </Col>
+                </Row>
               </Form.Group>
             </Col>
 
@@ -166,22 +225,27 @@ const Cambio = (e) => {
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Síntomas Reportados</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="sintomas"  value={formDatos.sintomas} onChange={Cambio}/>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="sintomas" value={formDatos.sintomas} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Antecedentes Médicos</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="antecedentes" value={formDatos.antecedentes} onChange={Cambio}/>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="antecedentes" value={formDatos.antecedentes} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Plan de Tratamiento Inicial</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="tratamiento" value={formDatos.tratamiento} onChange={Cambio}/>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="tratamiento" value={formDatos.tratamiento} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Alergias</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="alergias" value={formDatos.alergias} onChange={Cambio}/>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="alergias" value={formDatos.alergias} onChange={Cambio} />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label className="text-light">Observaciones</Form.Label>
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="condiciones" value={formDatos.condiciones} onChange={Cambio} />
               </Form.Group>
             </Col>
 
@@ -203,8 +267,8 @@ const Cambio = (e) => {
                   "Enfermedades Autoinmunes",
                   "Obesidad",
                   "Accidente Cerebrovascular",
-                  "Trastornos Psiquiátricos (Depresión, Ansiedad)",
-                  "Trastornos Digestivos (Gastritis, Ulceras)",
+                  "Trastornos Psiquiátricos ",
+                  "Trastornos Digestivos ",
                 ].map((condition, index) => (
                   <Form.Check
                     name="condiciones"
@@ -224,7 +288,7 @@ const Cambio = (e) => {
 
           {/* Contenedor para los botones */}
           <div className="text-center mt-4 d-flex justify-content-center gap-3">
-            <Button  variant="primary" size="lg" onClick={() => Enviar_Datos()}>
+            <Button variant="primary" size="lg" onClick={() => Enviar_Datos()}>
               Confirmar Diagnóstico
             </Button>
             <Button variant="danger" size="lg" onClick={() => navigate("/principal")}>

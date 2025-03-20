@@ -49,14 +49,14 @@ const Principal = () => {
       case "ActualizarDatos":
         navigate(`/${route}`);
         break;
+      case "RegistroPacientes":
+        navigate(`/${route}`);
+        break;
       default:
         navigate(`/${route}`);
         break;
     }
   };
-  
-
-  
 
   const handleSelectChange = (event) => {
     try {
@@ -83,7 +83,7 @@ const Principal = () => {
   };
 
 
-const enviarTrue = async () => {
+  const enviarTrue = async () => {
     try {
       const response = await fetch("http://192.168.137.1:8080/enviarBool", {
         method: "POST",
@@ -130,13 +130,10 @@ const enviarTrue = async () => {
             <button style={styles.button} onClick={() => handleButtonClick('ficha')}>
               Ficha
             </button>
-            <button style={styles.button} onClick={() => handleButtonClick('Signos')}>
-              Signos Vitales
-            </button>
             <button style={styles.button} onClick={() => handleButtonClick('Formulario')}>
-              Registrar un Diagnostico
+              Registro de diagnostico
             </button>
-            <button style={styles.button} onClick={() => handleButtonClick('RegistroPaciente')}>
+            <button style={styles.button} onClick={() => handleButtonClick('/RegistroPaciente')}>
               Registrar un paciente
             </button>
           </div>
