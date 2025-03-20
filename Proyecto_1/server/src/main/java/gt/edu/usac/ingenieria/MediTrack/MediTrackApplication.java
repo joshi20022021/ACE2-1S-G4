@@ -242,55 +242,6 @@ public class MediTrackApplication {
 		return rfid;
 	}
 
-
-	// Configuración de conexión a MySQL
-    private static final String url = "jdbc:mysql://arqui-2.ciir7ihqfr2n.us-east-2.rds.amazonaws.com:3306/ACYE2";
-    private static final String usuario = "ACYE2";
-    private static final String contraseña = "Sucios!344"; // Reemplazar con la contraseña real
-
-    @PostMapping("/guardarPaciente")
-    public ResponseEntity<String> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
-        try {
-            if (datosPaciente == null || datosPaciente.isEmpty()) {
-                return ResponseEntity.badRequest().body("El cuerpo de la solicitud está vacío o es inválido.");
-            }
-            pacientes.add(datosPaciente);
-			int indicePaciente = pacientes.size() - 1; // Último índice agregado
-
-            enviarDatosAlArduino(indicePaciente);
-			return ResponseEntity.ok("Paciente guardado exitosamente.");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error interno del servidor al guardar el paciente.");
-        }
-    }
-
-	@GetMapping("/GetPacientes")
-	public List<String> obtenerNombresPacientes() {
-        List<String> nombres = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
-                 PreparedStatement pstmt = conn.prepareStatement("SELECT nombres FROM pacientes");
-                 ResultSet rs = pstmt.executeQuery()) {
-
-                // Agregar los nombres a la lista
-                while (rs.next()) {
-                    nombres.add(rs.getString("nombres"));
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            System.out.println("No se pudo encontrar el driver de MySQL.");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("Error al obtener nombres de pacientes.");
-            e.printStackTrace();
-        }
-
-        return nombres;
-    }
-
 	// Datos del paciente para la ficha
 	@GetMapping("/SeleccionarPaciente")
     public Map<String, Object> seleccionarPaciente() {
@@ -349,7 +300,72 @@ public class MediTrackApplication {
 		}
 	}
 	
+	// Consultas Sql
+	// Configuración de conexión a MySQL
+	private static final String url = "jdbc:mysql://arqui-2.ciir7ihqfr2n.us-east-2.rds.amazonaws.com:3306/ACYE2";
+	private static final String usuario = "ACYE2";
+	private static final String contraseña = "Sucios!344"; 
 
+	@GetMapping("/GetPacientes")
+	public List<String> obtenerNombresPacientes() {
+        List<String> nombres = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+                 PreparedStatement pstmt = conn.prepareStatement("SELECT nombres FROM pacientes");
+                 ResultSet rs = pstmt.executeQuery()) {
+
+                // Agregar los nombres a la lista
+                while (rs.next()) {
+                    nombres.add(rs.getString("nombres"));
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            System.out.println("No se pudo encontrar el driver de MySQL.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Error al obtener nombres de pacientes.");
+            e.printStackTrace();
+        }
+
+        return nombres;
+    }
+
+	@PostMapping("/guardarPaciente")
+    public ResponseEntity<Void> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
+        String sql = "INSERT INTO pacientes (Nombre Completo, diagnostico, edad, expediente, fecha_ingreso, sexo, tipo_sangre, sintomas, antecedentes, tratamiento, alergias, condiciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+             PreparedStatement Contenedor = conn.prepareStatement(sql)) {
+
+            Contenedor.setString(1, (String) datosPaciente.get("nombres"));
+            Contenedor.setString(2, (String) datosPaciente.get("diagnostico"));
+            Contenedor.setInt(3, Integer.parseInt(datosPaciente.get("edad").toString()));
+            Contenedor.setString(4, (String) datosPaciente.get("expediente"));
+            Contenedor.setString(5, (String) datosPaciente.get("fechaIngreso"));
+            Contenedor.setString(6, (String) datosPaciente.get("sexo"));
+            Contenedor.setString(7, (String) datosPaciente.get("tipoSangre"));
+            Contenedor.setString(8, (String) datosPaciente.get("sintomas"));
+            Contenedor.setString(9, (String) datosPaciente.get("antecedentes"));
+            Contenedor.setString(10, (String) datosPaciente.get("tratamiento"));
+            Contenedor.setString(11, (String) datosPaciente.get("alergias"));
+
+            // Pasamos el arreglo de condiciones a cadena
+            Object condicionesObj = datosPaciente.get("condiciones");
+            String condicionesStr = condicionesObj instanceof Iterable ? String.join(",", (Iterable<String>) condicionesObj): condicionesObj.toString();
+                
+            Contenedor.setString(12, condicionesStr);
+
+            Contenedor.executeUpdate(); // Realiza la consulta
+            System.out.println(" Paciente guardado correctamente");
+
+            return ResponseEntity.ok().build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
 
 }
 

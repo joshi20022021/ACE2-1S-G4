@@ -23,13 +23,13 @@ const Formulario = () => {
   });
 
     // Manejar cambios en inputs y selects
-    const Cambio = (e) => {
+const Cambio = (e) => {
       const { name, value } = e.target;
       setFormDatos({
         ...formDatos,
         [name]: value,
       });
-    };
+};
   
     // Manejar cambios en checkboxes
     const CheckCambio = (e) => {

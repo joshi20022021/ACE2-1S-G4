@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 const RegistroPaciente = () => {
+  const navigate = useNavigate();
   const [formDatos, setFormDatos] = useState({
     nombres: "",
     edad: "",
@@ -84,7 +86,7 @@ const RegistroPaciente = () => {
 
           <div className="text-center mt-4 d-flex justify-content-center gap-3">
             <Button variant="primary" size="lg">Guardar Datos</Button>
-            <Button variant="danger" size="lg">Regresar</Button>
+            <Button variant="danger" size="lg" onClick={() => navigate('/principal')}>Regresar</Button>
           </div>
         </Form>
       </motion.div>

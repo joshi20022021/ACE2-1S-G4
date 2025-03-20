@@ -29,7 +29,7 @@ const Principal = () => {
   const handleButtonClick = async (route) => {
     console.log(`Botón ${route} clickeado`);
     switch (route) {
-      case "Formulario":
+      case "Formulario1":
         try {
           const response = await fetch("http://192.168.137.1:8080/Acceso_Form");
           if (!response.ok) throw new Error("Error en la solicitud");
@@ -83,7 +83,7 @@ const Principal = () => {
   };
 
 
-  const enviarTrue = async () => {
+const enviarTrue = async () => {
     try {
       const response = await fetch("http://192.168.137.1:8080/enviarBool", {
         method: "POST",
@@ -136,7 +136,7 @@ const Principal = () => {
             <button style={styles.button} onClick={() => handleButtonClick('Formulario')}>
               Registrar un Diagnostico
             </button>
-            <button style={styles.button} onClick={() => handleButtonClick('/RegistroPaciente')}>
+            <button style={styles.button} onClick={() => handleButtonClick('RegistroPaciente')}>
               Registrar un paciente
             </button>
           </div>
