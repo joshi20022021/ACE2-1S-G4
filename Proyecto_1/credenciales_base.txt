@@ -1,4 +1,4 @@
 endpoint: arqui-2.ciir7ihqfr2n.us-east-2.rds.amazonaws.com
 puerto: 3306
-usuario:ACYE2
+usuario: ACYE2
 contraseña: Sucios!344
