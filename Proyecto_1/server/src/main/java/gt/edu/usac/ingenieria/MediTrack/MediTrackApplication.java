@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fazecast.jSerialComm.SerialPort;
 import java.sql.Connection;
+
+import main.java.gt.edu.usac.ingenieria.MediTrack.MqttClientManager;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,11 +43,19 @@ public class MediTrackApplication {
 	public static List<Map<String, Object>> pacientes = new ArrayList<>();
 
 	public static void main(String[] args) {
+		System.out.println("🚀 Iniciando servidor de MediTrack...");
+		MqttClientManager.connect();
+		System.out.println("🔗 Conectado al broker MQTT.");
+		MqttClientManager.subscribe("meditrack/sensores");
+		MqttClientManager.publish("meditrack/status", "Servidor iniciado correctamente.");
+
 		SpringApplication.run(MediTrackApplication.class, args);
 
-		detectPorts();
 
-		new Thread(MediTrackApplication::readDataFromArduino).start();
+
+		//detectPorts();
+
+		//new Thread(MediTrackApplication::readDataFromArduino).start();
 	}
 
 	// Métodos de arduino
