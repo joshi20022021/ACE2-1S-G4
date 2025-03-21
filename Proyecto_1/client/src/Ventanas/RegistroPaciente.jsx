@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect  } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
@@ -9,11 +9,14 @@ const RegistroPaciente = () => {
   const [formDatos, setFormDatos] = useState({
     nombres: "",
     edad: "",
-    expediente: "",
-    fechaIngreso: "",
     sexo: "",
-    tipoSangre: ""
-  });
+    expediente: "",
+    tipoSangre: "",
+    fotografia:"",
+    fechaIngreso: "",
+    usuario_id: "",
+    camilla_id:""
+  });  
 
   const [foto, setFoto] = useState(null); // Estado para la foto
   const [cameraActive, setCameraActive] = useState(false); // Estado para activar/desactivar la cámara
@@ -31,9 +34,19 @@ const RegistroPaciente = () => {
   const handleFotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFoto(URL.createObjectURL(file)); // Guarda la URL de la foto para previsualización
+      const photoURL = URL.createObjectURL(file);
+      setFoto(photoURL); // Guarda la URL de la foto para previsualización
+  
+      setFormDatos(prevState => ({
+        ...prevState,
+        fotografia: photoURL
+      }));
     }
   };
+  
+  useEffect(() => { // seguir cambios
+    console.log(formDatos.fotografia);
+  }, [formDatos.fotografia]);
 
   const activateCamera = async () => {
     setCameraActive(true);

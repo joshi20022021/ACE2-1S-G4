@@ -333,22 +333,20 @@ public class MediTrackApplication {
 
 	@PostMapping("/guardarPaciente")
     public ResponseEntity<Void> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
-        String sql = "INSERT INTO pacientes (Nombre Completo, diagnostico, edad, expediente, fecha_ingreso, sexo, tipo_sangre, sintomas, antecedentes, tratamiento, alergias, condiciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
              PreparedStatement Contenedor = conn.prepareStatement(sql)) {
 
             Contenedor.setString(1, (String) datosPaciente.get("nombres"));
-            Contenedor.setString(2, (String) datosPaciente.get("diagnostico"));
-            Contenedor.setInt(3, Integer.parseInt(datosPaciente.get("edad").toString()));
+            Contenedor.setInt(2, Integer.parseInt(datosPaciente.get("edad").toString()));
+			Contenedor.setString(3, (String) datosPaciente.get("sexo"));
             Contenedor.setString(4, (String) datosPaciente.get("expediente"));
-            Contenedor.setString(5, (String) datosPaciente.get("fechaIngreso"));
-            Contenedor.setString(6, (String) datosPaciente.get("sexo"));
-            Contenedor.setString(7, (String) datosPaciente.get("tipoSangre"));
-            Contenedor.setString(8, (String) datosPaciente.get("sintomas"));
-            Contenedor.setString(9, (String) datosPaciente.get("antecedentes"));
-            Contenedor.setString(10, (String) datosPaciente.get("tratamiento"));
-            Contenedor.setString(11, (String) datosPaciente.get("alergias"));
+			Contenedor.setString(5, (String) datosPaciente.get("tipoSangre"));
+			Contenedor.setString(6, (String) datosPaciente.get("fotografia"));
+            Contenedor.setString(7, (String) datosPaciente.get("fechaIngreso"));
+            Contenedor.setString(8, (String) datosPaciente.get("usuario_id"));
+            Contenedor.setString(9, (String) datosPaciente.get("camilla_id"));
 
             // Pasamos el arreglo de condiciones a cadena
             Object condicionesObj = datosPaciente.get("condiciones");
