@@ -8,7 +8,27 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleButtonClick = async (route) => {
+
+  };
+
+  const handleLogin =async (e) => {
+
+    try {
+      const response = await fetch("http://192.168.137.1:8080/Acceso_Form");
+      if (!response.ok) throw new Error("Error en la solicitud");
+      const Estado_Acceso = await response.json();
+      if (Estado_Acceso) {
+        toast.success("Acceso concedido, redirigiendo...");
+        navigate('/principal');
+      } else {
+        toast.warn("Coloca la llave de acceso");
+      }
+    } catch (error) {
+      toast.error("❌ Error al obtener datos");
+      console.error("Error al obtener datos:", error);
+    }
+
     e.preventDefault();
     
     if (email === 'zobadillas@gmail.com' && password === '123456') {
@@ -54,7 +74,7 @@ function Login() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              
               style={styles.input}
             />
           </div>
@@ -65,7 +85,7 @@ function Login() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
+              
               style={styles.input}
             />
           </div>

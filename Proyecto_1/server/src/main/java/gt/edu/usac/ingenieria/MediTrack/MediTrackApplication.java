@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fazecast.jSerialComm.SerialPort;
 import java.sql.Connection;
-
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +24,6 @@ import java.util.Map;
 @RestController
 
 @CrossOrigin(origins = "*")
-
 
 
 
@@ -103,7 +100,7 @@ public class MediTrackApplication {
             switch (sensores[0]) {
                 case "ecg" -> ecg = Integer.parseInt(sensores[1]);
                 case "oxigeno" -> foto = Float.parseFloat(sensores[1]);
-                case "UID" -> rfid = sensores[1].trim().equals("E0 23 46 10"); // Medico
+                case "UID" -> rfid = sensores[1].trim().equals("7D 81 3C 02"); // Medico
 				case "Paciente" -> indicePaciente = Integer.parseInt(sensores[1].trim());
 				case "Mensaje" -> System.out.println();
             }
@@ -331,6 +328,7 @@ public class MediTrackApplication {
         return nombres;
     }
 
+	
 	@PostMapping("/guardarPaciente")
     public ResponseEntity<Void> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
         String sql = "INSERT INTO pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

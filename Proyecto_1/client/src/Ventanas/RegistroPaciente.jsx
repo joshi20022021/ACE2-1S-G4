@@ -18,7 +18,8 @@ const RegistroPaciente = () => {
     camilla_id:""
   });  
 
-  const [foto, setFoto] = useState(null); // Estado para la foto
+  const [fotoUrl, setFotoUrl] = useState(null); // Estado para la foto
+  const [fotoData, setFotoData] = useState(null);
   const [cameraActive, setCameraActive] = useState(false); // Estado para activar/desactivar la cámara
   const videoRef = useRef(null); // Referencia para el elemento de video
   const canvasRef = useRef(null); // Referencia para el elemento de canvas
@@ -34,12 +35,14 @@ const RegistroPaciente = () => {
   const handleFotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log(file)
       const photoURL = URL.createObjectURL(file);
-      setFoto(photoURL); // Guarda la URL de la foto para previsualización
+      setFotoData(file)
+      setFotoUrl(photoURL); // Guarda la URL de la foto para previsualización
   
       setFormDatos(prevState => ({
         ...prevState,
-        fotografia: photoURL
+        fotografia: file
       }));
     }
   };
@@ -47,6 +50,45 @@ const RegistroPaciente = () => {
   useEffect(() => { // seguir cambios
     console.log(formDatos.fotografia);
   }, [formDatos.fotografia]);
+
+
+  const Enviar_Datos = async () => {
+
+    console.log("Datos del formulario:", formDatos); // Debug en consola
+    try {
+
+      // Bloqueamos acceso al formulario
+      /*const response = await fetch("http://localhost:8080/Bloqueo_Acceso");
+      if (!response.ok) throw new Error("Error en la solicitud");
+
+      const Estado_Acceso = await response.json();
+      console.log(Estado_Acceso)*/
+
+      // Guardar pacientes
+      const response1 = await fetch("http://localhost:8080/guardarPaciente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formDatos) // Convertir el objeto a JSON para enviarlo
+      });
+  
+      if (response1.ok) {
+        alert("Datos guardados exitosamente.");
+      } else {
+        alert("Error al guardar los datos.");
+      }
+
+      if (!Estado_Acceso){
+        navigate("/principal");
+      }
+
+
+    } catch (error) {
+      
+    }
+  };
+
 
   const activateCamera = async () => {
     setCameraActive(true);
@@ -76,7 +118,7 @@ const RegistroPaciente = () => {
 
       // Convierte la imagen del canvas a una URL y la guarda en el estado
       const photoURL = canvas.toDataURL('image/png');
-      setFoto(photoURL);
+      setFotoUrl(photoURL);
 
       // Desactiva la cámara
       setCameraActive(false);
@@ -154,8 +196,8 @@ const RegistroPaciente = () => {
                 <div style={{ border: '2px dashed #ccc', borderRadius: '8px', padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.1)', height: '300px', width: '100%', marginBottom: '20px', overflow: 'hidden' }}>
                   {cameraActive ? (
                     <video ref={videoRef} autoPlay style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
-                  ) : foto ? (
-                    <img src={foto} alt="Vista previa" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                  ) : fotoUrl ? (
+                    <img src={fotoUrl} alt="Vista previa" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
                   ) : (
                     <p style={{ color: '#fff', textAlign: 'center' }}>Arrastra o selecciona una foto</p>
                   )}
@@ -189,7 +231,7 @@ const RegistroPaciente = () => {
           </Row>
 
           <div className="text-center mt-4 d-flex justify-content-center gap-3">
-            <Button variant="primary" size="lg">Guardar Datos</Button>
+            <Button  onClick={Enviar_Datos} variant="primary" size="lg">Guardar Datos</Button> 
             <Button variant="danger" size="lg" onClick={() => navigate(`/RegistroPacientes`)}>Regresar</Button>
           </div>
         </Form>
