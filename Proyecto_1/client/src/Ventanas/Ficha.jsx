@@ -10,11 +10,24 @@ const Ficha = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const [indicePaciente, setIndicePaciente] = useState(0);
-  const [pacientes, setPacientes] = useState([
-    { nombres: "Juan Pérez", diagnostico: "Gripe", edad: "30", expediente: "12345", fechaIngreso: "2023-10-01", sexo: "Masculino", tipoSangre: "O+", sintomas: "Fiebre, dolor de cabeza", antecedentes: "Ninguno", tratamiento: "Reposo", alergias: "Ninguna", condiciones: [] },
-    { nombres: "María López", diagnostico: "Dolor de espalda", edad: "25", expediente: "67890", fechaIngreso: "2023-09-15", sexo: "Femenino", tipoSangre: "A+", sintomas: "Dolor lumbar", antecedentes: "Ninguno", tratamiento: "Fisioterapia", alergias: "Ninguna", condiciones: [] },
-    { nombres: "Carlos Sánchez", diagnostico: "Hipertensión", edad: "45", expediente: "54321", fechaIngreso: "2023-08-20", sexo: "Masculino", tipoSangre: "B+", sintomas: "Dolor de cabeza, mareos", antecedentes: "Familiares con hipertensión", tratamiento: "Medicación", alergias: "Ninguna", condiciones: ["Hipertensión"] }
-  ]);
+
+    const [pacientes, setPacientes] = useState([]);
+    
+    useEffect(() => {
+      // Hacer la petición a la API
+      const fetchPacientes = async () => {
+        try {
+          const response = await fetch("http://localhost:8080/GetPacientes");
+          const data = await response.json();
+          setPacientes(data); // Guardamos los nombres en el estado
+        } catch (error) {
+          console.error("Error al obtener nombres de pacientes:", error);
+        }
+      };
+  
+      fetchPacientes();
+    }, []);
+  
   const [formDatos, setFormDatos] = useState({
     nombres: "",
     diagnostico: "",
@@ -200,10 +213,8 @@ const Ficha = () => {
             onChange={handlePacienteChange}
           >
             <option value="">Seleccione un paciente</option>
-            {pacientes.map((paciente, index) => (
-              <option key={index} value={index}>
-                {paciente.nombres}
-              </option>
+            {pacientes.map((nombre, index) => (
+                <option key={index} value={nombre}>{nombre}</option>
             ))}
           </select>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -6,6 +6,23 @@ import '../App.css';
 
 const Formulario = () => {
   const navigate = useNavigate();
+
+    const [pacientes, setPacientes] = useState([]);
+    
+    useEffect(() => {
+      // Hacer la petición a la API
+      const fetchPacientes = async () => {
+        try {
+          const response = await fetch("http://localhost:8080/GetPacientes");
+          const data = await response.json();
+          setPacientes(data); // Guardamos los nombres en el estado
+        } catch (error) {
+          console.error("Error al obtener nombres de pacientes:", error);
+        }
+      };
+  
+      fetchPacientes();
+    }, []);
 
   let [formDatos, setFormDatos] = useState({
     paciente: "", // Nuevo campo para el paciente seleccionado
@@ -25,12 +42,7 @@ const Formulario = () => {
   });
 
   // Lista de pacientes (puedes obtenerla de una API o base de datos)
-  const pacientes = [
-    { id: 1, nombre: "Juan Pérez" },
-    { id: 2, nombre: "María López" },
-    { id: 3, nombre: "Carlos Sánchez" },
-    // Agrega más pacientes según sea necesario
-  ];
+
 
   // Manejar cambios en inputs y selects
   const Cambio = (e) => {
@@ -124,10 +136,8 @@ const Formulario = () => {
                 <Form.Label className="text-light">Pacientes</Form.Label>
                 <Form.Select required className="bg-dark text-light" name="paciente" value={formDatos.paciente} onChange={Cambio}>
                   <option value="">Seleccione un paciente...</option>
-                  {pacientes.map((paciente) => (
-                    <option key={paciente.id} value={paciente.id}>
-                      {paciente.nombre}
-                    </option>
+                  {pacientes.map((nombre, index) => (
+                    <option key={index} value={nombre}>{nombre}</option>
                   ))}
                 </Form.Select>
               </Form.Group>

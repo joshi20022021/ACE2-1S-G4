@@ -322,12 +322,12 @@ public class MediTrackApplication {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
-                 PreparedStatement pstmt = conn.prepareStatement("SELECT nombres FROM pacientes");
+                 PreparedStatement pstmt = conn.prepareStatement("SELECT Nombre_Completo FROM Pacientes");
                  ResultSet rs = pstmt.executeQuery()) {
 
                 // Agregar los nombres a la lista
                 while (rs.next()) {
-                    nombres.add(rs.getString("nombres"));
+                    nombres.add(rs.getString("Nombre_Completo"));
                 }
             }
         } catch (ClassNotFoundException e) {

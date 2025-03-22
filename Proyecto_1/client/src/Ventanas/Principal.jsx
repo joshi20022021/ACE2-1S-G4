@@ -11,11 +11,12 @@ const Principal = () => {
   const [loading, setLoading] = useState(false);
 
   const [pacientes, setPacientes] = useState([]);
+  
   useEffect(() => {
     // Hacer la petición a la API
     const fetchPacientes = async () => {
       try {
-        const response = await fetch("http://192.168.137.1:8080/GetPacientes");
+        const response = await fetch("http://localhost:8080/GetPacientes");
         const data = await response.json();
         setPacientes(data); // Guardamos los nombres en el estado
       } catch (error) {
