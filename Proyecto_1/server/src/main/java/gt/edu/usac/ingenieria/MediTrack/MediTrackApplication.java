@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fazecast.jSerialComm.SerialPort;
 import java.sql.Connection;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Base64;
 
 @SpringBootApplication
 @RestController
@@ -39,6 +42,7 @@ public class MediTrackApplication {
 	private static boolean rfid = false;
 	public static int indicePaciente = 0;
 	public static List<Map<String, Object>> pacientes = new ArrayList<>();
+	public static int Tipo_Usuario = 0;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MediTrackApplication.class, args);
@@ -251,6 +255,14 @@ public class MediTrackApplication {
 	public int seleccionarIndice() {
 		return indicePaciente;
 	}
+
+	// Manejo de usuarios
+	@PostMapping("/Usuario")
+	public int Modficar_Usuario(@RequestParam int IndiceUsuario) {
+		Tipo_Usuario = IndiceUsuario;
+		return Tipo_Usuario;
+	}
+
 	
 	// Borrar Datos pacientes
 	@PostMapping("/BorrarDatosPaciente")
@@ -329,33 +341,41 @@ public class MediTrackApplication {
         return nombres;
     }
 
-	
-	@PostMapping("/guardarPaciente")
-    public ResponseEntity<Void> guardarPaciente(@RequestBody Map<String, Object> datosPaciente) {
-        String sql = "INSERT INTO pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	@PostMapping(value = "/guardarPaciente", consumes = "multipart/form-data")
+    public ResponseEntity<Void> guardarPaciente(
+        @RequestParam("nombres") String nombres,
+        @RequestParam("edad") int edad,
+        @RequestParam("sexo") String sexo,
+        @RequestParam("expediente") String expediente,
+        @RequestParam("tipoSangre") String tipoSangre,
+        @RequestParam("fechaIngreso") String fechaIngreso,
+        @RequestParam("fotografia") MultipartFile fotografia
+    ) {
+        String sql = "INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
-             PreparedStatement Contenedor = conn.prepareStatement(sql)) {
+         PreparedStatement Contenedor = conn.prepareStatement(sql)) {
 
-            Contenedor.setString(1, (String) datosPaciente.get("nombres"));
-            Contenedor.setInt(2, Integer.parseInt(datosPaciente.get("edad").toString()));
-			Contenedor.setString(3, (String) datosPaciente.get("sexo"));
-            Contenedor.setString(4, (String) datosPaciente.get("expediente"));
-			Contenedor.setString(5, (String) datosPaciente.get("tipoSangre"));
-			Contenedor.setString(6, (String) datosPaciente.get("fotografia"));
-            Contenedor.setString(7, (String) datosPaciente.get("fechaIngreso"));
-            Contenedor.setString(8, (String) datosPaciente.get("usuario_id"));
-            Contenedor.setString(9, (String) datosPaciente.get("camilla_id"));
+            Contenedor.setString(1, nombres);
+            Contenedor.setInt(2, edad);
+            Contenedor.setString(3, sexo);
+            Contenedor.setString(4, expediente);
+            Contenedor.setString(5, tipoSangre);
+            Contenedor.setBytes(6, fotografia.getBytes());
+            Contenedor.setString(7, fechaIngreso);
+            Contenedor.setString(8, String.valueOf(Tipo_Usuario)); // tu variable global
+            Contenedor.setString(9, "1"); // camilla fija o lo que uses
 
-            // Pasamos el arreglo de condiciones a cadena
-            Object condicionesObj = datosPaciente.get("condiciones");
+		    // Pasamos el arreglo de condiciones a cadena
+            /*Object condicionesObj = datosPaciente.get("condiciones");
             String condicionesStr = condicionesObj instanceof Iterable ? String.join(",", (Iterable<String>) condicionesObj): condicionesObj.toString();
-                
+            
             Contenedor.setString(12, condicionesStr);
+            */
 
-            Contenedor.executeUpdate(); // Realiza la consulta
-            System.out.println(" Paciente guardado correctamente");
+            Contenedor.executeUpdate();
 
+            System.out.println("Paciente guardado correctamente");
             return ResponseEntity.ok().build();
 
         } catch (Exception e) {
@@ -363,6 +383,7 @@ public class MediTrackApplication {
             return ResponseEntity.status(500).build();
         }
     }
+
 
 }
 

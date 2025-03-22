@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'; // Importar motion desde framer-motion
 import '../App.css';
@@ -8,13 +8,32 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleButtonClick = async (route) => {
 
+  const enviarUsuario = async (indice) => {
+    try {
+      const response = await fetch('http://localhost:8080/Usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          IndiceUsuario: indice,
+        }),
+      });
+  
+      if (!response.ok) throw new Error('Error en la solicitud');
+  
+      const tipoUsuario = await response.json(); // o .text() si es un número plano
+      console.log('Respuesta del servidor:', tipoUsuario);
+    } catch (error) {
+      console.error('Error al enviar usuario:', error);
+    }
   };
+  
 
   const handleLogin =async (e) => {
 
-    try {
+    /*try {
       const response = await fetch("http://192.168.137.1:8080/Acceso_Form");
       if (!response.ok) throw new Error("Error en la solicitud");
       const Estado_Acceso = await response.json();
@@ -27,14 +46,16 @@ function Login() {
     } catch (error) {
       toast.error("❌ Error al obtener datos");
       console.error("Error al obtener datos:", error);
-    }
+    }*/
 
     e.preventDefault();
     
-    if (email === 'zobadillas@gmail.com' && password === '123456') {
+    if (email === 'Especialista@gmail.com' && password === '123456') {
+      enviarUsuario(1);
       navigate('/principal');
-    } else if (email === 'ola@gmail.com' && password === '123456') {
-      navigate('/ApartadoU');
+    } else if (email === 'residente@gmail.com' && password === '123456') {
+      enviarUsuario(2);
+      navigate('/principal');
     } else {
       alert('Email o contraseña incorrectos');
     }
