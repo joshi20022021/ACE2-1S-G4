@@ -2,7 +2,7 @@
 INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id)
 VALUES 
 ('Ana Li', 25, 'F', 10001, 'O+', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 1, 1),
-('Leo Wu', 30, 'M', 10002, 'A-', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 2, 2);
+('Leo Wu', 30, 'M', 10002, 'A-', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 1, 1);
 
 ALTER TABLE Pacientes
   MODIFY Camilla_id INT NULL;
