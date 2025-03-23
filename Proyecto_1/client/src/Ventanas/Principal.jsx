@@ -30,20 +30,20 @@ const Principal = () => {
   const handleButtonClick = async (route) => {
     console.log(`Botón ${route} clickeado`);
     switch (route) {
-      case "Formulario1":
+      case "Formulario":
         try {
-          const response = await fetch("http://192.168.137.1:8080/Acceso_Form");
+          const response = await fetch("http://localhost:8080/GetUsuario");
           if (!response.ok) throw new Error("Error en la solicitud");
           const Estado_Acceso = await response.json();
 
-          if (Estado_Acceso) {
+          if (Estado_Acceso == 1) {
             toast.success("Acceso concedido, redirigiendo...");
             navigate(`/${route}`);
           } else {
-            toast.warn("Coloca la llave de acceso");
+            toast.warn("Permisos Insuficientes");
           }
         } catch (error) {
-          toast.error("❌ Error al obtener datos");
+          toast.error("Error al obtener datos");
           console.error("Error al obtener datos:", error);
         }
         break;

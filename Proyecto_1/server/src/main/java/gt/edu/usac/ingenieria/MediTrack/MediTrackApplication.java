@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Base64;
 
 @SpringBootApplication
 @RestController
@@ -263,6 +262,11 @@ public class MediTrackApplication {
 		return Tipo_Usuario;
 	}
 
+	@GetMapping("/GetUsuario")
+	public int GetUsuario() {
+		return Tipo_Usuario;
+	}
+
 	
 	// Borrar Datos pacientes
 	@PostMapping("/BorrarDatosPaciente")
@@ -384,7 +388,35 @@ public class MediTrackApplication {
         }
     }
 
-
+	@PostMapping("/AsignarCamilla")
+    public ResponseEntity<String> asignarCamilla(
+        @RequestParam("idPaciente") int idPaciente,
+        @RequestParam("idCamilla") int idCamilla
+    ) {
+        String sql = "UPDATE Pacientes SET Camilla_id = ? WHERE id = ?";
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setInt(1, idCamilla);
+            stmt.setInt(2, idPaciente);
+    
+            int Afectados = stmt.executeUpdate();
+    
+            if (Afectados > 0) {
+                System.out.println("Camilla "+idCamilla+" asignada correctamente a " + idPaciente);
+                return ResponseEntity.ok("Camilla "+idCamilla+" asignada correctamente a " + idPaciente);
+            } else {
+                System.out.println("⚠ No se encontró al paciente: " + idPaciente);
+                return ResponseEntity.status(404).body("Paciente no encontrado.");
+            }
+    
+        } catch (SQLException e) {
+            System.out.println("Error al asignar camilla.");
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error al asignar camilla.");
+        }
+    }
 }
 
 /*

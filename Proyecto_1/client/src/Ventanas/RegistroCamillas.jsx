@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 const styles = {
@@ -94,11 +94,24 @@ const styles = {
 const RegistroCamillas = () => {
   const navigate = useNavigate(); // Hook para redireccionar
 
-  const [pacientes, setPacientes] = useState([
-    { id: 1, nombre: 'Juan Pérez' },
-    { id: 2, nombre: 'María Gómez' },
-    { id: 3, nombre: 'Carlos López' },
-  ]);
+  const [pacientes, setPacientes] = useState([]);
+  
+  let [indicePaciente, setindicePaciente] = useState();
+  
+  useEffect(() => {
+    // Hacer la petición a la API
+    const fetchPacientes = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/GetPacientes");
+        const data = await response.json();
+        setPacientes(data); // Guardamos los nombres en el estado
+      } catch (error) {
+        console.error("Error al obtener nombres de pacientes:", error);
+      }
+    };
+  
+    fetchPacientes();
+  }, []);
 
   const [camillas, setCamillas] = useState([
     { id: 1, numero: 'Camilla 1' },
@@ -110,18 +123,55 @@ const RegistroCamillas = () => {
   const [camillaSeleccionada, setCamillaSeleccionada] = useState('');
 
   const handlePacienteChange = (event) => {
+    const nuevoIndice = event.target.selectedIndex;
+    setindicePaciente(nuevoIndice);
     setPacienteSeleccionado(event.target.value);
   };
+  
 
   const handleCamillaChange = (event) => {
+
     setCamillaSeleccionada(event.target.value);
   };
 
-  const handleConfirmarRegistro = () => {
-    if (pacienteSeleccionado && camillaSeleccionada) {
+  const handleConfirmarRegistro = async() => {
+    /*if (pacienteSeleccionado && camillaSeleccionada) {
       alert(`Paciente: ${pacienteSeleccionado} asignado a ${camillaSeleccionada}`);
     } else {
       alert('Por favor, selecciona un paciente y una camilla.');
+    }*/
+
+      console.log("Paciente: "+indicePaciente);
+    if (indicePaciente && camillaSeleccionada) {
+      // Extraer el número del ID de camilla (ej. "Camilla 2" → 2)
+      const idCamilla = camillaSeleccionada.split(' ')[1];
+  
+      try {
+        const response = await fetch("http://localhost:8080/AsignarCamilla", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            idPaciente: indicePaciente,
+            idCamilla: idCamilla
+          }),
+        });
+  
+        const resultado = await response.text();
+  
+        if (response.ok) {
+          alert(`${resultado}`);
+        } else {
+          alert(`Error: ${resultado}`);
+        }
+  
+      } catch (error) {
+        console.error("Error al asignar camilla:", error);
+        alert("Error al conectar con el servidor");
+      }
+    } else {
+      alert('⚠ Por favor, selecciona un paciente y una camilla.');
     }
   };
 
@@ -146,11 +196,9 @@ const RegistroCamillas = () => {
               </label>
               <select id="pacientes" value={pacienteSeleccionado} onChange={handlePacienteChange} style={styles.select}>
                 <option value="">Seleccione un paciente</option>
-                {pacientes.map((paciente) => (
-                  <option key={paciente.id} value={paciente.nombre}>
-                    {paciente.nombre}
-                  </option>
-                ))}
+                {pacientes.map((nombre, index) => (
+                    <option key={index} value={nombre}>{nombre}</option>
+                  ))}
               </select>
             </div>
 
