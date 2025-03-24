@@ -17,11 +17,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
+import java.text.ParseException;
+
 
 @SpringBootApplication
 @RestController
@@ -514,7 +519,24 @@ public class MediTrackApplication {
                 psIns.setDouble(14, promOxi);
     
                 psIns.setInt(15, pacienteId);
-                psIns.setString(16, fechaIngreso);
+				
+				// importante destacar que a la base de datos se le resto 6 la hora de su servidor, y la hora obtenida de aqui se le restaron 18 horas
+                try {
+			    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date fechaOriginal = sdf.parse(fechaIngreso); // fechaIngreso viene como string
+                    
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(fechaOriginal);
+                    calendar.add(Calendar.HOUR_OF_DAY, -18); // Restamos 18 horas para hora guatemalteca
+                    Date fechaCorregida = calendar.getTime();
+                    
+                    String fechaFinalCorregida = sdf.format(fechaCorregida);
+    
+                    psIns.setString(16, fechaFinalCorregida);
+			    } catch (ParseException e) {
+			    	e.printStackTrace();
+			    	return ResponseEntity.status(500).body("Error al parsear la fecha: " + e.getMessage());
+			    }
     
                 psIns.executeUpdate();
             }
