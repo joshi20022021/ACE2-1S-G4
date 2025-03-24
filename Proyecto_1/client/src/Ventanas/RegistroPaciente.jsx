@@ -56,14 +56,14 @@ const RegistroPaciente = () => {
   const Enviar_Datos = async () => {
     try {
       const formData = new FormData();
-  
+
       formData.append("nombres", formDatos.nombres);
       formData.append("edad", formDatos.edad);
       formData.append("sexo", formDatos.sexo);
       formData.append("expediente", formDatos.expediente);
       formData.append("tipoSangre", formDatos.tipoSangre);
       formData.append("fechaIngreso", formDatos.fechaIngreso);
-      formData.append("fotografia", formDatos.fotografia); // 👈 archivo tipo File
+      formData.append("fotografia", formDatos.fotografia); // archivo tipo File
       
       // Bloqueamos acceso al formulario
       /*const response = await fetch("http://localhost:8080/Bloqueo_Acceso");

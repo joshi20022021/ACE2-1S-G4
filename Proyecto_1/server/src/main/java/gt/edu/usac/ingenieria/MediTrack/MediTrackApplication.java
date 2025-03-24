@@ -417,6 +417,125 @@ public class MediTrackApplication {
             return ResponseEntity.status(500).body("Error al asignar camilla.");
         }
     }
+
+
+	@PostMapping("/guardarDiagnostico")
+    public ResponseEntity<String> guardarDiagnostico(
+            @RequestParam("pacienteId") int pacienteId,
+            @RequestParam("diagnosticoPrincipal") String diagnosticoPrincipal,
+            @RequestParam("sintomas") String sintomas,
+            @RequestParam("antecedentes") String antecedentes,
+            @RequestParam("condiciones") String condiciones,
+            @RequestParam("alergias") String alergias,
+            @RequestParam("tratamiento") String tratamiento,
+            @RequestParam("observaciones") String observaciones,
+            @RequestParam("recomendaciones") String recomendaciones, 
+    		@RequestParam("fechaIngreso") String fechaIngreso
+    ) {
+        // variavles para min, max, promedio de ecg y oximetria
+        int minECG = 0, maxECG = 0;
+        double promECG = 0;
+        int minOxi = 0, maxOxi = 0;
+        double promOxi = 0;
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
+    
+            // Estadística de signos vitales
+            String sqlEstadisticas = """
+                SELECT 
+                    MIN(Frecuencia_Cardiaca) AS minECG,
+                    MAX(Frecuencia_Cardiaca) AS maxECG,
+                    AVG(Frecuencia_Cardiaca) AS promECG,
+                    MIN(Oxigenacion)       AS minOxi,
+                    MAX(Oxigenacion)       AS maxOxi,
+                    AVG(Oxigenacion)       AS promOxi
+                FROM Signos_Vitales
+            """;
+    
+            try (PreparedStatement psEst = conn.prepareStatement(sqlEstadisticas);
+                 ResultSet rs = psEst.executeQuery()) {
+    
+                if (rs.next()) {
+    				// Obtenemos valores despues de la consulta
+                    minECG = rs.getInt("minECG");
+                    maxECG = rs.getInt("maxECG");
+                    promECG = rs.getDouble("promECG");
+                    minOxi = rs.getInt("minOxi");
+                    maxOxi = rs.getInt("maxOxi");
+                    promOxi = rs.getDouble("promOxi");
+                }
+            }
+    
+            // b) Insertar registro en Diagnósticos
+            //    Ajusta los campos y tipos según tus columnas
+            String sqlInsert = """
+                INSERT INTO Diagnósticos
+                (
+                  Diagnostico_Principal,
+                  Sintomas_Reportados,
+                  Antecedentes,
+                  Condiciones,
+                  Alergias,
+                  Tratamiento,
+                  Observaciones,
+                  Recomendaciones,
+    			  
+                  Minimo_ECG,
+                  Maximo_ECG,
+                  Promedio_ECG,
+                  Minimo,
+                  Maximo,
+                  Promedio,
+                  Pacientes_id,
+                  Fecha,
+                  Fecha_final,
+				  Estado
+                )
+                VALUES
+                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,'proceso')
+            """;
+            try (PreparedStatement psIns = conn.prepareStatement(sqlInsert)) {
+    
+                psIns.setString(1, diagnosticoPrincipal);
+                psIns.setString(2, sintomas);
+                psIns.setString(3, antecedentes);
+                psIns.setString(4, condiciones);
+                psIns.setString(5, alergias);
+                psIns.setString(6, tratamiento);
+                psIns.setString(7, observaciones);
+                psIns.setString(8, recomendaciones);
+    
+                // min, max, prom
+                psIns.setInt(9, minECG);       
+                psIns.setInt(10, maxECG);      
+                psIns.setDouble(11, promECG); 
+                psIns.setInt(12, minOxi);
+                psIns.setInt(13, maxOxi);
+                psIns.setDouble(14, promOxi);
+    
+                psIns.setInt(15, pacienteId);
+                psIns.setString(16, fechaIngreso);
+    
+                psIns.executeUpdate();
+            }
+    
+            /*
+    		//Borrar todo de la tabla Signos_Vitales (datos temporales, puede ser opcional)
+            String sqlDelete = "DELETE FROM Signos_Vitales";
+            try (PreparedStatement psDel = conn.prepareStatement(sqlDelete)) {
+                psDel.executeUpdate();
+            }
+    		*/
+    
+            // Retornar respuesta
+            return ResponseEntity.ok("Diagnóstico guardado y Signos_Vitales limpiados.");
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error guardando diagnóstico: " + e.getMessage());
+        }
+    }
+
 }
 
 /*

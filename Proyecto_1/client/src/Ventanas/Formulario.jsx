@@ -8,9 +8,17 @@ const Formulario = () => {
   const navigate = useNavigate();
 
     const [pacientes, setPacientes] = useState([]);
-    
+    const [fechaIngreso, setFechaIngreso] = useState('');
+
     useEffect(() => {
-      // Hacer la petición a la API
+      const ahora = new Date();
+      const offsetMs = ahora.getTimezoneOffset() * 60000;
+      const local = new Date(ahora.getTime() - offsetMs);
+ 
+      const fechaGuatemala = local.toISOString().slice(0, 19).replace('T', ' ');
+
+      setFechaIngreso(fechaGuatemala);
+
       const fetchPacientes = async () => {
         try {
           const response = await fetch("http://localhost:8080/GetPacientes");
@@ -24,28 +32,37 @@ const Formulario = () => {
       fetchPacientes();
     }, []);
 
+    let [indicePaciente, setindicePaciente] = useState();
+
   let [formDatos, setFormDatos] = useState({
-    paciente: "", // Nuevo campo para el paciente seleccionado
-    ecgMaximos: "",
-    ecgMinimos: "",
-    ecgPromedio: "",
+    principal:"",
+    sintomas: "",
+    antecedentes: "",
+    condiciones: [], 
+    alergias: "",
+    tratamiento: "",
+    Observaciones:"",
+    recomendaciones: "",
     oximetroMaximos: "",
     oximetroMinimos: "",
     oximetroPromedio: "",
-    sintomas: "",
-    antecedentes: "",
-    tratamiento: "",
-    alergias: "",
-    Observaciones:"",
-    recomendaciones: "",
-    condiciones: [], // Se almacena como un array
+    ecgMaximos: "",
+    ecgMinimos: "",
+    ecgPromedio: "",
+    fecha_inicio:fechaIngreso,
+    fecha_final:"",
+    idpaciente: indicePaciente
   });
 
-  // Lista de pacientes (puedes obtenerla de una API o base de datos)
-
+  const handlePacienteChange = (event) => {
+    const nuevoIndice = event.target.selectedIndex;
+    setindicePaciente(nuevoIndice);
+    //setPacienteSeleccionado(event.target.value);
+  };
 
   // Manejar cambios en inputs y selects
   const Cambio = (e) => {
+
     const { name, value } = e.target;
     setFormDatos({
       ...formDatos,
@@ -66,35 +83,33 @@ const Formulario = () => {
 
   const Enviar_Datos = async () => {
     console.log("Datos del formulario:", formDatos); // Debug en consola
-    try {
-      // Bloqueamos acceso al formulario
-      const response = await fetch("http://192.168.137.1:8080/Bloqueo_Acceso");
-      if (!response.ok) throw new Error("Error en la solicitud");
-
-      const Estado_Acceso = await response.json();
-      console.log(Estado_Acceso);
-
-      // Guardar pacientes
-      const response1 = await fetch("http://192.168.137.1:8080/guardarPaciente", {
+    try{
+      const formData = new FormData();
+      formData.append("pacienteId", indicePaciente);
+      formData.append("diagnosticoPrincipal", formDatos.principal);
+      formData.append("sintomas", formDatos.sintomas);
+      formData.append("antecedentes", formDatos.antecedentes);
+      formData.append("condiciones", formDatos.condiciones);
+      formData.append("alergias", formDatos.alergias);
+      formData.append("tratamiento", formDatos.tratamiento);
+      formData.append("observaciones", formDatos.Observaciones);
+      formData.append("recomendaciones", formDatos.recomendaciones);
+      formData.append("fechaIngreso", fechaIngreso); // fecha ingreso
+      const response = await fetch("http://localhost:8080/guardarDiagnostico", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formDatos) // Convertir el objeto a JSON para enviarlo
+        body: formData,
       });
-
-      if (response1.ok) {
-        alert("Datos guardados exitosamente, Acerque su tarjeta del paciente.");
+  
+      if (response.ok) {
+        alert("Datos guardados exitosamente.");
+        navigate("/principal");
       } else {
         alert("Error al guardar los datos.");
       }
-
-      if (!Estado_Acceso) {
-        navigate("/principal");
-      }
-
+    
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error al enviar datos:", error);
+      alert("⚠️ Error inesperado al enviar datos.");
     }
   };
 
@@ -134,7 +149,7 @@ const Formulario = () => {
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Pacientes</Form.Label>
-                <Form.Select required className="bg-dark text-light" name="paciente" value={formDatos.paciente} onChange={Cambio}>
+                <Form.Select required className="bg-dark text-light" name="paciente" value={formDatos.idpaciente} onChange={handlePacienteChange}>
                   <option value="">Seleccione un paciente...</option>
                   {pacientes.map((nombre, index) => (
                     <option key={index} value={nombre}>{nombre}</option>
@@ -236,6 +251,10 @@ const Formulario = () => {
             {/* Columna 2: Campos de mayor información (textareas) */}
             <Col md={4} sm={12} className="mb-3">
               <Form.Group className="mb-3">
+                <Form.Label className="text-light">Diagnóstico principal</Form.Label>
+                <Form.Control   required className="bg-dark text-light" name="principal" value={formDatos.principal} onChange={Cambio} />
+              </Form.Group>
+              <Form.Group className="mb-3">
                 <Form.Label className="text-light">Síntomas Reportados</Form.Label>
                 <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="sintomas" value={formDatos.sintomas} onChange={Cambio} />
               </Form.Group>
@@ -257,13 +276,13 @@ const Formulario = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Observaciones</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="condiciones" value={formDatos.Observaciones} onChange={Cambio} />
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="Observaciones" value={formDatos.Observaciones} onChange={Cambio} />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="text-light">Recomendaciones</Form.Label>
-                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="condiciones" value={formDatos.recomendaciones} onChange={Cambio} />
-              </Form.Group>1
+                <Form.Control as="textarea" rows={3} required className="bg-dark text-light" name="recomendaciones" value={formDatos.recomendaciones} onChange={Cambio} />
+              </Form.Group>
             </Col>
 
             {/* Columna 3: Checkboxes para condiciones preexistentes */}

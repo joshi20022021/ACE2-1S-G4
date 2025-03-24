@@ -4,6 +4,31 @@ VALUES
 ('Ana Li', 25, 'F', 10001, 'O+', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 1, 1),
 ('Leo Wu', 30, 'M', 10002, 'A-', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 1, 1);
 
+            INSERT INTO Diagnósticos
+            (
+              Diagnostico_Principal,
+              Sintomas_Reportados,
+              Antecedentes,
+              Condiciones,
+              Alergias,
+              Tratamiento,
+              Observaciones,
+              Recomendaciones,
+              Minimo_ECG,
+              Maximo_ECG,
+              Promedio_ECG,
+              Minimo,
+              Maximo,
+              Promedio,
+              Signos_Vitales_id,
+              Pacientes_id,
+              Fecha,
+              Fecha_final,
+              Estado
+            )
+            VALUES
+            ("","","","","","","","",1,1,1,1,1,1,11,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'proceso');
+
 ALTER TABLE Pacientes
   MODIFY Camilla_id INT NULL;
 
@@ -21,17 +46,24 @@ VALUES ('Vacia', NOW());
 
 -- utilidades
  
-SELECT * FROM Pacientes; -- ver tabla
+SELECT * FROM Diagnósticos; -- ver tabla
 
-DROP TABLE Usuarios;
+ALTER TABLE Diagnósticos
+ADD COLUMN Promedio_ECG int NOT NULL;
+
+UPDATE Pacientes SET Camilla_id = 1 WHERE id = 1;
+
+DROP TABLE Signos_vitales;
 
 SHOW TABLES;
 
 SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE Pacientes;
+TRUNCATE TABLE Diagnósticos;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- 	DDL
+
+
 CREATE TABLE IF NOT EXISTS `ACYE2`.`Usuarios` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Nombre_Completo` VARCHAR(550) NOT NULL,
@@ -41,8 +73,7 @@ CREATE TABLE IF NOT EXISTS `ACYE2`.`Usuarios` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `RFID_UNIQUE` (`UID` ASC) VISIBLE,
   PRIMARY KEY (`id`));
-  
-  
+
 CREATE TABLE IF NOT EXISTS `ACYE2`.`Camilla` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Estado` VARCHAR(45) NOT NULL,
@@ -75,15 +106,6 @@ CREATE TABLE IF NOT EXISTS `ACYE2`.`Pacientes` (
     REFERENCES `ACYE2`.`Camilla` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-    
-CREATE TABLE IF NOT EXISTS `ACYE2`.`Signos_Vitales` (
-  `id` INT NOT NULL,
-  `Oxigenacion` INT NOT NULL,
-  `Frecuencia_Cardiaca` INT NOT NULL,
-  `Fecha` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `ACYE2`.`Diagnósticos` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -99,22 +121,34 @@ CREATE TABLE IF NOT EXISTS `ACYE2`.`Diagnósticos` (
   `Minimo` INT NOT NULL,
   `Maximo` INT NOT NULL,
   `Promedio` INT NOT NULL,
+  `Minimo_ECG` INT NOT NULL,
+  `Maximo_ECG` INT NOT NULL,
+  `Promedio_ECG` INT NOT NULL,
   `Fecha` TIMESTAMP NOT NULL,
+  `Fecha_final` TIMESTAMP NOT NULL,
   `Pacientes_id` INT NOT NULL,
-  `Signos_Vitales_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Pacientes_id`, `Signos_Vitales_id`),
+  PRIMARY KEY (`id`, `Pacientes_id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_Diagnósticos_Pacientes1_idx` (`Pacientes_id` ASC) VISIBLE,
-  INDEX `fk_Diagnósticos_Signos_Vitales1_idx` (`Signos_Vitales_id` ASC) VISIBLE,
   CONSTRAINT `fk_Diagnósticos_Pacientes1`
     FOREIGN KEY (`Pacientes_id`)
     REFERENCES `ACYE2`.`Pacientes` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Diagnósticos_Signos_Vitales1`
-    FOREIGN KEY (`Signos_Vitales_id`)
-    REFERENCES `ACYE2`.`Signos_Vitales` (`id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
+    
+CREATE TABLE IF NOT EXISTS `ACYE2`.`Signos_Vitales` (
+  `id` INT NOT NULL,
+  `Oxigenacion` INT NOT NULL,
+  `Frecuencia_Cardiaca` INT NOT NULL,
+  `Fecha` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Diagnósticos_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `Diagnósticos_id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_Signos_Vitales_Diagnósticos1_idx` (`Diagnósticos_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Signos_Vitales_Diagnósticos1`
+    FOREIGN KEY (`Diagnósticos_id`)
+    REFERENCES `ACYE2`.`Diagnósticos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
   
