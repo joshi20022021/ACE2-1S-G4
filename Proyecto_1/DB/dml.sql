@@ -48,6 +48,11 @@ VALUES ('Vacia', NOW());
  
 SELECT * FROM Diagnósticos; -- ver tabla
 
+SELECT NOW();
+
+SET time_zone = '-06:00'; -- zona horaria guatemala
+SET time_zone = '+06:00'; -- zona horaria servidor
+
 ALTER TABLE Diagnósticos
 ADD COLUMN Promedio_ECG int NOT NULL;
 
