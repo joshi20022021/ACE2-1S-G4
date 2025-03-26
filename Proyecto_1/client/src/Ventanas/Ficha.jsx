@@ -7,27 +7,30 @@ import 'jspdf-autotable';
 import { motion } from 'framer-motion';
 
 const Ficha = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const [indicePaciente, setIndicePaciente] = useState(0);
 
     const [pacientes, setPacientes] = useState([]);
+
+    const ListaPacientes = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/GetPacientes", {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error("Error al obtener los datos");
+        }
+        const data = await response.json();
+        setPacientes(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
     
     useEffect(() => {
-      // Hacer la petición a la API
-      const fetchPacientes = async () => {
-        try {
-          const response = await fetch("http://localhost:8080/GetPacientes");
-          const data = await response.json();
-          setPacientes(data); // Guardamos los nombres en el estado
-        } catch (error) {
-          console.error("Error al obtener nombres de pacientes:", error);
-        }
-      };
-  
-      fetchPacientes();
+      ListaPacientes();
     }, []);
-  
+
   const [formDatos, setFormDatos] = useState({
     nombres: "",
     diagnostico: "",
@@ -43,43 +46,10 @@ const Ficha = () => {
     condiciones: [],
   });
 
-  useEffect(() => {
-    // Activar la animación después de que el componente se monte
-    setIsVisible(true);
-    fetchPacientes();
-  }, []);
-
-  const fetchPacientes = async () => {
-    try {
-      const response = await fetch("http://192.168.137.1:8080/ListarPacientes", {
-        method: "GET",
-      });
-      if (!response.ok) {
-        throw new Error("Error al obtener los datos");
-      }
-      const data = await response.json();
-      setPacientes(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const handlePacienteChange = async (event) => {
-    const selectedIndex = event.target.value;
-    setIndicePaciente(selectedIndex);
-
-    try {
-      const response = await fetch(`http://192.168.137.1:8080/SeleccionarPaciente?IndicePaciente=${selectedIndex}`, {
-        method: "GET",
-      });
-      if (!response.ok) {
-        throw new Error("Error al obtener los datos");
-      }
-      const data = await response.json();
-      setFormDatos(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    const nuevoIndice = event.target.selectedIndex;
+    setIndicePaciente(nuevoIndice);
   };
 
   const borrarPaciente = async () => {
@@ -95,7 +65,7 @@ const Ficha = () => {
 
       const data = await response.text();
       console.log("Respuesta del backend:", data);
-      fetchPacientes(); // Refrescar la lista de pacientes después de borrar
+      ListaPacientes(); // Refrescar la lista de pacientes después de borrar
     } catch (error) {
       console.error("Error al borrar el paciente:", error);
     }
@@ -230,7 +200,7 @@ const Ficha = () => {
                 <th colSpan="6">NOMBRE(S)</th>
               </tr>
               <tr>
-                <td colSpan="6">{formDatos.nombres || "Nada"}</td>
+                <td colSpan="6">{formDatos.nombres || " "}</td>
               </tr>
               <tr>
                 <th>FECHA DE INGRESO</th>
@@ -239,62 +209,62 @@ const Ficha = () => {
                 </th>
               </tr>
               <tr>
-                <td>{formDatos.fechaIngreso || "Nada"}</td>
+                <td>{formDatos.fechaIngreso || " "}</td>
                 <td colSpan="6" className="center">
-                  {formDatos.sexo || "Nada"}
+                  {formDatos.sexo || " "}
                 </td>
               </tr>
               <tr>
                 <th colSpan="6">EDAD</th>
               </tr>
               <tr>
-                <td colSpan="6">{formDatos.edad || "Nada"}</td>
+                <td colSpan="6">{formDatos.edad || " "}</td>
               </tr>
               <tr>
                 <th colSpan="6">EXPEDIENTE MÉDICO</th>
               </tr>
               <tr>
-                <td colSpan="6">{formDatos.expediente || "Nada"}</td>
+                <td colSpan="6">{formDatos.expediente || " "}</td>
               </tr>
               <tr>
                 <th colSpan="6">DIAGNÓSTICO PRINCIPAL</th>
               </tr>
               <tr>
-                <td colSpan="6">{formDatos.diagnostico || "Nada"}</td>
+                <td colSpan="6">{formDatos.diagnostico || " "}</td>
               </tr>
               <tr>
                 <th colSpan="3">TIPO DE SANGRE</th>
                 <th colSpan="3">ALERGIAS</th>
               </tr>
               <tr>
-                <td colSpan="3">{formDatos.tipoSangre || "Nada"}</td>
-                <td colSpan="3">{formDatos.alergias || "Nada"}</td>
+                <td colSpan="3">{formDatos.tipoSangre || " "}</td>
+                <td colSpan="3">{formDatos.alergias || " "}</td>
               </tr>
               <tr>
                 <th colSpan="6">SÍNTOMAS REPORTADOS</th>
               </tr>
               <tr>
-                <td colSpan="6">{formDatos.sintomas || "Nada"}</td>
+                <td colSpan="6">{formDatos.sintomas || " "}</td>
               </tr>
               <tr>
                 <th colSpan="3">ANTECEDENTES MÉDICOS</th>
                 <th colSpan="3">CONDICIONES PREEXISTENTES</th>
               </tr>
               <tr>
-                <td colSpan="3">{formDatos.antecedentes || "Nada"}</td>
+                <td colSpan="3">{formDatos.antecedentes || " "}</td>
                 <td colSpan="3">
                   {formDatos.condiciones && formDatos.condiciones.length > 0
                     ? formDatos.condiciones.map((condicion, index) => (
                         <div key={index}>{condicion}</div>
                       ))
-                    : "Nada"}
+                    : " "}
                 </td>
               </tr>
               <tr>
                 <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
               </tr>
               <tr>
-                <td colSpan="6">{formDatos.tratamiento || "Nada"}</td>
+                <td colSpan="6">{formDatos.tratamiento || " "}</td>
               </tr>
             </tbody>
           </motion.table>

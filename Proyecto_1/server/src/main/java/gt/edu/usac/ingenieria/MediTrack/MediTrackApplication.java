@@ -272,7 +272,6 @@ public class MediTrackApplication {
 		return Tipo_Usuario;
 	}
 
-	
 	// Borrar Datos pacientes
 	@PostMapping("/BorrarDatosPaciente")
 	public String BorrarPaciente(@RequestParam int IndicePaciente) {
@@ -557,6 +556,71 @@ public class MediTrackApplication {
             return ResponseEntity.status(500).body("Error guardando diagnóstico: " + e.getMessage());
         }
     }
+
+
+	@PostMapping("/GetHistorialPaciente")
+public Map<String, Object> obtenerPaciente(@RequestParam("idPaciente") int idPaciente) {
+    Map<String, Object> respuesta = new HashMap<>();
+
+    try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
+        // Consulta JOIN (ajusta los campos que necesites)
+        String sql = """
+            SELECT p.Nombre_Completo        AS nombres,
+                   p.edad                  AS edad,
+                   p.Sexo                  AS sexo,
+                   p.No_Exp_Med           AS expediente,
+                   p.Tipo_Sangre          AS tipoSangre,
+                   p.Fecha                AS fechaIngreso,
+                   
+                   d.Diagnostico_Principal AS diagnostico,
+                   d.Sintomas_Reportados   AS sintomas,
+                   d.Antecedentes          AS antecedentes,
+                   d.Tratamiento           AS tratamiento,
+                   d.Alergias             AS alergias,
+                   d.Condiciones          AS condiciones
+                   
+            FROM Pacientes p
+            LEFT JOIN Diagnósticos d
+                   ON p.id = d.Pacientes_id
+            WHERE p.id = ?
+        """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPaciente);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Guardar en el map lo que vas a usar en tu formulario
+                    respuesta.put("nombres",       rs.getString("nombres"));
+                    respuesta.put("edad",          rs.getInt("edad"));
+                    respuesta.put("sexo",          rs.getString("sexo"));
+                    respuesta.put("expediente",    rs.getString("expediente"));
+                    respuesta.put("tipoSangre",    rs.getString("tipoSangre"));
+                    respuesta.put("fechaIngreso",  rs.getString("fechaIngreso"));
+                    
+                    respuesta.put("diagnostico",   rs.getString("diagnostico"));
+                    respuesta.put("sintomas",      rs.getString("sintomas"));
+                    respuesta.put("antecedentes",  rs.getString("antecedentes"));
+                    respuesta.put("tratamiento",   rs.getString("tratamiento"));
+                    respuesta.put("alergias",      rs.getString("alergias"));
+                    
+                    // Si en tu BD "condiciones" está en una sola columna separada por comas
+                    // y deseas un arreglo en React, puedes hacer un split:
+                    String condStr = rs.getString("condiciones");
+                    if (condStr != null) {
+                        String[] condicionesArray = condStr.split(",");
+                        respuesta.put("condiciones", condicionesArray);
+                    } else {
+                        respuesta.put("condiciones", new String[0]);
+                    }
+                }
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return respuesta;
+}
 
 }
 
