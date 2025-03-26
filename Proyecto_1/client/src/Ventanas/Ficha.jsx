@@ -43,7 +43,10 @@ const Ficha = () => {
     antecedentes: "",
     tratamiento: "",
     alergias: "",
-    condiciones: [],
+    fechaDiagnostico: "",
+    condicionesPreexistentes: "",
+    observaciones: "",
+    recomendaciones: "",
   });
 
 
@@ -108,6 +111,14 @@ const Ficha = () => {
       [{ content: "DIAGNÓSTICO PRINCIPAL", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
       [{ content: formDatos.diagnostico || "-", colSpan: 4, styles: { halign: "center" } }],
       [
+        { content: "FECHA DE DIAGNÓSTICO", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
+        { content: "CONDICIONES PREEXISTENTES", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
+      ],
+      [
+        { content: formDatos.fechaDiagnostico || "-", colSpan: 2, styles: { halign: "center" } },
+        { content: formDatos.condicionesPreexistentes || "-", colSpan: 2, styles: { halign: "center" } },
+      ],
+      [
         { content: "TIPO DE SANGRE", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
         { content: "ALERGIAS", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
       ],
@@ -117,20 +128,14 @@ const Ficha = () => {
       ],
       [{ content: "SÍNTOMAS REPORTADOS", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
       [{ content: formDatos.sintomas || "-", colSpan: 4, styles: { halign: "center" } }],
-      [
-        { content: "ANTECEDENTES MÉDICOS", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
-        { content: "CONDICIONES PREEXISTENTES", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
-      ],
-      [
-        { content: formDatos.antecedentes || "-", colSpan: 2, styles: { halign: "center" } },
-        {
-          content: formDatos.condiciones && formDatos.condiciones.length > 0 ? formDatos.condiciones.join(", ") : "-",
-          colSpan: 2,
-          styles: { halign: "center" },
-        },
-      ],
+      [{ content: "ANTECEDENTES MÉDICOS", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.antecedentes || "-", colSpan: 4, styles: { halign: "center" } }],
       [{ content: "PLAN DE TRATAMIENTO INICIAL", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
       [{ content: formDatos.tratamiento || "-", colSpan: 4, styles: { halign: "center" } }],
+      [{ content: "OBSERVACIONES", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.observaciones || "-", colSpan: 4, styles: { halign: "center" } }],
+      [{ content: "RECOMENDACIONES", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
+      [{ content: formDatos.recomendaciones || "-", colSpan: 4, styles: { halign: "center" } }],
     ];
 
     doc.autoTable({
@@ -233,6 +238,14 @@ const Ficha = () => {
                 <td colSpan="6">{formDatos.diagnostico || " "}</td>
               </tr>
               <tr>
+                <th colSpan="3">FECHA DE DIAGNÓSTICO</th>
+                <th colSpan="3">CONDICIONES PREEXISTENTES</th>
+              </tr>
+              <tr>
+                <td colSpan="3">{formDatos.fechaDiagnostico || " "}</td>
+                <td colSpan="3">{formDatos.condicionesPreexistentes || " "}</td>
+              </tr>
+              <tr>
                 <th colSpan="3">TIPO DE SANGRE</th>
                 <th colSpan="3">ALERGIAS</th>
               </tr>
@@ -247,24 +260,28 @@ const Ficha = () => {
                 <td colSpan="6">{formDatos.sintomas || " "}</td>
               </tr>
               <tr>
-                <th colSpan="3">ANTECEDENTES MÉDICOS</th>
-                <th colSpan="3">CONDICIONES PREEXISTENTES</th>
+                <th colSpan="6">ANTECEDENTES MÉDICOS</th>
               </tr>
               <tr>
-                <td colSpan="3">{formDatos.antecedentes || " "}</td>
-                <td colSpan="3">
-                  {formDatos.condiciones && formDatos.condiciones.length > 0
-                    ? formDatos.condiciones.map((condicion, index) => (
-                        <div key={index}>{condicion}</div>
-                      ))
-                    : " "}
-                </td>
+                <td colSpan="6">{formDatos.antecedentes || " "}</td>
               </tr>
               <tr>
                 <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
               </tr>
               <tr>
                 <td colSpan="6">{formDatos.tratamiento || " "}</td>
+              </tr>
+              <tr>
+                <th colSpan="6">OBSERVACIONES</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.observaciones || " "}</td>
+              </tr>
+              <tr>
+                <th colSpan="6">RECOMENDACIONES</th>
+              </tr>
+              <tr>
+                <td colSpan="6">{formDatos.recomendaciones || " "}</td>
               </tr>
             </tbody>
           </motion.table>
