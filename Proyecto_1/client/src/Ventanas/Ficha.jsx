@@ -9,27 +9,137 @@ import { motion } from 'framer-motion';
 const Ficha = () => {
   const navigate = useNavigate();
   const [indicePaciente, setIndicePaciente] = useState(0);
+  const [pacientes, setPacientes] = useState([]);
+  
+  // Listas de todas las opciones
+  const condicionesPreexistentes = [
+    "Cáncer",
+    "VIH/SIDA",
+    "Diabetes",
+    "Hipertensión",
+    "Asma",
+    "Enfermedad cardíaca",
+    "Artritis",
+    "EPOC",
+    "Obesidad",
+    "Enfermedad renal"
+  ];
 
-    const [pacientes, setPacientes] = useState([]);
+  const opcionesAlergias = [
+    "Penicilina",
+    "Aspirina",
+    "Sulfamidas",
+    "Yodo",
+    "Latex",
+    "Polen",
+    "Ácaros",
+    "Mariscos",
+    "Frutos secos",
+    "Huevos"
+  ];
 
-    const ListaPacientes = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/GetPacientes", {
-          method: "GET",
-        });
-        if (!response.ok) {
-          throw new Error("Error al obtener los datos");
-        }
-        const data = await response.json();
-        setPacientes(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    
-    useEffect(() => {
-      ListaPacientes();
-    }, []);
+  const opcionesEstado = [
+    "Estable",
+    "Grave",
+    "Crítico",
+    "En observación",
+    "Recuperación",
+    "Alta médica"
+  ];
+
+  const opcionesDiagnostico = [
+    "Neumonía",
+    "Infección urinaria",
+    "Hipertensión arterial",
+    "Diabetes mellitus",
+    "Asma bronquial",
+    "Gastritis",
+    "Artritis reumatoide",
+    "Depresión mayor",
+    "COVID-19",
+    "Fractura de cadera"
+  ];
+
+  const opcionesSintomas = [
+    "Fiebre",
+    "Tos persistente",
+    "Dificultad respiratoria",
+    "Dolor torácico",
+    "Mareos",
+    "Náuseas/vómitos",
+    "Diarrea",
+    "Cefalea intensa",
+    "Pérdida de peso",
+    "Fatiga crónica"
+  ];
+
+  const opcionesTratamiento = [
+    "Antibióticos",
+    "Antiinflamatorios",
+    "Analgésicos",
+    "Quimioterapia",
+    "Fisioterapia",
+    "Cirugía programada",
+    "Terapia hormonal",
+    "Psicoterapia",
+    "Dieta especial",
+    "Reposo absoluto"
+  ];
+
+  const opcionesObservaciones = [
+    "Mejoría notable",
+    "Sin cambios",
+    "Empeoramiento",
+    "Reacción al tratamiento",
+    "Requiere seguimiento",
+    "Alta inminente",
+    "Cambio de medicación",
+    "Derivación a especialista",
+    "Exámenes pendientes",
+    "Riesgo de recaída"
+  ];
+
+  const opcionesAntecedentes = [
+    "Cirugías previas",
+    "Hospitalizaciones anteriores",
+    "Enfermedades crónicas",
+    "Alergias conocidas",
+    "Antecedentes familiares relevantes",
+    "Traumatismos importantes",
+    "Tratamientos prolongados",
+    "Adicciones",
+    "Embarazos/partos",
+    "Vacunación incompleta"
+  ];
+
+  const opcionesRecomendaciones = [
+    "Control en 1 semana",
+    "Exámenes de laboratorio",
+    "Imágenes diagnósticas",
+    "Consulta con especialista",
+    "Cambio de hábitos",
+    "Terapia de rehabilitación",
+    "Acompañamiento psicológico",
+    "Hospitalización domiciliaria",
+    "Urgencias si empeora",
+    "Alta sin recomendaciones"
+  ];
+
+  
+  const fechasIniciales = [
+    "2023-01-01",
+    "2023-02-15",
+    "2023-03-10",
+    "2023-04-05",
+    "2023-05-20",
+    "2023-06-15"
+  ];
+
+  const fechasFinales = [
+    "2023-04-05",
+    "2023-05-20",
+    "2023-06-15"
+  ];
 
   const [formDatos, setFormDatos] = useState({
     nombres: "",
@@ -43,16 +153,53 @@ const Ficha = () => {
     antecedentes: "",
     tratamiento: "",
     alergias: "",
-    fechaDiagnostico: "",
+    fecha_inicial: "",
+    fecha_Final: "",
     condicionesPreexistentes: "",
     observaciones: "",
     recomendaciones: "",
+    estado: ""
   });
 
+  const ListaPacientes = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/GetPacientes", {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos");
+      }
+      const data = await response.json();
+      setPacientes(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+  useEffect(() => {
+    ListaPacientes();
+  }, []);
 
   const handlePacienteChange = async (event) => {
     const nuevoIndice = event.target.selectedIndex;
     setIndicePaciente(nuevoIndice);
+  };
+
+  const cargarListas = () => {
+    setFormDatos(prev => ({
+      ...prev,
+      condicionesPreexistentes: condicionesPreexistentes.join(", "),
+      alergias: opcionesAlergias.join(", "),
+      estado: opcionesEstado.join(", "),
+      diagnostico: opcionesDiagnostico.join(", "),
+      sintomas: opcionesSintomas.join(", "),
+      tratamiento: opcionesTratamiento.join(", "),
+      observaciones: opcionesObservaciones.join(", "),
+      antecedentes: opcionesAntecedentes.join(", "),
+      recomendaciones: opcionesRecomendaciones.join(", "),
+      fecha_inicial: fechasIniciales.join(", "),
+      fecha_Final: fechasFinales.join(", ")
+    }));
   };
 
   const borrarPaciente = async () => {
@@ -68,90 +215,176 @@ const Ficha = () => {
 
       const data = await response.text();
       console.log("Respuesta del backend:", data);
-      ListaPacientes(); // Refrescar la lista de pacientes después de borrar
+      ListaPacientes();
     } catch (error) {
       console.error("Error al borrar el paciente:", error);
     }
   };
 
   const generatePDF = () => {
-    const [year, month, day] = formDatos.fechaIngreso
-      ? formDatos.fechaIngreso.split("-")
-      : ["-", "-", "-"];
-
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-
-    doc.autoTable({
-      startY: 10,
-      head: [
-        [
-          {
-            content: "FICHA DE IDENTIFICACIÓN DEL PACIENTE",
-            colSpan: 4,
-            styles: {
-              halign: "center",
-              fillColor: [6, 19, 31],
-              textColor: 255,
-              fontStyle: "bold",
-              fontSize: 14,
-            },
-          },
-        ],
-      ],
-      theme: "plain",
-    });
-
-    const tableBody = [
-      ["NOMBRE(S)", "DÍA", "MES", "AÑO"],
-      [formDatos.nombres || "-", day || "-", month || "-", year || "-"],
-      [{ content: "EDAD", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.edad || "-", colSpan: 4, styles: { halign: "center" } }],
-      [{ content: "EXPEDIENTE MÉDICO", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.expediente || "-", colSpan: 4, styles: { halign: "center" } }],
-      [{ content: "DIAGNÓSTICO PRINCIPAL", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.diagnostico || "-", colSpan: 4, styles: { halign: "center" } }],
-      [
-        { content: "FECHA DE DIAGNÓSTICO", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
-        { content: "CONDICIONES PREEXISTENTES", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
-      ],
-      [
-        { content: formDatos.fechaDiagnostico || "-", colSpan: 2, styles: { halign: "center" } },
-        { content: formDatos.condicionesPreexistentes || "-", colSpan: 2, styles: { halign: "center" } },
-      ],
-      [
-        { content: "TIPO DE SANGRE", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
-        { content: "ALERGIAS", colSpan: 2, styles: { fontStyle: "bold", halign: "center" } },
-      ],
-      [
-        { content: formDatos.tipoSangre || "-", colSpan: 2, styles: { halign: "center" } },
-        { content: formDatos.alergias || "-", colSpan: 2, styles: { halign: "center" } },
-      ],
-      [{ content: "SÍNTOMAS REPORTADOS", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.sintomas || "-", colSpan: 4, styles: { halign: "center" } }],
-      [{ content: "ANTECEDENTES MÉDICOS", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.antecedentes || "-", colSpan: 4, styles: { halign: "center" } }],
-      [{ content: "PLAN DE TRATAMIENTO INICIAL", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.tratamiento || "-", colSpan: 4, styles: { halign: "center" } }],
-      [{ content: "OBSERVACIONES", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.observaciones || "-", colSpan: 4, styles: { halign: "center" } }],
-      [{ content: "RECOMENDACIONES", colSpan: 4, styles: { fontStyle: "bold", halign: "center" } }],
-      [{ content: formDatos.recomendaciones || "-", colSpan: 4, styles: { halign: "center" } }],
+  
+    
+    const margin = 15;
+    let yPos = margin;
+    const lineHeight = 7;
+    const pageHeight = 280;
+    const col1 = margin;
+    const col2 = margin + 65;
+    const col3 = margin + 130;
+    const colWidth = 60;
+  
+    
+    const titleStyle = { fontSize: 16, textColor: [6, 19, 31], fontStyle: 'bold' };
+    const sectionStyle = { fontSize: 12, textColor: [6, 19, 31], fontStyle: 'bold' };
+    const normalStyle = { fontSize: 10, textColor: [0, 0, 0], fontStyle: 'normal' };
+  
+    
+    const setStyle = (style) => {
+      doc.setFontSize(style.fontSize);
+      doc.setTextColor(...style.textColor);
+      doc.setFont("helvetica", style.fontStyle);
+    };
+  
+    
+    setStyle(titleStyle);
+    doc.text("FICHA DE IDENTIFICACIÓN DEL PACIENTE", 105, yPos, { align: "center" });
+    yPos += lineHeight * 2;
+  
+    
+    const addBasicInfo = () => {
+      setStyle(sectionStyle);
+      doc.text("INFORMACIÓN BÁSICA", margin, yPos);
+      yPos += lineHeight;
+  
+      setStyle(normalStyle);
+      const basicData = [
+        [`Nombre(s): ${formDatos.nombres || "-"}`, `Edad: ${formDatos.edad || "-"}`],
+        [`Sexo: ${formDatos.sexo || "-"}`, `Tipo de Sangre: ${formDatos.tipoSangre || "-"}`],
+        [`Expediente Médico: ${formDatos.expediente || "-"}`, `Fecha Ingreso: ${formDatos.fechaIngreso || "-"}`]
+      ];
+  
+      basicData.forEach(row => {
+        if (yPos > pageHeight - (lineHeight * 2)) {
+          doc.addPage();
+          yPos = margin;
+        }
+        doc.text(row[0], col1, yPos);
+        doc.text(row[1], col2, yPos);
+        yPos += lineHeight;
+      });
+  
+      
+      const formatDates = (dates) => {
+        if (!dates) return [];
+        return dates.split(", ")
+          .filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)) 
+          .map(date => date.trim());
+      };
+  
+      const fechasIniciales = formatDates(formDatos.fecha_inicial);
+      const fechasFinales = formatDates(formDatos.fecha_Final);
+  
+    
+      if (fechasIniciales.length > 0) {
+        doc.text("Fechas Iniciales:", col1, yPos);
+        yPos += lineHeight;
+        
+        let xPos = col1;
+        fechasIniciales.forEach((fecha, index) => {
+          if (xPos > margin + 120) {
+            xPos = col1;
+            yPos += lineHeight;
+          }
+          doc.text(fecha, xPos, yPos);
+          xPos += colWidth;
+        });
+        yPos += lineHeight;
+      }
+  
+    
+      if (fechasFinales.length > 0) {
+        doc.text("Fechas Finales:", col1, yPos);
+        yPos += lineHeight;
+        
+        let xPos = col1;
+        fechasFinales.forEach((fecha, index) => {
+          if (xPos > margin + 120) {
+            xPos = col1;
+            yPos += lineHeight;
+          }
+          doc.text(fecha, xPos, yPos);
+          xPos += colWidth;
+        });
+        yPos += lineHeight * 2;
+      } else {
+        yPos += lineHeight;
+      }
+    };
+  
+    
+    const addTableSection = (title, data) => {
+      if (!data) return;
+  
+    
+      setStyle(sectionStyle);
+      doc.text(`${title}:`, margin, yPos);
+      yPos += lineHeight;
+  
+  
+      setStyle(normalStyle);
+  
+      // se divide los datos en chunks de 3 columnas
+      const items = data.split(", ").filter(item => item.trim() !== "");
+      const chunks = [];
+      for (let i = 0; i < items.length; i += 4) {
+        chunks.push(items.slice(i, i + 3));
+      }
+  
+      
+      chunks.forEach((chunk) => {
+    
+        if (yPos > pageHeight - (lineHeight * 2)) {
+          doc.addPage();
+          yPos = margin;
+        }
+  
+        
+        let xPos = margin;
+        chunk.forEach((item) => {
+          doc.text(item.trim(), xPos, yPos);
+          xPos += colWidth;
+        });
+  
+        yPos += lineHeight;
+      });
+  
+      yPos += lineHeight; 
+    };
+  
+    
+    addBasicInfo();
+  
+    
+    const sections = [
+      { title: "ESTADO", data: formDatos.estado },
+      { title: "DIAGNÓSTICO PRINCIPAL", data: formDatos.diagnostico },
+      { title: "CONDICIONES PREEXISTENTES", data: formDatos.condicionesPreexistentes },
+      { title: "ALERGIAS", data: formDatos.alergias },
+      { title: "SÍNTOMAS REPORTADOS", data: formDatos.sintomas },
+      { title: "ANTECEDENTES MÉDICOS", data: formDatos.antecedentes },
+      { title: "PLAN DE TRATAMIENTO", data: formDatos.tratamiento },
+      { title: "OBSERVACIONES", data: formDatos.observaciones },
+      { title: "RECOMENDACIONES", data: formDatos.recomendaciones }
     ];
-
-    doc.autoTable({
-      startY: 25,
-      body: tableBody,
-      theme: "grid",
-      styles: { fontSize: 10, cellPadding: 3, valign: "middle" },
-      columnStyles: {
-        0: { cellWidth: 60 },
-        1: { cellWidth: 40 },
-        2: { cellWidth: 40 },
-        3: { cellWidth: 40 },
-      },
-      headStyles: { fillColor: [6, 19, 31], textColor: 255 },
+  
+    sections.forEach(section => {
+      if (section.data) {
+        addTableSection(section.title, section.data);
+      }
     });
-
+  
+    // Guardar el PDF
     doc.save("ficha_paciente.pdf");
   };
 
@@ -189,103 +422,110 @@ const Ficha = () => {
           >
             <option value="">Seleccione un paciente</option>
             {pacientes.map((nombre, index) => (
-                <option key={index} value={nombre}>{nombre}</option>
+              <option key={index} value={nombre}>{nombre}</option>
             ))}
           </select>
+          
+          <button 
+            className="btn btn-info mt-3 w-100" 
+            onClick={cargarListas}
+            style={{ borderRadius: '28px' }}
+          >
+            Cargar Datos
+          </button>
         </div>
+        
         <div className="w-75">
-          <motion.table variants={tableVariants}>
-            <tbody>
-              <tr>
-                <td className="title" colSpan="6">
-                  FICHA DE IDENTIFICACIÓN DEL PACIENTE
-                </td>
-              </tr>
-              <tr>
-                <th colSpan="6">NOMBRE(S)</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.nombres || " "}</td>
-              </tr>
-              <tr>
-                <th>FECHA DE INGRESO</th>
-                <th colSpan="6" className="center">
-                  SEXO
-                </th>
-              </tr>
-              <tr>
-                <td>{formDatos.fechaIngreso || " "}</td>
-                <td colSpan="6" className="center">
-                  {formDatos.sexo || " "}
-                </td>
-              </tr>
-              <tr>
-                <th colSpan="6">EDAD</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.edad || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">EXPEDIENTE MÉDICO</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.expediente || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">DIAGNÓSTICO PRINCIPAL</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.diagnostico || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="3">FECHA DE DIAGNÓSTICO</th>
-                <th colSpan="3">CONDICIONES PREEXISTENTES</th>
-              </tr>
-              <tr>
-                <td colSpan="3">{formDatos.fechaDiagnostico || " "}</td>
-                <td colSpan="3">{formDatos.condicionesPreexistentes || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="3">TIPO DE SANGRE</th>
-                <th colSpan="3">ALERGIAS</th>
-              </tr>
-              <tr>
-                <td colSpan="3">{formDatos.tipoSangre || " "}</td>
-                <td colSpan="3">{formDatos.alergias || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">SÍNTOMAS REPORTADOS</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.sintomas || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">ANTECEDENTES MÉDICOS</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.antecedentes || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">PLAN DE TRATAMIENTO INICIAL</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.tratamiento || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">OBSERVACIONES</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.observaciones || " "}</td>
-              </tr>
-              <tr>
-                <th colSpan="6">RECOMENDACIONES</th>
-              </tr>
-              <tr>
-                <td colSpan="6">{formDatos.recomendaciones || " "}</td>
-              </tr>
-            </tbody>
-          </motion.table>
+          <motion.div variants={tableVariants} className="dynamic-grid">
+            <div className="grid-header">
+              <h3>FICHA DE IDENTIFICACIÓN DEL PACIENTE</h3>
+            </div>
+            
+            <div className="grid-container">
+              {}
+              <div className="grid-item">
+                <h5>INFORMACIÓN GENERAL</h5>
+                <div className="grid-row">
+                  <div className="grid-cell">
+                    <label>Nombre(s)</label>
+                    <div>{formDatos.nombres || "-"}</div>
+                  </div>
+                  <div className="grid-cell">
+                    <label>Edad</label>
+                    <div>{formDatos.edad || "-"}</div>
+                  </div>
+                  <div className="grid-cell">
+                    <label>Sexo</label>
+                    <div>{formDatos.sexo || "-"}</div>
+                  </div>
+                  <div className="grid-cell">
+                    <label>Tipo de Sangre</label>
+                    <div>{formDatos.tipoSangre || "-"}</div>
+                  </div>
+                </div>
+                
+                <div className="grid-row">
+                  <div className="grid-cell">
+                    <label>Expediente Médico</label>
+                    <div>{formDatos.expediente || "-"}</div>
+                  </div>
+                  <div className="grid-cell">
+                    <label>Fecha Ingreso</label>
+                    <div>{formDatos.fechaIngreso || "-"}</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Sección de Fechas */}
+              <div className="grid-item">
+                <h5> F E C H A S</h5>
+                <div className="grid-row">
+                  <div className="grid-cell">
+                    <h6>Fechas Iniciales</h6>
+                    <div className="grid-data">
+                      {formDatos.fecha_inicial && formDatos.fecha_inicial.split(", ").map((fecha, i) => (
+                        <span key={`inicial-${i}`} className="data-item">{fecha}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="grid-cell">
+                    <h6>Fechas Finales</h6>
+                    <div className="grid-data">
+                      {formDatos.fecha_Final && formDatos.fecha_Final.split(", ").map((fecha, i) => (
+                        <span key={`final-${i}`} className="data-item">{fecha}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {}
+              {[
+                { title: "ESTADO", data: formDatos.estado, field: "estado" },
+                { title: "DIAGNÓSTICO PRINCIPAL", data: formDatos.diagnostico, field: "diagnostico" },
+                { title: "CONDICIONES PREEXISTENTES", data: formDatos.condicionesPreexistentes, field: "condicionesPreexistentes" },
+                { title: "ALERGIAS", data: formDatos.alergias, field: "alergias" },
+                { title: "SÍNTOMAS REPORTADOS", data: formDatos.sintomas, field: "sintomas" },
+                { title: "ANTECEDENTES MÉDICOS", data: formDatos.antecedentes, field: "antecedentes" },
+                { title: "PLAN DE TRATAMIENTO", data: formDatos.tratamiento, field: "tratamiento" },
+                { title: "OBSERVACIONES", data: formDatos.observaciones, field: "observaciones" },
+                { title: "RECOMENDACIONES", data: formDatos.recomendaciones, field: "recomendaciones" }
+              ].map((section, index) => (
+                formDatos[section.field] && (
+                  <div key={index} className="grid-item">
+                    <h5>{section.title}</h5>
+                    <div className="grid-data">
+                      {section.data.split(", ").map((item, i) => (
+                        <span key={i} className="data-item">{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                )
+              ))}
+            </div>
+          </motion.div>
         </div>
+        
         <div className="w-25">
           <div className="fotografia">
             <h3>Fotografía</h3>
@@ -311,78 +551,155 @@ const Ficha = () => {
       <style jsx>{`
         .container {
           width: 100%;
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
           padding: 20px;
         }
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 0 auto 20px;
-          font-size: 14px;
-          border: 1px solid #ccc;
-          background-color: #1c1c1c;
-        }
-        th,
-        td {
-          border: 1px solid #ccc;
-          padding: 6px 10px;
-          vertical-align: middle;
+        
+        .dynamic-grid {
           background-color: #2e2e2e;
-          color: #fff;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        th {
-          background-color: #000;
-          font-weight: bold;
-          text-align: left;
-        }
-        .title {
-          font-size: 18px;
-          text-transform: uppercase;
-          text-align: center;
-          font-weight: bold;
-          color: #fff;
+        
+        .grid-header {
           background-color: rgb(6, 19, 31);
-          padding: 10px 0;
-          border: none !important;
-        }
-        .center {
+          color: white;
+          padding: 15px;
           text-align: center;
+          font-weight: bold;
+          font-size: 18px;
         }
+        
+        .grid-header h3 {
+          margin: 0;
+          text-transform: uppercase;
+        }
+        
+        .grid-container {
+          padding: 15px;
+        }
+        
+        .grid-item {
+          margin-bottom: 20px;
+          background-color: #3a3a3a;
+          border-radius: 6px;
+          padding: 15px;
+        }
+        
+        .grid-item h5 {
+          color:rgb(255, 255, 255);
+          margin-top: 0;
+          margin-bottom: 15px;
+          border-bottom: 1px solid #555;
+          padding-bottom: 8px;
+        }
+        
+        .grid-item h6 {
+          color:rgb(13, 240, 183);
+          margin-top: 0;
+          margin-bottom: 10px;
+          font-size: 14px;
+        }
+        
+        .grid-row {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 10px;
+          gap: 10px;
+        }
+        
+        .grid-cell {
+          flex: 1;
+          min-width: 200px;
+          padding: 8px;
+          background-color: #2e2e2e;
+          border-radius: 4px;
+        }
+        
+        .grid-cell label {
+          display: block;
+          color: #aaa;
+          font-size: 12px;
+          margin-bottom: 5px;
+        }
+        
+        .grid-cell div {
+          color: white;
+          font-size: 14px;
+          word-break: break-word;
+        }
+        
+        .grid-data {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        
+        .data-item {
+          background-color: #4a4a4a;
+          color: white;
+          padding: 6px 12px;
+          border-radius: 16px;
+          font-size: 13px;
+          white-space: nowrap;
+        }
+        
+        .fotografia {
+          border: 1px solid #444;
+          padding: 15px;
+          text-align: center;
+          background-color: #2e2e2e;
+          color: #ddd;
+          border-radius: 8px;
+          height: fit-content;
+        }
+        
+        .foto-placeholder {
+          width: 100%;
+          height: 250px;
+          background-color: #3a3a3a;
+          border: 2px dashed #555;
+          margin-top: 10px;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #777;
+        }
+        
         .btn {
           padding: 10px 20px;
           font-size: 16px;
           border-radius: 28px;
           transition: all 0.3s ease;
+          min-width: 150px;
         }
+        
         .btn-danger {
           background-color: #dc3545;
           border: none;
         }
+        
         .btn-secondary {
           background-color: #6c757d;
           border: none;
         }
+        
         .btn-primary {
           background-color: #0d6efd;
           border: none;
         }
+        
+        .btn-info {
+          background-color: #0dcaf0;
+          border: none;
+        }
+        
         .btn:hover {
           opacity: 0.9;
-        }
-        .fotografia {
-          border: 1px solid #ccc;
-          padding: 10px;
-          text-align: center;
-          background-color: #2e2e2e;
-          color: #fff;
-        }
-        .foto-placeholder {
-          width: 100%;
-          height: 200px;
-          background-color: #1c1c1c;
-          border: 1px dashed #ccc;
-          margin-top: 10px;
+          transform: translateY(-2px);
         }
       `}</style>
     </motion.div>
