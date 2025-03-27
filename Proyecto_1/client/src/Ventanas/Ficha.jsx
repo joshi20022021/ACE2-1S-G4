@@ -13,152 +13,91 @@ const Ficha = () => {
   
   // Listas de todas las opciones
   const condicionesPreexistentes = [
-    "Cáncer",
-    "VIH/SIDA",
-    "Diabetes",
-    "Hipertensión",
-    "Asma",
-    "Enfermedad cardíaca",
-    "Artritis",
-    "EPOC",
-    "Obesidad",
-    "Enfermedad renal"
+    "Cáncer", "VIH/SIDA", "Diabetes", "Hipertensión", "Asma",
+    "Enfermedad cardíaca", "Artritis", "EPOC", "Obesidad", "Enfermedad renal"
   ];
 
   const opcionesAlergias = [
-    "Penicilina",
-    "Aspirina",
-    "Sulfamidas",
-    "Yodo",
-    "Latex",
-    "Polen",
-    "Ácaros",
-    "Mariscos",
-    "Frutos secos",
-    "Huevos"
+    "Penicilina", "Aspirina", "Sulfamidas", "Yodo", "Latex",
+    "Polen", "Ácaros", "Mariscos", "Frutos secos", "Huevos"
   ];
 
   const opcionesEstado = [
-    "Estable",
-    "Grave",
-    "Crítico",
-    "En observación",
-    "Recuperación",
-    "Alta médica"
+    "Estable", "Grave", "Crítico", "En observación", 
+    "Recuperación", "Alta médica"
   ];
 
   const opcionesDiagnostico = [
-    "Neumonía",
-    "Infección urinaria",
-    "Hipertensión arterial",
-    "Diabetes mellitus",
-    "Asma bronquial",
-    "Gastritis",
-    "Artritis reumatoide",
-    "Depresión mayor",
-    "COVID-19",
+    "Neumonía", "Infección urinaria", "Hipertensión arterial", 
+    "Diabetes mellitus", "Asma bronquial", "Gastritis", 
+    "Artritis reumatoide", "Depresión mayor", "COVID-19", 
     "Fractura de cadera"
   ];
 
   const opcionesSintomas = [
-    "Fiebre",
-    "Tos persistente",
-    "Dificultad respiratoria",
-    "Dolor torácico",
-    "Mareos",
-    "Náuseas/vómitos",
-    "Diarrea",
-    "Cefalea intensa",
-    "Pérdida de peso",
+    "Fiebre", "Tos persistente", "Dificultad respiratoria", 
+    "Dolor torácico", "Mareos", "Náuseas/vómitos", 
+    "Diarrea", "Cefalea intensa", "Pérdida de peso", 
     "Fatiga crónica"
   ];
 
   const opcionesTratamiento = [
-    "Antibióticos",
-    "Antiinflamatorios",
-    "Analgésicos",
-    "Quimioterapia",
-    "Fisioterapia",
-    "Cirugía programada",
-    "Terapia hormonal",
-    "Psicoterapia",
-    "Dieta especial",
+    "Antibióticos", "Antiinflamatorios", "Analgésicos", 
+    "Quimioterapia", "Fisioterapia", "Cirugía programada", 
+    "Terapia hormonal", "Psicoterapia", "Dieta especial", 
     "Reposo absoluto"
   ];
 
   const opcionesObservaciones = [
-    "Mejoría notable",
-    "Sin cambios",
-    "Empeoramiento",
-    "Reacción al tratamiento",
-    "Requiere seguimiento",
-    "Alta inminente",
-    "Cambio de medicación",
-    "Derivación a especialista",
-    "Exámenes pendientes",
+    "Mejoría notable", "Sin cambios", "Empeoramiento", 
+    "Reacción al tratamiento", "Requiere seguimiento", 
+    "Alta inminente", "Cambio de medicación", 
+    "Derivación a especialista", "Exámenes pendientes", 
     "Riesgo de recaída"
   ];
 
   const opcionesAntecedentes = [
-    "Cirugías previas",
-    "Hospitalizaciones anteriores",
-    "Enfermedades crónicas",
-    "Alergias conocidas",
-    "Antecedentes familiares relevantes",
-    "Traumatismos importantes",
-    "Tratamientos prolongados",
-    "Adicciones",
-    "Embarazos/partos",
-    "Vacunación incompleta"
+    "Cirugías previas", "Hospitalizaciones anteriores", 
+    "Enfermedades crónicas", "Alergias conocidas", 
+    "Antecedentes familiares relevantes", "Traumatismos importantes", 
+    "Tratamientos prolongados", "Adicciones", 
+    "Embarazos/partos", "Vacunación incompleta"
   ];
 
   const opcionesRecomendaciones = [
-    "Control en 1 semana",
-    "Exámenes de laboratorio",
-    "Imágenes diagnósticas",
-    "Consulta con especialista",
-    "Cambio de hábitos",
-    "Terapia de rehabilitación",
-    "Acompañamiento psicológico",
-    "Hospitalización domiciliaria",
-    "Urgencias si empeora",
-    "Alta sin recomendaciones"
+    "Control en 1 semana", "Exámenes de laboratorio", 
+    "Imágenes diagnósticas", "Consulta con especialista", 
+    "Cambio de hábitos", "Terapia de rehabilitación", 
+    "Acompañamiento psicológico", "Hospitalización domiciliaria", 
+    "Urgencias si empeora", "Alta sin recomendaciones"
   ];
 
-  
   const fechasIniciales = [
-    "2023-01-01",
-    "2023-02-15",
-    "2023-03-10",
-    "2023-04-05",
-    "2023-05-20",
-    "2023-06-15"
+    "2023-01-01", "2023-02-15", "2023-03-10", 
+    "2023-04-05", "2023-05-20", "2023-06-15",
+    "2023-07-10", "2023-08-25", "2023-09-30",
+    "2023-10-15"
   ];
 
   const fechasFinales = [
-    "2023-04-05",
-    "2023-05-20",
-    "2023-06-15"
+    "2023-04-05", "2023-05-20", "2023-24-15",
+    "2023-07-10", "2023-08-25", "2023-09-30",
+    "2023-10-15", "2023-11-20", "2023-12-01",
+    "2024-01-15"
   ];
 
+  // listas para los diagnosticos, antecedentes y recomendaciones
   const [formDatos, setFormDatos] = useState({
-    nombres: "",
-    diagnostico: "",
-    edad: "",
-    expediente: "",
-    fechaIngreso: "",
-    sexo: "",
-    tipoSangre: "",
-    sintomas: "",
-    antecedentes: "",
-    tratamiento: "",
-    alergias: "",
-    fecha_inicial: "",
-    fecha_Final: "",
-    condicionesPreexistentes: "",
-    observaciones: "",
-    recomendaciones: "",
-    estado: ""
+    datosGenerales: {
+      nombres: "",
+      edad: "",
+      expediente: "",
+      fechaIngreso: "",
+      sexo: "",
+      tipoSangre: ""
+    },
+    diagnosticos: [],
+    antecedentes: []
   });
 
   const ListaPacientes = async () => {
@@ -186,20 +125,27 @@ const Ficha = () => {
   };
 
   const cargarListas = () => {
-    setFormDatos(prev => ({
-      ...prev,
-      condicionesPreexistentes: condicionesPreexistentes.join(", "),
-      alergias: opcionesAlergias.join(", "),
-      estado: opcionesEstado.join(", "),
-      diagnostico: opcionesDiagnostico.join(", "),
-      sintomas: opcionesSintomas.join(", "),
-      tratamiento: opcionesTratamiento.join(", "),
-      observaciones: opcionesObservaciones.join(", "),
-      antecedentes: opcionesAntecedentes.join(", "),
-      recomendaciones: opcionesRecomendaciones.join(", "),
-      fecha_inicial: fechasIniciales.join(", "),
-      fecha_Final: fechasFinales.join(", ")
+    const diagnosticosTransformados = opcionesDiagnostico.map((diagnostico, index) => ({
+      nombreDiagnostico: diagnostico,
+      condicionesPreexistentes: [condicionesPreexistentes[index % condicionesPreexistentes.length]],
+      alergias: [opcionesAlergias[index % opcionesAlergias.length]],
+      estado: opcionesEstado[index % opcionesEstado.length],
+      sintomas: [opcionesSintomas[index % opcionesSintomas.length]],
+      tratamiento: opcionesTratamiento[index % opcionesTratamiento.length],
+      observaciones: opcionesObservaciones[index % opcionesObservaciones.length],
+      recomendaciones: opcionesRecomendaciones[index % opcionesRecomendaciones.length],
+      fecha_inicial: fechasIniciales[index % fechasIniciales.length],
+      fecha_Final: fechasFinales[index % fechasFinales.length]
     }));
+
+    setFormDatos({
+      datosGenerales: {
+        nombres: pacientes[indicePaciente] || "",
+        
+      },
+      diagnosticos: diagnosticosTransformados,
+      antecedentes: opcionesAntecedentes
+    });
   };
 
   const borrarPaciente = async () => {
@@ -224,168 +170,91 @@ const Ficha = () => {
   const generatePDF = () => {
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   
-    
     const margin = 15;
     let yPos = margin;
     const lineHeight = 7;
     const pageHeight = 280;
-    const col1 = margin;
-    const col2 = margin + 65;
-    const col3 = margin + 130;
-    const colWidth = 60;
   
-    
     const titleStyle = { fontSize: 16, textColor: [6, 19, 31], fontStyle: 'bold' };
     const sectionStyle = { fontSize: 12, textColor: [6, 19, 31], fontStyle: 'bold' };
     const normalStyle = { fontSize: 10, textColor: [0, 0, 0], fontStyle: 'normal' };
+    const diagnosticoStyle = { fontSize: 12, textColor: [0, 0, 0], fontStyle: 'bold' };
   
-    
     const setStyle = (style) => {
       doc.setFontSize(style.fontSize);
       doc.setTextColor(...style.textColor);
       doc.setFont("helvetica", style.fontStyle);
     };
   
-    
     setStyle(titleStyle);
     doc.text("FICHA DE IDENTIFICACIÓN DEL PACIENTE", 105, yPos, { align: "center" });
     yPos += lineHeight * 2;
   
-    
-    const addBasicInfo = () => {
-      setStyle(sectionStyle);
-      doc.text("INFORMACIÓN BÁSICA", margin, yPos);
-      yPos += lineHeight;
-  
-      setStyle(normalStyle);
-      const basicData = [
-        [`Nombre(s): ${formDatos.nombres || "-"}`, `Edad: ${formDatos.edad || "-"}`],
-        [`Sexo: ${formDatos.sexo || "-"}`, `Tipo de Sangre: ${formDatos.tipoSangre || "-"}`],
-        [`Expediente Médico: ${formDatos.expediente || "-"}`, `Fecha Ingreso: ${formDatos.fechaIngreso || "-"}`]
-      ];
-  
-      basicData.forEach(row => {
-        if (yPos > pageHeight - (lineHeight * 2)) {
-          doc.addPage();
-          yPos = margin;
-        }
-        doc.text(row[0], col1, yPos);
-        doc.text(row[1], col2, yPos);
-        yPos += lineHeight;
-      });
-  
-      
-      const formatDates = (dates) => {
-        if (!dates) return [];
-        return dates.split(", ")
-          .filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)) 
-          .map(date => date.trim());
-      };
-  
-      const fechasIniciales = formatDates(formDatos.fecha_inicial);
-      const fechasFinales = formatDates(formDatos.fecha_Final);
-  
-    
-      if (fechasIniciales.length > 0) {
-        doc.text("Fechas Iniciales:", col1, yPos);
-        yPos += lineHeight;
-        
-        let xPos = col1;
-        fechasIniciales.forEach((fecha, index) => {
-          if (xPos > margin + 120) {
-            xPos = col1;
-            yPos += lineHeight;
-          }
-          doc.text(fecha, xPos, yPos);
-          xPos += colWidth;
-        });
-        yPos += lineHeight;
-      }
-  
-    
-      if (fechasFinales.length > 0) {
-        doc.text("Fechas Finales:", col1, yPos);
-        yPos += lineHeight;
-        
-        let xPos = col1;
-        fechasFinales.forEach((fecha, index) => {
-          if (xPos > margin + 120) {
-            xPos = col1;
-            yPos += lineHeight;
-          }
-          doc.text(fecha, xPos, yPos);
-          xPos += colWidth;
-        });
-        yPos += lineHeight * 2;
-      } else {
-        yPos += lineHeight;
-      }
-    };
-  
-    
-    const addTableSection = (title, data) => {
-      if (!data) return;
-  
-    
-      setStyle(sectionStyle);
-      doc.text(`${title}:`, margin, yPos);
-      yPos += lineHeight;
-  
-  
-      setStyle(normalStyle);
-  
-      // se divide los datos en chunks de 3 columnas
-      const items = data.split(", ").filter(item => item.trim() !== "");
-      const chunks = [];
-      for (let i = 0; i < items.length; i += 4) {
-        chunks.push(items.slice(i, i + 3));
-      }
-  
-      
-      chunks.forEach((chunk) => {
-    
-        if (yPos > pageHeight - (lineHeight * 2)) {
-          doc.addPage();
-          yPos = margin;
-        }
-  
-        
-        let xPos = margin;
-        chunk.forEach((item) => {
-          doc.text(item.trim(), xPos, yPos);
-          xPos += colWidth;
-        });
-  
-        yPos += lineHeight;
-      });
-  
-      yPos += lineHeight; 
-    };
-  
-    
-    addBasicInfo();
-  
-    
-    const sections = [
-      { title: "ESTADO", data: formDatos.estado },
-      { title: "DIAGNÓSTICO PRINCIPAL", data: formDatos.diagnostico },
-      { title: "CONDICIONES PREEXISTENTES", data: formDatos.condicionesPreexistentes },
-      { title: "ALERGIAS", data: formDatos.alergias },
-      { title: "SÍNTOMAS REPORTADOS", data: formDatos.sintomas },
-      { title: "ANTECEDENTES MÉDICOS", data: formDatos.antecedentes },
-      { title: "PLAN DE TRATAMIENTO", data: formDatos.tratamiento },
-      { title: "OBSERVACIONES", data: formDatos.observaciones },
-      { title: "RECOMENDACIONES", data: formDatos.recomendaciones }
+    // Información general
+    setStyle(sectionStyle);
+    doc.text("INFORMACIÓN GENERAL", margin, yPos);
+    yPos += lineHeight;
+
+    setStyle(normalStyle);
+    const generalData = [
+      `Nombre: ${formDatos.datosGenerales.nombres || "-"}`,
+      `Edad: ${formDatos.datosGenerales.edad || "-"} | Sexo: ${formDatos.datosGenerales.sexo || "-"}`,
+      `Tipo de sangre: ${formDatos.datosGenerales.tipoSangre || "-"}`,
+      `Expediente: ${formDatos.datosGenerales.expediente || "-"}`,
+      `Fecha de ingreso: ${formDatos.datosGenerales.fechaIngreso || "-"}`
     ];
-  
-    sections.forEach(section => {
-      if (section.data) {
-        addTableSection(section.title, section.data);
+
+    generalData.forEach(text => {
+      if (yPos > pageHeight - (lineHeight * 2)) {
+        doc.addPage();
+        yPos = margin;
       }
+      doc.text(text, margin, yPos);
+      yPos += lineHeight;
     });
-  
-    // Guardar el PDF
-    doc.save("ficha_paciente.pdf");
+    yPos += lineHeight;
+
+    // Antecedentes
+    setStyle(sectionStyle);
+    doc.text("ANTECEDENTES", margin, yPos);
+    yPos += lineHeight;
+
+    setStyle(normalStyle);
+    const antecedentesText = formDatos.antecedentes.join(", ");
+    doc.text(antecedentesText, margin, yPos, { maxWidth: 180 });
+    yPos += lineHeight * (antecedentesText.length > 100 ? 3 : 1);
+    yPos += lineHeight;
+
+    formDatos.diagnosticos.forEach((diagnostico, index) => {
+      setStyle(diagnosticoStyle);
+      doc.text(`DIAGNÓSTICO ${index + 1}: ${diagnostico.nombreDiagnostico}`, margin, yPos);
+      yPos += lineHeight;
+
+      setStyle(normalStyle);
+      const diagnosticoData = [
+        `• Condiciones: ${diagnostico.condicionesPreexistentes.join(", ")}`,
+        `• Alergias: ${diagnostico.alergias.join(", ")}`,
+        `• Estado: ${diagnostico.estado}`,
+        `• Síntomas: ${diagnostico.sintomas.join(", ")}`,
+        `• Tratamiento: ${diagnostico.tratamiento}`,
+        `• Observaciones: ${diagnostico.observaciones}`,
+        `• Recomendaciones: ${diagnostico.recomendaciones}`,
+        `• Fechas: ${diagnostico.fecha_inicial} - ${diagnostico.fecha_Final}`
+      ];
+
+      diagnosticoData.forEach(item => {
+        if (yPos > pageHeight - lineHeight) {
+          doc.addPage();
+          yPos = margin;
+        }
+        doc.text(item, margin + 5, yPos);
+        yPos += lineHeight;
+      });
+
+      yPos += lineHeight;
+    });
+
+    doc.save(`ficha_paciente_${formDatos.datosGenerales.nombres.replace(/\s+/g, '_')}.pdf`);
   };
 
   const containerVariants = {
@@ -442,85 +311,103 @@ const Ficha = () => {
             </div>
             
             <div className="grid-container">
-              {}
+              {/* Información básica */}
               <div className="grid-item">
                 <h5>INFORMACIÓN GENERAL</h5>
                 <div className="grid-row">
                   <div className="grid-cell">
                     <label>Nombre(s)</label>
-                    <div>{formDatos.nombres || "-"}</div>
+                    <div>{formDatos.datosGenerales.nombres || "-"}</div>
                   </div>
                   <div className="grid-cell">
                     <label>Edad</label>
-                    <div>{formDatos.edad || "-"}</div>
+                    <div>{formDatos.datosGenerales.edad || "-"}</div>
                   </div>
                   <div className="grid-cell">
                     <label>Sexo</label>
-                    <div>{formDatos.sexo || "-"}</div>
+                    <div>{formDatos.datosGenerales.sexo || "-"}</div>
                   </div>
                   <div className="grid-cell">
                     <label>Tipo de Sangre</label>
-                    <div>{formDatos.tipoSangre || "-"}</div>
+                    <div>{formDatos.datosGenerales.tipoSangre || "-"}</div>
                   </div>
                 </div>
                 
                 <div className="grid-row">
                   <div className="grid-cell">
                     <label>Expediente Médico</label>
-                    <div>{formDatos.expediente || "-"}</div>
+                    <div>{formDatos.datosGenerales.expediente || "-"}</div>
                   </div>
                   <div className="grid-cell">
                     <label>Fecha Ingreso</label>
-                    <div>{formDatos.fechaIngreso || "-"}</div>
+                    <div>{formDatos.datosGenerales.fechaIngreso || "-"}</div>
                   </div>
                 </div>
               </div>
               
-              {/* Sección de Fechas */}
+              {/* Antecedentes */}
               <div className="grid-item">
-                <h5> F E C H A S</h5>
-                <div className="grid-row">
-                  <div className="grid-cell">
-                    <h6>Fechas Iniciales</h6>
-                    <div className="grid-data">
-                      {formDatos.fecha_inicial && formDatos.fecha_inicial.split(", ").map((fecha, i) => (
-                        <span key={`inicial-${i}`} className="data-item">{fecha}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="grid-cell">
-                    <h6>Fechas Finales</h6>
-                    <div className="grid-data">
-                      {formDatos.fecha_Final && formDatos.fecha_Final.split(", ").map((fecha, i) => (
-                        <span key={`final-${i}`} className="data-item">{fecha}</span>
-                      ))}
-                    </div>
-                  </div>
+                <h5>ANTECEDENTES</h5>
+                <div className="grid-data">
+                  {formDatos.antecedentes.map((antecedente, i) => (
+                    <span key={`antecedente-${i}`} className="data-item">{antecedente}</span>
+                  ))}
                 </div>
               </div>
               
-              {}
-              {[
-                { title: "ESTADO", data: formDatos.estado, field: "estado" },
-                { title: "DIAGNÓSTICO PRINCIPAL", data: formDatos.diagnostico, field: "diagnostico" },
-                { title: "CONDICIONES PREEXISTENTES", data: formDatos.condicionesPreexistentes, field: "condicionesPreexistentes" },
-                { title: "ALERGIAS", data: formDatos.alergias, field: "alergias" },
-                { title: "SÍNTOMAS REPORTADOS", data: formDatos.sintomas, field: "sintomas" },
-                { title: "ANTECEDENTES MÉDICOS", data: formDatos.antecedentes, field: "antecedentes" },
-                { title: "PLAN DE TRATAMIENTO", data: formDatos.tratamiento, field: "tratamiento" },
-                { title: "OBSERVACIONES", data: formDatos.observaciones, field: "observaciones" },
-                { title: "RECOMENDACIONES", data: formDatos.recomendaciones, field: "recomendaciones" }
-              ].map((section, index) => (
-                formDatos[section.field] && (
-                  <div key={index} className="grid-item">
-                    <h5>{section.title}</h5>
-                    <div className="grid-data">
-                      {section.data.split(", ").map((item, i) => (
-                        <span key={i} className="data-item">{item}</span>
-                      ))}
+              {/* Diagnósticos */}
+              {formDatos.diagnosticos.map((diagnostico, index) => (
+                <div key={index} className="grid-item diagnostico-item">
+                  <h5>DIAGNÓSTICO {index + 1}: {diagnostico.nombreDiagnostico}</h5>
+                  
+                  <div className="grid-row">
+                    <div className="grid-cell">
+                      <label>Condiciones preexistentes</label>
+                      <div>{diagnostico.condicionesPreexistentes.join(", ")}</div>
+                    </div>
+                    <div className="grid-cell">
+                      <label>Alergias</label>
+                      <div>{diagnostico.alergias.join(", ")}</div>
+                    </div>
+                    <div className="grid-cell">
+                      <label>Estado</label>
+                      <div>{diagnostico.estado}</div>
                     </div>
                   </div>
-                )
+                  
+                  <div className="grid-row">
+                    <div className="grid-cell">
+                      <label>Síntomas</label>
+                      <div>{diagnostico.sintomas.join(", ")}</div>
+                    </div>
+                    <div className="grid-cell">
+                      <label>Tratamiento</label>
+                      <div>{diagnostico.tratamiento}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid-row">
+                    <div className="grid-cell">
+                      <label>Observaciones</label>
+                      <div>{diagnostico.observaciones}</div>
+                    </div>
+                    <div className="grid-cell">
+                      <label>Recomendaciones</label>
+                      <div>{diagnostico.recomendaciones}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid-row">
+                    <div className="grid-cell">
+                      <label>Fecha inicial</label>
+                      <div>{diagnostico.fecha_inicial}</div>
+                    </div>
+                    <div className="grid-cell">
+                      <label>Fecha final</label>
+                      <div>{diagnostico.fecha_Final}</div>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -549,6 +436,7 @@ const Ficha = () => {
       </motion.div>
 
       <style jsx>{`
+        /* Tus estilos existentes se mantienen igual */
         .container {
           width: 100%;
           max-width: 1400px;
@@ -588,16 +476,24 @@ const Ficha = () => {
           padding: 15px;
         }
         
+        .diagnostico-item {
+          border-left: 4px solid #0dcaf0;
+        }
+        
         .grid-item h5 {
-          color:rgb(255, 255, 255);
+          color: #fff;
           margin-top: 0;
           margin-bottom: 15px;
           border-bottom: 1px solid #555;
           padding-bottom: 8px;
         }
         
+        .diagnostico-item h5 {
+          color: #0dcaf0;
+        }
+        
         .grid-item h6 {
-          color:rgb(13, 240, 183);
+          color: #0df0b7;
           margin-top: 0;
           margin-bottom: 10px;
           font-size: 14px;
