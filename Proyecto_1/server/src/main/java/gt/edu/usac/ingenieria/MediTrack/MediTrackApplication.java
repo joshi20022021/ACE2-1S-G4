@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.Base64;
 
 
 @SpringBootApplication
@@ -558,69 +559,104 @@ public class MediTrackApplication {
     }
 
 
-	@PostMapping("/GetHistorialPaciente")
-public Map<String, Object> obtenerPaciente(@RequestParam("idPaciente") int idPaciente) {
-    Map<String, Object> respuesta = new HashMap<>();
+    @PostMapping("/GetHistorialPaciente")
+    public Map<String, Object> obtenerPaciente(@RequestParam("idPaciente") int idPaciente) {
+        Map<String, Object> respuesta = new HashMap<>();
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
+    
+            // Obtenemos el paciente
+            String sqlPaciente = """
+                SELECT p.Nombre_Completo AS nombres,
+                       p.edad           AS edad,
+                       p.Sexo           AS sexo,
+                       p.No_Exp_Med     AS expediente,
+                       p.Tipo_Sangre    AS tipoSangre,
+                       p.Fecha          AS fechaIngreso,
+                       p.Fotografía     AS fotografia
+                FROM Pacientes p
+                WHERE p.id = ?
+            """;
+    
+            try (PreparedStatement stmtPaciente = conn.prepareStatement(sqlPaciente)) {
+                stmtPaciente.setInt(1, idPaciente);
+                try (ResultSet rsPaciente = stmtPaciente.executeQuery()) {
+                    if (rsPaciente.next()) {
+                        respuesta.put("nombres",      rsPaciente.getString("nombres"));
+                        respuesta.put("edad",         rsPaciente.getInt("edad"));
+                        respuesta.put("sexo",         rsPaciente.getString("sexo"));
+                        respuesta.put("expediente",   rsPaciente.getString("expediente"));
+                        respuesta.put("tipoSangre",   rsPaciente.getString("tipoSangre"));
+                        respuesta.put("fechaIngreso", rsPaciente.getString("fechaIngreso"));
 
-    try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
-        // Consulta JOIN (ajusta los campos que necesites)
-        String sql = """
-            SELECT p.Nombre_Completo        AS nombres,
-                   p.edad                  AS edad,
-                   p.Sexo                  AS sexo,
-                   p.No_Exp_Med           AS expediente,
-                   p.Tipo_Sangre          AS tipoSangre,
-                   p.Fecha                AS fechaIngreso,
-                   
-                   d.Diagnostico_Principal AS diagnostico,
-                   d.Sintomas_Reportados   AS sintomas,
-                   d.Antecedentes          AS antecedentes,
-                   d.Tratamiento           AS tratamiento,
-                   d.Alergias             AS alergias,
-                   d.Condiciones          AS condiciones
-                   
-            FROM Pacientes p
-            LEFT JOIN Diagnósticos d
-                   ON p.id = d.Pacientes_id
-            WHERE p.id = ?
-        """;
+                        byte[] fotoBytes = rsPaciente.getBytes("fotografia"); // formateo de la imagen
+                        if (fotoBytes != null && fotoBytes.length > 0) {
+                            String fotoBase64 = Base64.getEncoder().encodeToString(fotoBytes);
+                            respuesta.put("foto", fotoBase64);
+                        } else {
+                            respuesta.put("foto", null); // o una imagen por defecto
+                        }
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idPaciente);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    // Guardar en el map lo que vas a usar en tu formulario
-                    respuesta.put("nombres",       rs.getString("nombres"));
-                    respuesta.put("edad",          rs.getInt("edad"));
-                    respuesta.put("sexo",          rs.getString("sexo"));
-                    respuesta.put("expediente",    rs.getString("expediente"));
-                    respuesta.put("tipoSangre",    rs.getString("tipoSangre"));
-                    respuesta.put("fechaIngreso",  rs.getString("fechaIngreso"));
-                    
-                    respuesta.put("diagnostico",   rs.getString("diagnostico"));
-                    respuesta.put("sintomas",      rs.getString("sintomas"));
-                    respuesta.put("antecedentes",  rs.getString("antecedentes"));
-                    respuesta.put("tratamiento",   rs.getString("tratamiento"));
-                    respuesta.put("alergias",      rs.getString("alergias"));
-                    
-                    // Si en tu BD "condiciones" está en una sola columna separada por comas
-                    // y deseas un arreglo en React, puedes hacer un split:
-                    String condStr = rs.getString("condiciones");
-                    if (condStr != null) {
-                        String[] condicionesArray = condStr.split(",");
-                        respuesta.put("condiciones", condicionesArray);
                     } else {
-                        respuesta.put("condiciones", new String[0]);
+                        respuesta.put("error", "No se encontró el paciente con id: " + idPaciente);
+                        return respuesta;
                     }
                 }
             }
+    
+            // obtenemos los diagnósticos del paciente
+            String sqlDiagnosticos = """
+                SELECT d.Diagnostico_Principal AS diagnostico,
+                       d.Sintomas_Reportados   AS sintomas,
+                       d.Condiciones           AS condiciones,
+                       d.Antecedentes          AS antecedentes,
+                       d.Tratamiento           AS tratamiento,
+                       d.Alergias             AS alergias,
+                       d.Condiciones          AS condiciones,
+                       d.Estado               AS estado,
+                       d.Fecha               AS fecha,
+                       d.Fecha_final         AS fechafinal,
+                       d.Observaciones       AS observaciones,
+                       d.Recomendaciones     AS recomendaciones
+                FROM Diagnósticos d
+                WHERE d.Pacientes_id = ?
+            """;
+    
+            try (PreparedStatement stmtDiag = conn.prepareStatement(sqlDiagnosticos)) {
+                stmtDiag.setInt(1, idPaciente);
+                try (ResultSet rsDiag = stmtDiag.executeQuery()) {
+    
+                    List<Map<String, Object>> listaDiagnosticos = new ArrayList<>();
+    
+                    while (rsDiag.next()) {
+                        Map<String, Object> diag = new HashMap<>();
+                        diag.put("diagnostico",  rsDiag.getString("diagnostico"));
+                        diag.put("sintomas",     rsDiag.getString("sintomas"));
+                        diag.put("condiciones",     rsDiag.getString("condiciones"));
+                        diag.put("antecedentes", rsDiag.getString("antecedentes"));
+                        diag.put("tratamiento",  rsDiag.getString("tratamiento"));
+                        diag.put("alergias",     rsDiag.getString("alergias"));
+                        diag.put("estado",     rsDiag.getString("estado"));
+                        diag.put("fecha",     rsDiag.getString("fecha"));
+                        diag.put("fechafinal",     rsDiag.getString("fechafinal"));
+                        diag.put("observaciones",     rsDiag.getString("observaciones"));
+                        diag.put("recomendaciones",     rsDiag.getString("recomendaciones"));
+    
+                        listaDiagnosticos.add(diag);
+                    }
+    
+                    // Se agrega la lista de diagnósticos al Map de respuesta
+                    respuesta.put("diagnosticos", listaDiagnosticos);
+                }
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            respuesta.put("error", "Ocurrió un error al consultar la base de datos.");
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-    return respuesta;
-}
+    
+        return respuesta;
+    }         
 
 }
 

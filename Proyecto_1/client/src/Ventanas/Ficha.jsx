@@ -10,81 +10,32 @@ const Ficha = () => {
   const navigate = useNavigate();
   const [indicePaciente, setIndicePaciente] = useState(0);
   const [pacientes, setPacientes] = useState([]);
-  
-  // Listas de todas las opciones
-  const condicionesPreexistentes = [
-    "Cáncer", "VIH/SIDA", "Diabetes", "Hipertensión", "Asma",
-    "Enfermedad cardíaca", "Artritis", "EPOC", "Obesidad", "Enfermedad renal"
-  ];
 
-  const opcionesAlergias = [
-    "Penicilina", "Aspirina", "Sulfamidas", "Yodo", "Latex",
-    "Polen", "Ácaros", "Mariscos", "Frutos secos", "Huevos"
-  ];
-
-  const opcionesEstado = [
-    "Estable", "Grave", "Crítico", "En observación", 
-    "Recuperación", "Alta médica"
-  ];
-
-  const opcionesDiagnostico = [
-    "Neumonía", "Infección urinaria", "Hipertensión arterial", 
-    "Diabetes mellitus", "Asma bronquial", "Gastritis", 
-    "Artritis reumatoide", "Depresión mayor", "COVID-19", 
-    "Fractura de cadera"
-  ];
-
-  const opcionesSintomas = [
-    "Fiebre", "Tos persistente", "Dificultad respiratoria", 
-    "Dolor torácico", "Mareos", "Náuseas/vómitos", 
-    "Diarrea", "Cefalea intensa", "Pérdida de peso", 
-    "Fatiga crónica"
-  ];
-
-  const opcionesTratamiento = [
-    "Antibióticos", "Antiinflamatorios", "Analgésicos", 
-    "Quimioterapia", "Fisioterapia", "Cirugía programada", 
-    "Terapia hormonal", "Psicoterapia", "Dieta especial", 
-    "Reposo absoluto"
-  ];
-
-  const opcionesObservaciones = [
-    "Mejoría notable", "Sin cambios", "Empeoramiento", 
-    "Reacción al tratamiento", "Requiere seguimiento", 
-    "Alta inminente", "Cambio de medicación", 
-    "Derivación a especialista", "Exámenes pendientes", 
-    "Riesgo de recaída"
-  ];
-
-  const opcionesAntecedentes = [
-    "Cirugías previas", "Hospitalizaciones anteriores", 
-    "Enfermedades crónicas", "Alergias conocidas", 
-    "Antecedentes familiares relevantes", "Traumatismos importantes", 
-    "Tratamientos prolongados", "Adicciones", 
-    "Embarazos/partos", "Vacunación incompleta"
-  ];
-
-  const opcionesRecomendaciones = [
-    "Control en 1 semana", "Exámenes de laboratorio", 
-    "Imágenes diagnósticas", "Consulta con especialista", 
-    "Cambio de hábitos", "Terapia de rehabilitación", 
-    "Acompañamiento psicológico", "Hospitalización domiciliaria", 
-    "Urgencias si empeora", "Alta sin recomendaciones"
-  ];
-
-  const fechasIniciales = [
-    "2023-01-01", "2023-02-15", "2023-03-10", 
-    "2023-04-05", "2023-05-20", "2023-06-15",
-    "2023-07-10", "2023-08-25", "2023-09-30",
-    "2023-10-15"
-  ];
-
-  const fechasFinales = [
-    "2023-04-05", "2023-05-20", "2023-24-15",
-    "2023-07-10", "2023-08-25", "2023-09-30",
-    "2023-10-15", "2023-11-20", "2023-12-01",
-    "2024-01-15"
-  ];
+  // Ejemplo de consumo
+  const cargarHistorial = async (idPaciente) => {
+    try {
+      const response = await fetch(`http://localhost:8080/GetHistorialPaciente?idPaciente=${idPaciente}`, {
+        method: "POST"
+      });
+      const data = await response.json();
+      
+      // Ajustar tu estado en React, por ejemplo:
+      setFormDatos({
+        datosGenerales: {
+          nombres: data.nombres || "",
+          edad: data.edad || "",
+          sexo: data.sexo || "",
+          tipoSangre: data.tipoSangre || "",
+          expediente: data.expediente || "",
+          fechaIngreso: data.fechaIngreso || "",
+          foto: data.foto || null
+        },
+        diagnosticos: data.diagnosticos || []
+      });
+    } catch (error) {
+      console.error("Error al obtener historial:", error);
+    }
+  };
 
   // listas para los diagnosticos, antecedentes y recomendaciones
   const [formDatos, setFormDatos] = useState({
@@ -94,10 +45,10 @@ const Ficha = () => {
       expediente: "",
       fechaIngreso: "",
       sexo: "",
-      tipoSangre: ""
+      tipoSangre: "",
+      foto: ""
     },
-    diagnosticos: [],
-    antecedentes: []
+    diagnosticos: []
   });
 
   const ListaPacientes = async () => {
@@ -125,27 +76,7 @@ const Ficha = () => {
   };
 
   const cargarListas = () => {
-    const diagnosticosTransformados = opcionesDiagnostico.map((diagnostico, index) => ({
-      nombreDiagnostico: diagnostico,
-      condicionesPreexistentes: [condicionesPreexistentes[index % condicionesPreexistentes.length]],
-      alergias: [opcionesAlergias[index % opcionesAlergias.length]],
-      estado: opcionesEstado[index % opcionesEstado.length],
-      sintomas: [opcionesSintomas[index % opcionesSintomas.length]],
-      tratamiento: opcionesTratamiento[index % opcionesTratamiento.length],
-      observaciones: opcionesObservaciones[index % opcionesObservaciones.length],
-      recomendaciones: opcionesRecomendaciones[index % opcionesRecomendaciones.length],
-      fecha_inicial: fechasIniciales[index % fechasIniciales.length],
-      fecha_Final: fechasFinales[index % fechasFinales.length]
-    }));
-
-    setFormDatos({
-      datosGenerales: {
-        nombres: pacientes[indicePaciente] || "",
-        
-      },
-      diagnosticos: diagnosticosTransformados,
-      antecedentes: opcionesAntecedentes
-    });
+    cargarHistorial(indicePaciente);
   };
 
   const borrarPaciente = async () => {
@@ -294,7 +225,6 @@ const Ficha = () => {
               <option key={index} value={nombre}>{nombre}</option>
             ))}
           </select>
-          
           <button 
             className="btn btn-info mt-3 w-100" 
             onClick={cargarListas}
@@ -302,6 +232,7 @@ const Ficha = () => {
           >
             Cargar Datos
           </button>
+        
         </div>
         
         <div className="w-75">
@@ -345,29 +276,19 @@ const Ficha = () => {
                 </div>
               </div>
               
-              {/* Antecedentes */}
-              <div className="grid-item">
-                <h5>ANTECEDENTES</h5>
-                <div className="grid-data">
-                  {formDatos.antecedentes.map((antecedente, i) => (
-                    <span key={`antecedente-${i}`} className="data-item">{antecedente}</span>
-                  ))}
-                </div>
-              </div>
-              
               {/* Diagnósticos */}
               {formDatos.diagnosticos.map((diagnostico, index) => (
                 <div key={index} className="grid-item diagnostico-item">
-                  <h5>DIAGNÓSTICO {index + 1}: {diagnostico.nombreDiagnostico}</h5>
+                  <h5>DIAGNÓSTICO {index + 1}: {diagnostico.diagnostico}</h5>
                   
                   <div className="grid-row">
                     <div className="grid-cell">
                       <label>Condiciones preexistentes</label>
-                      <div>{diagnostico.condicionesPreexistentes.join(", ")}</div>
+                      <div>{diagnostico.condiciones}</div>
                     </div>
                     <div className="grid-cell">
                       <label>Alergias</label>
-                      <div>{diagnostico.alergias.join(", ")}</div>
+                      <div>{diagnostico.alergias}</div>
                     </div>
                     <div className="grid-cell">
                       <label>Estado</label>
@@ -378,7 +299,7 @@ const Ficha = () => {
                   <div className="grid-row">
                     <div className="grid-cell">
                       <label>Síntomas</label>
-                      <div>{diagnostico.sintomas.join(", ")}</div>
+                      <div>{diagnostico.sintomas}</div>
                     </div>
                     <div className="grid-cell">
                       <label>Tratamiento</label>
@@ -400,11 +321,16 @@ const Ficha = () => {
                   <div className="grid-row">
                     <div className="grid-cell">
                       <label>Fecha inicial</label>
-                      <div>{diagnostico.fecha_inicial}</div>
+                      <div>{diagnostico.fecha}</div>
                     </div>
                     <div className="grid-cell">
                       <label>Fecha final</label>
-                      <div>{diagnostico.fecha_Final}</div>
+                      <div>{diagnostico.fechafinal}</div>
+                    </div>
+                    
+                    <div className="grid-cell">
+                      <label>Antecedentes</label>
+                      <div>{diagnostico.antecedentes}</div>
                     </div>
                   </div>
                 </div>
@@ -416,7 +342,17 @@ const Ficha = () => {
         <div className="w-25">
           <div className="fotografia">
             <h3>Fotografía</h3>
-            <div className="foto-placeholder"></div>
+            <div className="foto-placeholder">
+            {formDatos.datosGenerales.foto ? (
+              <img
+                src={`data:image/jpeg;base64,${formDatos.datosGenerales.foto}`}
+                alt="Fotografía del paciente"
+                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "4px" }}
+              />
+              ) : (
+              <span>Sin imagen</span>
+              )}
+            </div>
           </div>
         </div>
       </div>
