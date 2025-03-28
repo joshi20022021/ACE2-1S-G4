@@ -82,7 +82,7 @@ def insertar_verificacion(uid):
 
 def actualizar_camilla(id_camilla, estado_valor):
     try:
-        estado = "Ocupada" if estado_valor == "0" else "Vacia"
+        estado = "Ocupada" if estado_valor == "1" else "Vacia"
 
         # Actualiza el estado y fecha de la camilla
         cursor.execute("""
