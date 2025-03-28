@@ -51,6 +51,35 @@ def insertar_signos(ox, fc):
     except Exception as e:
         print("❌ Error al insertar en MySQL:", e)
 
+def insertar_verificacion(uid):
+    try:
+        # Buscar el ID del usuario correspondiente al UID
+        cursor.execute("SELECT id FROM Usuarios WHERE UID = %s", (uid,))
+        result = cursor.fetchone()
+
+        if not result:
+            print(f"❌ UID {uid} no está registrado en la tabla Usuarios.")
+            return
+
+        usuario_id = result[0]
+
+        # Obtener el siguiente ID disponible en Verificaciones
+        cursor.execute("SELECT IFNULL(MAX(id), 0) + 1 FROM Verificaciones")
+        nuevo_id = cursor.fetchone()[0]
+
+        # Insertar en Verificaciones con ID manual
+        cursor.execute("""
+            INSERT INTO Verificaciones (id, uid, Usuarios_id)
+            VALUES (%s, %s, %s)
+        """, (nuevo_id, uid, usuario_id))
+
+        conn.commit()
+        print(f"✅ Verificación registrada: ID={nuevo_id}, UID={uid}, Usuarios_id={usuario_id}")
+
+    except Exception as e:
+        print("❌ Error al insertar en Verificaciones:", e)
+
+
 def on_connect(client, userdata, flags, rc):
     print("✅ Conectado al broker MQTT")
     client.subscribe("sensores/#")
@@ -71,6 +100,10 @@ def on_message(client, userdata, msg):
         insertar_signos(oxigeno, frecuencia)
         oxigeno = None
         frecuencia = None
+
+    elif topico == "sensores/uid":
+        uid = dato
+        insertar_verificacion(uid)
 
 client = mqtt.Client()
 client.on_connect = on_connect
