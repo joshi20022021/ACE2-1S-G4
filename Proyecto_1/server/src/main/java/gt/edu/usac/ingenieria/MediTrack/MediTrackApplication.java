@@ -330,7 +330,7 @@ public class MediTrackApplication {
 
     
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
-            // Armamos el SQL con el nombre de tabla directamente (VALIDADO)
+
             String sqlActualizarAlta = "UPDATE Pacientes SET Estado = 'Alta' WHERE id = ?";
     
             try (PreparedStatement stmt = conn.prepareStatement(sqlActualizarAlta)) {
