@@ -81,24 +81,6 @@ const Ficha = () => {
     cargarHistorial(indicePaciente);
   };
 
-  const borrarPaciente = async () => {
-    if (indicePaciente == null) {
-      console.error("Error: índicePaciente es null o undefined");
-      return;
-    }
-
-    try {
-      const response = await fetch(`http://192.168.137.1:8080/BorrarDatosPaciente?IndicePaciente=${indicePaciente}`, {
-        method: "POST",
-      });
-
-      const data = await response.text();
-      console.log("Respuesta del backend:", data);
-      ListaPacientes();
-    } catch (error) {
-      console.error("Error al borrar el paciente:", error);
-    }
-  };
   
   const margin = 15;
   let yPos = margin;
@@ -237,7 +219,19 @@ const Ficha = () => {
 
   const generateAltaDiagnóstico = async(indiceDiagnóstico) => {
 
-    await fetch(`http://localhost:8080/DarDeAltaDiagnostico?idPaciente=${indicePaciente}&idDiagnostico=${indiceDiagnóstico+1}`, {
+    const response = await fetch("http://localhost:8080/IdDiagnosticosPaciente", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        idPaciente: indicePaciente
+      })
+    });
+    const diagnosticos = await response.json();
+    console.log("-->"+diagnosticos[indiceDiagnóstico]+"<--");
+
+    await fetch(`http://localhost:8080/DarDeAltaDiagnostico?idPaciente=${indicePaciente}&idDiagnostico=${diagnosticos[indiceDiagnóstico]}`, {
       method: "POST"
     });
 

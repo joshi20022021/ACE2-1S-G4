@@ -372,6 +372,28 @@ public class MediTrackApplication {
     }
 
     
+    @PostMapping("/IdDiagnosticosPaciente")
+    public List<Integer> obtenerIdDiagnosticos(@RequestParam("idPaciente") int idPaciente) {
+        List<Integer> ids = new ArrayList<>();
+    
+        String sql = "SELECT id FROM Diagnósticos WHERE Pacientes_id = ?"; // Obtenemos todos los diagnósticos del paciente
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setInt(1, idPaciente);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ids.add(rs.getInt("id")); // guardamos los id en una lista
+                }
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return ids;
+    }
 
 	@GetMapping("/GetPacientes")
 	public List<String> obtenerNombresPacientes() {
