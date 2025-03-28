@@ -4,15 +4,12 @@ import paho.mqtt.client as mqtt
 SERIAL_PORT = 'COM5' 
 BAUD_RATE = 9600
 
-# Configuración del broker MQTT
 MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
 
-# Conexión MQTT
 client = mqtt.Client()
 client.connect(MQTT_BROKER, MQTT_PORT, 60)
 
-# Abrir el puerto serial
 ser = serial.Serial(SERIAL_PORT, BAUD_RATE)
 print(f"Conectado a {SERIAL_PORT}, escuchando datos del Arduino...")
 
@@ -21,7 +18,6 @@ while True:
         line = ser.readline().decode('utf-8').strip()
         print("Dato leído:", line)
 
-        # Publicar en diferentes tópicos según el dato
         if line.startswith("ecg:"):
             client.publish("sensores/ecg", line.split(":")[1])
         elif line.startswith("oxigeno:"):
@@ -32,6 +28,14 @@ while True:
             client.publish("sensores/paciente", line[9:].strip())
         elif line.startswith("Mensaje:"):
             client.publish("sensores/mensaje", line[8:].strip())
+        elif line.startswith("Camilla"):
+            partes = line.split(",")
+            if len(partes) == 3:
+                id_camilla = partes[1].strip()
+                estado = partes[2].strip()
+                mensaje = f"{id_camilla},{estado}"
+                client.publish("sensores/camilla", mensaje)
+                print(f"📤 Publicado a sensores/camilla: {mensaje}")
 
     except Exception as e:
         print("Error:", e)

@@ -79,6 +79,23 @@ def insertar_verificacion(uid):
     except Exception as e:
         print("❌ Error al insertar en Verificaciones:", e)
 
+def actualizar_camilla(id_camilla, estado_valor):
+    try:
+        estado = "Ocupada" if estado_valor == "0" else "Vacia"
+
+        # Actualiza el estado y fecha de la camilla
+        cursor.execute("""
+            UPDATE Camilla
+            SET Estado = %s, Fecha = CURRENT_TIMESTAMP
+            WHERE id = %s
+        """, (estado, id_camilla))
+
+        conn.commit()
+        print(f"✅ Camilla actualizada: id={id_camilla}, Estado={estado}")
+
+    except Exception as e:
+        print("❌ Error al actualizar camilla:", e)
+
 
 def on_connect(client, userdata, flags, rc):
     print("✅ Conectado al broker MQTT")
@@ -101,9 +118,20 @@ def on_message(client, userdata, msg):
         oxigeno = None
         frecuencia = None
 
-    elif topico == "sensores/uid":
-        uid = dato
+    elif topico == "sensores/rfid_uid":
+        uid = dato.strip()
         insertar_verificacion(uid)
+
+    elif topico == "sensores/camilla":
+        try:
+            partes = dato.split(",")
+            if len(partes) == 2:
+                id_camilla = partes[0].strip()
+                estado = partes[1].strip()
+                actualizar_camilla(id_camilla, estado)
+        except Exception as e:
+            print("❌ Error al procesar datos de camilla:", e)
+
 
 client = mqtt.Client()
 client.on_connect = on_connect
