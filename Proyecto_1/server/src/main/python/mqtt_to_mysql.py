@@ -53,8 +53,8 @@ def insertar_signos(ox, fc):
 
 def insertar_verificacion(uid):
     try:
-        # Buscar el ID del usuario correspondiente al UID
-        cursor.execute("SELECT id FROM Usuarios WHERE UID = %s", (uid,))
+        uid_limpio = uid.replace(" ", "")  # Elimina espacios
+        cursor.execute("SELECT id FROM Usuarios WHERE REPLACE(UID, ' ', '') = %s", (uid_limpio,))
         result = cursor.fetchone()
 
         if not result:
@@ -63,11 +63,11 @@ def insertar_verificacion(uid):
 
         usuario_id = result[0]
 
-        # Obtener el siguiente ID disponible en Verificaciones
+        # Obtener el siguiente ID disponible
         cursor.execute("SELECT IFNULL(MAX(id), 0) + 1 FROM Verificaciones")
         nuevo_id = cursor.fetchone()[0]
 
-        # Insertar en Verificaciones con ID manual
+        # Insertar en Verificaciones con el UID original
         cursor.execute("""
             INSERT INTO Verificaciones (id, uid, Usuarios_id)
             VALUES (%s, %s, %s)
@@ -78,6 +78,7 @@ def insertar_verificacion(uid):
 
     except Exception as e:
         print("❌ Error al insertar en Verificaciones:", e)
+
 
 def actualizar_camilla(id_camilla, estado_valor):
     try:

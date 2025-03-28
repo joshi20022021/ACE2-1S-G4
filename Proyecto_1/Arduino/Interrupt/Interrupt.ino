@@ -92,13 +92,12 @@ void loop() {
   for(int i = 0; i < 3; i++){
     if (digitalRead(camillas[i]) == LOW) {
       camillasOcupadas[i] = !camillasOcupadas[i];
+
+      Serial.print("Camilla,");
+      Serial.print(i+1);
+      Serial.print( ",");
+      Serial.println(camillasOcupadas[i]);
     }
-    delay(100);
-    
-    Serial.print("Camilla,");
-    Serial.print(i);
-    Serial.print( ",");
-    Serial.println(camillasOcupadas[i]);
   }
 
   // -------------------------------------
