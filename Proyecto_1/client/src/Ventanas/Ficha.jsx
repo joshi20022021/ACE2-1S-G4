@@ -251,6 +251,8 @@ const Ficha = () => {
     setStyle(titleStyle);
     doc.text("CONSTANCIA DE ALTA DE DIAGNÓSTICO DEL PACIENTE", margin, yPos);
     yPos += lineHeight;
+    doc.text(formDatos.datosGenerales.nombres, margin, yPos);
+    yPos += lineHeight;
     setStyle(normalStyle);
 
       setStyle(diagnosticoStyle);
@@ -268,6 +270,7 @@ const Ficha = () => {
         `• Recomendaciones: ${formDatos.diagnosticos[indiceDiagnóstico].recomendaciones}`,
         `• Fechas: ${formDatos.diagnosticos[indiceDiagnóstico].fecha} - ${formDatos.diagnosticos[indiceDiagnóstico].fechafinal}`
       ];
+      
 
       diagnosticoData.forEach(item => {
         if (yPos > pageHeight - lineHeight) {
@@ -279,6 +282,19 @@ const Ficha = () => {
       });
 
       yPos += lineHeight;
+      setStyle(diagnosticoStyle);
+      doc.text(`Información de las gráficas`, margin, yPos);
+      yPos += lineHeight;
+      doc.text(`Oximetria datos`, margin, yPos);
+      yPos += lineHeight;
+      setStyle(normalStyle);
+      doc.text(` Minimo: ${formDatos.diagnosticos[indiceDiagnóstico].minimoO} Maximo: ${formDatos.diagnosticos[indiceDiagnóstico].maximoO} Promedio: ${formDatos.diagnosticos[indiceDiagnóstico].promedioO}`, margin, yPos);
+      yPos += lineHeight;
+      setStyle(diagnosticoStyle);
+      doc.text(`ECG datos`, margin, yPos);
+      yPos += lineHeight;
+      setStyle(normalStyle);
+      doc.text(` Minimo: ${formDatos.diagnosticos[indiceDiagnóstico].minimoE} Maximo: ${formDatos.diagnosticos[indiceDiagnóstico].maximoE} Promedio: ${formDatos.diagnosticos[indiceDiagnóstico].promedioE}`, margin, yPos);
    
 
     doc.save(`alta_paciente_${formDatos.datosGenerales.nombres.replace(/\s+/g, '_')}.pdf`);

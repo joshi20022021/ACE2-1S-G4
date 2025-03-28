@@ -669,7 +669,14 @@ public class MediTrackApplication {
                        d.Fecha               AS fecha,
                        d.Fecha_final         AS fechafinal,
                        d.Observaciones       AS observaciones,
-                       d.Recomendaciones     AS recomendaciones
+                       d.Recomendaciones     AS recomendaciones,
+
+                       d.Minimo              AS minimoO,
+                       d.Maximo              AS maximoO,
+                       d.Promedio            AS promedioO,
+                       d.Minimo_ECG           AS minimoE,
+                       d.Maximo_ECG           AS maximoE,
+                       d.Promedio_ECG         AS promedioE
                 FROM Diagnósticos d
                 WHERE d.Pacientes_id = ?
             """;
@@ -693,7 +700,14 @@ public class MediTrackApplication {
                         diag.put("fechafinal",     rsDiag.getString("fechafinal"));
                         diag.put("observaciones",     rsDiag.getString("observaciones"));
                         diag.put("recomendaciones",     rsDiag.getString("recomendaciones"));
-    
+                        // valores de gráficas
+                        diag.put("minimoO",     String.valueOf(rsDiag.getInt("minimoO")));
+                        diag.put("maximoO",     String.valueOf(rsDiag.getInt("maximoO")));
+                        diag.put("promedioO",   String.valueOf(rsDiag.getInt("promedioO")));
+                        diag.put("minimoE",     String.valueOf(rsDiag.getInt("minimoE")));
+                        diag.put("maximoE",     String.valueOf(rsDiag.getInt("maximoE")));
+                        diag.put("promedioE",   String.valueOf(rsDiag.getInt("promedioE")));
+
                         listaDiagnosticos.add(diag);
                     }
     
