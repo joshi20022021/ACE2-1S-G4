@@ -30,6 +30,9 @@ const int pinBotonPausa = 18;
 MFRC522 rfid(SS_PIN, RST_PIN);  // Crear objeto para el módulo RC522
 MFRC522::MIFARE_Key key;
 
+const int camillas[] = {7, 8, 9};
+bool camillasOcupadas[] = {false, false, false};
+
 
 
 String Leido = "";
@@ -64,6 +67,12 @@ void setup() {
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
+
+  // ---------------c a m i l l a s--------------
+  for (int i = 0; i < 3; i++){
+    pinMode(camillas[i], INPUT_PULLUP);
+    digitalWrite(camillas[i], HIGH);
+  }
 }
 
 // -----------------------------------------------------
@@ -73,11 +82,23 @@ void loop() {
   // 1) Revisamos si estamos en pausa:
   //    - Si "paused == true", no hacemos nada del trabajo principal.
   // -------------------------------------
-  if (paused) {
+  //if (paused) {
     // O puedes imprimir un mensaje si quieres ver que está en pausa
-    Serial.println("Mensaje:Sistema en PAUSA. Pulsa el botón para reanudar.");
-    delay(500);  // Para no saturar el serial
-    return;      // Salimos de loop()
+    //Serial.println("Mensaje:Sistema en PAUSA. Pulsa el botón para reanudar.");
+    //delay(500);  // Para no saturar el serial
+    //return;      // Salimos de loop()
+  //}
+
+  for(int i = 0; i < 3; i++){
+    if (digitalRead(camillas[i]) == LOW) {
+      camillasOcupadas[i] = !camillasOcupadas[i];
+    }
+    delay(100);
+    
+    Serial.print("Camilla,");
+    Serial.print(i);
+    Serial.print( ",");
+    Serial.println(camillasOcupadas[i]);
   }
 
   // -------------------------------------
