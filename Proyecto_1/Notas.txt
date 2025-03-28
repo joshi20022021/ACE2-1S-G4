@@ -1,0 +1,10 @@
+endpoint: arqui-2.ciir7ihqfr2n.us-east-2.rds.amazonaws.com
+puerto: 3306
+usuario: ACYE2
+contraseña: Sucios!344
+
+// Instalacion mvn
+
+1) Abrir terminal powershell en administrador y escribir: choco install maven
+2) comando de instalacion en carpeta server: mvn clean install
+3) ejecutar en carpeta server: mvn spring-boot:run
