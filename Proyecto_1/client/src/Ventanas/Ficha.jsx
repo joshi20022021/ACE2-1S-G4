@@ -28,7 +28,8 @@ const Ficha = () => {
           tipoSangre: data.tipoSangre || "",
           expediente: data.expediente || "",
           fechaIngreso: data.fechaIngreso || "",
-          foto: data.foto || null
+          foto: data.foto || null,
+          Estado: data.estado || ""
         },
         diagnosticos: data.diagnosticos || []
       });
@@ -46,7 +47,8 @@ const Ficha = () => {
       fechaIngreso: "",
       sexo: "",
       tipoSangre: "",
-      foto: ""
+      foto: "",
+      Estado:""
     },
     diagnosticos: []
   });
@@ -97,20 +99,21 @@ const Ficha = () => {
       console.error("Error al borrar el paciente:", error);
     }
   };
+  
+  const margin = 15;
+  let yPos = margin;
+  const lineHeight = 7;
+  const pageHeight = 280;
 
-  const generatePDF = () => {
+  const titleStyle = { fontSize: 16, textColor: [6, 19, 31], fontStyle: 'bold' };
+  const sectionStyle = { fontSize: 12, textColor: [6, 19, 31], fontStyle: 'bold' };
+  const normalStyle = { fontSize: 10, textColor: [0, 0, 0], fontStyle: 'normal' };
+  const diagnosticoStyle = { fontSize: 12, textColor: [0, 0, 0], fontStyle: 'bold' };
+
+
+
+  const generateReporte = () => {
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  
-    const margin = 15;
-    let yPos = margin;
-    const lineHeight = 7;
-    const pageHeight = 280;
-  
-    const titleStyle = { fontSize: 16, textColor: [6, 19, 31], fontStyle: 'bold' };
-    const sectionStyle = { fontSize: 12, textColor: [6, 19, 31], fontStyle: 'bold' };
-    const normalStyle = { fontSize: 10, textColor: [0, 0, 0], fontStyle: 'normal' };
-    const diagnosticoStyle = { fontSize: 12, textColor: [0, 0, 0], fontStyle: 'bold' };
-  
     const setStyle = (style) => {
       doc.setFontSize(style.fontSize);
       doc.setTextColor(...style.textColor);
@@ -129,7 +132,8 @@ const Ficha = () => {
     setStyle(normalStyle);
     const generalData = [
       `Nombre: ${formDatos.datosGenerales.nombres || "-"}`,
-      `Edad: ${formDatos.datosGenerales.edad || "-"} | Sexo: ${formDatos.datosGenerales.sexo || "-"}`,
+      `Edad: ${formDatos.datosGenerales.edad || "-"}`,
+      `Sexo: ${formDatos.datosGenerales.sexo || "-"}`,
       `Tipo de sangre: ${formDatos.datosGenerales.tipoSangre || "-"}`,
       `Expediente: ${formDatos.datosGenerales.expediente || "-"}`,
       `Fecha de ingreso: ${formDatos.datosGenerales.fechaIngreso || "-"}`
@@ -145,32 +149,27 @@ const Ficha = () => {
     });
     yPos += lineHeight;
 
-    // Antecedentes
     setStyle(sectionStyle);
-    doc.text("ANTECEDENTES", margin, yPos);
+    doc.text("HISTORIAL MÉDICO", margin, yPos);
     yPos += lineHeight;
-
     setStyle(normalStyle);
-    const antecedentesText = formDatos.antecedentes.join(", ");
-    doc.text(antecedentesText, margin, yPos, { maxWidth: 180 });
-    yPos += lineHeight * (antecedentesText.length > 100 ? 3 : 1);
-    yPos += lineHeight;
 
     formDatos.diagnosticos.forEach((diagnostico, index) => {
       setStyle(diagnosticoStyle);
-      doc.text(`DIAGNÓSTICO ${index + 1}: ${diagnostico.nombreDiagnostico}`, margin, yPos);
+      doc.text(`DIAGNÓSTICO ${index + 1}: ${diagnostico.diagnostico}`, margin, yPos);
       yPos += lineHeight;
 
       setStyle(normalStyle);
       const diagnosticoData = [
-        `• Condiciones: ${diagnostico.condicionesPreexistentes.join(", ")}`,
-        `• Alergias: ${diagnostico.alergias.join(", ")}`,
+        `• Condiciones: ${diagnostico.condiciones}`,
+        `• Alergias: ${diagnostico.alergias}`,
         `• Estado: ${diagnostico.estado}`,
-        `• Síntomas: ${diagnostico.sintomas.join(", ")}`,
+        `• Síntomas: ${diagnostico.sintomas}`,
         `• Tratamiento: ${diagnostico.tratamiento}`,
+        `• Antecedentes: ${diagnostico.antecedentes}`,
         `• Observaciones: ${diagnostico.observaciones}`,
         `• Recomendaciones: ${diagnostico.recomendaciones}`,
-        `• Fechas: ${diagnostico.fecha_inicial} - ${diagnostico.fecha_Final}`
+        `• Fechas: ${diagnostico.fecha} - ${diagnostico.fechafinal}`
       ];
 
       diagnosticoData.forEach(item => {
@@ -186,6 +185,104 @@ const Ficha = () => {
     });
 
     doc.save(`ficha_paciente_${formDatos.datosGenerales.nombres.replace(/\s+/g, '_')}.pdf`);
+    yPos = margin;
+  };
+
+  const generateAlta = async() => {
+
+    // Petición para dar de alta
+    await fetch(`http://localhost:8080/DarDeAlta?idPaciente=${indicePaciente}`, {
+      method: "POST"
+    });
+    
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const setStyle = (style) => {
+      doc.setFontSize(style.fontSize);
+      doc.setTextColor(...style.textColor);
+      doc.setFont("helvetica", style.fontStyle);
+    };
+
+    setStyle(titleStyle);
+    doc.text("CONSTANCIA DE ALTA MÉDICA DEL PACIENTE", 105, yPos, { align: "center" });
+    yPos += lineHeight * 2;
+  
+    // Información general
+    setStyle(sectionStyle);
+    doc.text("INFORMACIÓN GENERAL", margin, yPos);
+    yPos += lineHeight;
+
+    setStyle(normalStyle);
+    const generalData = [
+      `Nombre: ${formDatos.datosGenerales.nombres || "-"}`,
+      `Edad: ${formDatos.datosGenerales.edad || "-"}`,
+      `Sexo: ${formDatos.datosGenerales.sexo || "-"}`,
+      `Tipo de sangre: ${formDatos.datosGenerales.tipoSangre || "-"}`,
+      `Expediente: ${formDatos.datosGenerales.expediente || "-"}`,
+      `Fecha de ingreso: ${formDatos.datosGenerales.fechaIngreso || "-"}`
+    ];
+
+    generalData.forEach(text => {
+      if (yPos > pageHeight - (lineHeight * 2)) {
+        doc.addPage();
+        yPos = margin;
+      }
+      doc.text(text, margin, yPos);
+      yPos += lineHeight;
+    });
+    yPos += lineHeight;
+
+    doc.save(`alta_paciente_${formDatos.datosGenerales.nombres.replace(/\s+/g, '_')}.pdf`);
+    yPos = margin;
+  };
+
+  const generateAltaDiagnóstico = async(indiceDiagnóstico) => {
+
+    await fetch(`http://localhost:8080/DarDeAltaDiagnostico?idPaciente=${indicePaciente}&idDiagnostico=${indiceDiagnóstico+1}`, {
+      method: "POST"
+    });
+
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const setStyle = (style) => {
+      doc.setFontSize(style.fontSize);
+      doc.setTextColor(...style.textColor);
+      doc.setFont("helvetica", style.fontStyle);
+    };
+
+    setStyle(titleStyle);
+    doc.text("CONSTANCIA DE ALTA DE DIAGNÓSTICO DEL PACIENTE", margin, yPos);
+    yPos += lineHeight;
+    setStyle(normalStyle);
+
+      setStyle(diagnosticoStyle);
+      doc.text(`DIAGNÓSTICO ${indiceDiagnóstico + 1}: ${formDatos.diagnosticos[indiceDiagnóstico].diagnostico}`, margin, yPos);
+      yPos += lineHeight;
+
+      setStyle(normalStyle);
+      const diagnosticoData = [
+        `• Condiciones: ${formDatos.diagnosticos[indiceDiagnóstico].condiciones}`,
+        `• Alergias: ${formDatos.diagnosticos[indiceDiagnóstico].alergias}`,
+        `• Síntomas: ${formDatos.diagnosticos[indiceDiagnóstico].sintomas}`,
+        `• Tratamiento: ${formDatos.diagnosticos[indiceDiagnóstico].tratamiento}`,
+        `• Antecedentes: ${formDatos.diagnosticos[indiceDiagnóstico].antecedentes}`,
+        `• Observaciones: ${formDatos.diagnosticos[indiceDiagnóstico].observaciones}`,
+        `• Recomendaciones: ${formDatos.diagnosticos[indiceDiagnóstico].recomendaciones}`,
+        `• Fechas: ${formDatos.diagnosticos[indiceDiagnóstico].fecha} - ${formDatos.diagnosticos[indiceDiagnóstico].fechafinal}`
+      ];
+
+      diagnosticoData.forEach(item => {
+        if (yPos > pageHeight - lineHeight) {
+          doc.addPage();
+          yPos = margin;
+        }
+        doc.text(item, margin + 5, yPos);
+        yPos += lineHeight;
+      });
+
+      yPos += lineHeight;
+   
+
+    doc.save(`alta_paciente_${formDatos.datosGenerales.nombres.replace(/\s+/g, '_')}.pdf`);
+    yPos = margin;
   };
 
   const containerVariants = {
@@ -202,6 +299,8 @@ const Ficha = () => {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 1 } },
   };
+
+
 
   return (
     <motion.div
@@ -274,10 +373,18 @@ const Ficha = () => {
                     <div>{formDatos.datosGenerales.fechaIngreso || "-"}</div>
                   </div>
                 </div>
+
+                <div className="grid-row">
+                  <div className="grid-cell">
+                    <label>Estado</label>
+                    <div>{formDatos.datosGenerales.Estado || "-"}</div>
+                  </div>
+                </div>
               </div>
               
               {/* Diagnósticos */}
               {formDatos.diagnosticos.map((diagnostico, index) => (
+                
                 <div key={index} className="grid-item diagnostico-item">
                   <h5>DIAGNÓSTICO {index + 1}: {diagnostico.diagnostico}</h5>
                   
@@ -289,10 +396,6 @@ const Ficha = () => {
                     <div className="grid-cell">
                       <label>Alergias</label>
                       <div>{diagnostico.alergias}</div>
-                    </div>
-                    <div className="grid-cell">
-                      <label>Estado</label>
-                      <div>{diagnostico.estado}</div>
                     </div>
                   </div>
                   
@@ -332,8 +435,20 @@ const Ficha = () => {
                       <label>Antecedentes</label>
                       <div>{diagnostico.antecedentes}</div>
                     </div>
+                    <div className="grid-cell">
+                      <label>Estado</label>
+                      <div>{diagnostico.estado}</div>
+                    </div>
                   </div>
+                  <button 
+                    className="btn btn-danger mt-3 w-100" 
+                    onClick={() => generateAltaDiagnóstico(index)}
+                    style={{ borderRadius: '28px' }}>
+                    Dar de Alta
+                  </button>
                 </div>
+
+                
               ))}
             </div>
           </motion.div>
@@ -359,10 +474,10 @@ const Ficha = () => {
 
       <motion.div className="buttons d-flex justify-content-center mt-4" variants={buttonVariants}>
         <div className="d-flex gap-3">
-          <button className="btn btn-danger" onClick={borrarPaciente}>
+          <button className="btn btn-danger" onClick={generateAlta}>
             Dar de Alta
           </button>
-          <button className="btn btn-secondary" onClick={generatePDF}>
+          <button className="btn btn-secondary" onClick={generateReporte}>
             Reporte PDF
           </button>
           <button className="btn btn-primary" onClick={() => navigate('/principal')}>

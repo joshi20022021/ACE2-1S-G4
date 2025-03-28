@@ -325,6 +325,54 @@ public class MediTrackApplication {
 	private static final String usuario = "ACYE2";
 	private static final String contraseña = "Sucios!344"; 
 
+    @PostMapping("/DarDeAlta")
+    public String DarDeAlta(@RequestParam("idPaciente") int idPaciente) {
+
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
+            // Armamos el SQL con el nombre de tabla directamente (VALIDADO)
+            String sqlActualizarAlta = "UPDATE Pacientes SET Estado = 'Alta' WHERE id = ?";
+    
+            try (PreparedStatement stmt = conn.prepareStatement(sqlActualizarAlta)) {
+                stmt.setInt(1, idPaciente);
+                int filas = stmt.executeUpdate();
+    
+                return filas > 0 ? "Cambio exitoso" : "No se encontró el registro";
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error al ejecutar la actualización";
+        }
+    }
+
+    @PostMapping("/DarDeAltaDiagnostico")
+    public String darDeAltaDiagnostico(@RequestParam("idPaciente") int idPaciente,@RequestParam("idDiagnostico") int idDiagnostico) {
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
+            String sqlActualizarDiagnostico = """
+                UPDATE Diagnósticos
+                SET Estado = 'Alta'
+                WHERE id = ? AND Pacientes_id = ?
+            """;
+    
+            try (PreparedStatement stmt = conn.prepareStatement(sqlActualizarDiagnostico)) {
+                stmt.setInt(1, idDiagnostico);
+                stmt.setInt(2, idPaciente);
+    
+                int filas = stmt.executeUpdate();
+    
+                return filas > 0 ? "Diagnóstico dado de alta exitosamente" : "No se encontró coincidencia con esos IDs";
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error al ejecutar la actualización de diagnóstico";
+        }
+    }
+
+    
+
 	@GetMapping("/GetPacientes")
 	public List<String> obtenerNombresPacientes() {
         List<String> nombres = new ArrayList<>();
@@ -360,7 +408,7 @@ public class MediTrackApplication {
         @RequestParam("fechaIngreso") String fechaIngreso,
         @RequestParam("fotografia") MultipartFile fotografia
     ) {
-        String sql = "INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id,Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
          PreparedStatement Contenedor = conn.prepareStatement(sql)) {
@@ -374,6 +422,7 @@ public class MediTrackApplication {
             Contenedor.setString(7, fechaIngreso);
             Contenedor.setString(8, String.valueOf(Tipo_Usuario)); // tu variable global
             Contenedor.setString(9, "1"); // camilla fija o lo que uses
+            Contenedor.setString(10, "proceso"); // camilla fija o lo que uses
 
 		    // Pasamos el arreglo de condiciones a cadena
             /*Object condicionesObj = datosPaciente.get("condiciones");
@@ -573,7 +622,8 @@ public class MediTrackApplication {
                        p.No_Exp_Med     AS expediente,
                        p.Tipo_Sangre    AS tipoSangre,
                        p.Fecha          AS fechaIngreso,
-                       p.Fotografía     AS fotografia
+                       p.Fotografía     AS fotografia,
+                       p.Estado         AS estado
                 FROM Pacientes p
                 WHERE p.id = ?
             """;
@@ -596,6 +646,8 @@ public class MediTrackApplication {
                         } else {
                             respuesta.put("foto", null); // o una imagen por defecto
                         }
+
+                        respuesta.put("estado", rsPaciente.getString("estado"));
 
                     } else {
                         respuesta.put("error", "No se encontró el paciente con id: " + idPaciente);
