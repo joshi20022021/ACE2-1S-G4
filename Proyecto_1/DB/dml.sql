@@ -1,33 +1,37 @@
 -- ejemplos
-INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id)
-VALUES 
-('Ana Li', 25, 'F', 10001, 'O+', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 1, 1),
-('Leo Wu', 30, 'M', 10002, 'A-', 'http://localhost:5173/89b07a6e-c4b7-45c5-aaad-fb3911a5233a', NOW(), 1, 1);
 
-            INSERT INTO Diagnósticos
-            (
-              Diagnostico_Principal,
-              Sintomas_Reportados,
-              Antecedentes,
-              Condiciones,
-              Alergias,
-              Tratamiento,
-              Observaciones,
-              Recomendaciones,
-              Minimo_ECG,
-              Maximo_ECG,
-              Promedio_ECG,
-              Minimo,
-              Maximo,
-              Promedio,
-              Signos_Vitales_id,
-              Pacientes_id,
-              Fecha,
-              Fecha_final,
-              Estado
-            )
-            VALUES
-            ("","","","","","","","",1,1,1,1,1,1,11,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'proceso');
+DELETE FROM Pacientes WHERE id = 4;
+
+RENAME TABLE `pacientes`     TO `Pacientes`;
+RENAME TABLE `diagnosticos`  TO `Diagnósticos`;
+RENAME TABLE `camilla`      TO `Camilla`;
+RENAME TABLE `signos_vitales` TO `Signos_Vitales`;
+RENAME TABLE `usuarios` TO `Usuarios`;
+
+
+-- ficha
+SELECT p.Nombre_Completo        AS nombres,
+		p.edad                  AS edad,
+		p.Sexo                  AS sexo,
+		p.No_Exp_Med           AS expediente,
+		p.Tipo_Sangre          AS tipoSangre,
+		p.Fecha                AS fechaIngreso
+FROM Pacientes p WHERE p.id = 1;
+
+SELECT d.Diagnostico_Principal AS diagnostico,
+                       d.Sintomas_Reportados   AS sintomas,
+                       d.Condiciones           AS condiciones,
+                       d.Antecedentes          AS antecedentes,
+                       d.Tratamiento           AS tratamiento,
+                       d.Alergias             AS alergias,
+                       d.Condiciones          AS condiciones,
+                       d.Estado               AS estado,
+                       d.Fecha               AS fecha,
+                       d.Fecha_final         AS fechafinal,
+                       d.Observaciones       AS observaciones,
+                       d.Recomendaciones     AS recomendaciones
+                FROM Diagnósticos d
+                WHERE d.Pacientes_id = 2;
 
 ALTER TABLE Pacientes
   MODIFY Camilla_id INT NULL;
@@ -46,7 +50,7 @@ VALUES ('Vacia', NOW());
 
 -- utilidades
  
-SELECT * FROM Diagnósticos; -- ver tabla
+SELECT * FROM Signos_Vitales; -- ver tabla
 
 SELECT NOW();
 
@@ -63,7 +67,7 @@ DROP TABLE Signos_vitales;
 SHOW TABLES;
 
 SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE Diagnósticos;
+TRUNCATE TABLE Pacientes;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- 	DDL
