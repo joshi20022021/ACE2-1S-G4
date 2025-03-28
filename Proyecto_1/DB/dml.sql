@@ -8,6 +8,16 @@ RENAME TABLE `camilla`      TO `Camilla`;
 RENAME TABLE `signos_vitales` TO `Signos_Vitales`;
 RENAME TABLE `usuarios` TO `Usuarios`;
 
+ALTER TABLE Pacientes
+ADD COLUMN Estado VARCHAR(45);
+
+UPDATE Pacientes
+SET Estado = "proceso"
+WHERE Pacientes.id = 1;
+
+UPDATE Diagnósticos
+SET Estado = 'proceso'
+WHERE id = 1 AND Pacientes_id = 1;
 
 -- ficha
 SELECT p.Nombre_Completo        AS nombres,
@@ -50,7 +60,7 @@ VALUES ('Vacia', NOW());
 
 -- utilidades
  
-SELECT * FROM Signos_Vitales; -- ver tabla
+SELECT * FROM Diagnósticos; -- ver tabla
 
 SELECT NOW();
 
