@@ -326,15 +326,16 @@ public class MediTrackApplication {
 	private static final String contraseña = "Sucios!344"; 
 
     @PostMapping("/DarDeAlta")
-    public String DarDeAlta(@RequestParam("idPaciente") int idPaciente) {
+    public String DarDeAlta(@RequestParam("idPaciente") int idPaciente,@RequestParam("fechafinal") String fechafinal) {
 
     
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
 
-            String sqlActualizarAlta = "UPDATE Pacientes SET Estado = 'Alta' WHERE id = ?";
+            String sqlActualizarAlta = "UPDATE Pacientes SET Estado = 'Alta', Fecha_final = ? WHERE id = ?";
     
             try (PreparedStatement stmt = conn.prepareStatement(sqlActualizarAlta)) {
-                stmt.setInt(1, idPaciente);
+                stmt.setString(1, fechafinal);
+                stmt.setInt(2, idPaciente);
                 int filas = stmt.executeUpdate();
     
                 return filas > 0 ? "Cambio exitoso" : "No se encontró el registro";
@@ -744,7 +745,56 @@ public class MediTrackApplication {
         }
     
         return respuesta;
-    }         
+    }
+    
+    
+    @GetMapping("/AccesoUsuario")
+    public int AccesoUsuario() {
+        int resultado = 0;
+    
+        String selectSql = """
+            SELECT u.id, u.UID AS uid_usuario, v.id AS verificacion_id, v.UID AS uid_verificacion
+            FROM Usuarios u
+            JOIN Verificaciones v ON u.id = v.Usuarios_id
+        """;
+    
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+             PreparedStatement stmt = conn.prepareStatement(selectSql);
+             ResultSet rs = stmt.executeQuery()) {
+    
+            List<Integer> idsVerificacionesCoincidentes = new ArrayList<>();
+    
+            while (rs.next()) {
+
+                // Usuarios
+                int id = rs.getInt("id"); // id de usuarios
+                String uidUsuario = rs.getString("uid_usuario");
+
+                // verificaciones
+                String uidVerificacion = rs.getString("uid_verificacion");
+                int idVerificacion = rs.getInt("verificacion_id");
+    
+                if (uidUsuario != null && uidUsuario.equals(uidVerificacion)) {
+                    resultado = id; // id coincidente
+                }
+                idsVerificacionesCoincidentes.add(idVerificacion); // guardamos id de Verificaciones
+            }
+    
+            String BorrarVerificacionsql = "UPDATE Verificaciones SET UID = '' WHERE id = ?";
+            try (PreparedStatement updateStmt = conn.prepareStatement(BorrarVerificacionsql)) {
+                for (int verificacionId : idsVerificacionesCoincidentes) {
+                    updateStmt.setInt(1, verificacionId);
+                    updateStmt.executeUpdate();
+                }
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return resultado;
+    }
+    
 
 }
 

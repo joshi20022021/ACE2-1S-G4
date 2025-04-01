@@ -45,6 +45,7 @@ const Ficha = () => {
       edad: "",
       expediente: "",
       fechaIngreso: "",
+      fechafinal:"",
       sexo: "",
       tipoSangre: "",
       foto: "",
@@ -172,11 +173,20 @@ const Ficha = () => {
 
   const generateAlta = async() => {
 
+    // Fecha final de alta
+    const ahora = new Date();
+    const offsetMs = ahora.getTimezoneOffset() * 60000;
+    const local = new Date(ahora.getTime() - offsetMs);
+
+    const fechaGuatemala = local.toISOString().slice(0, 19).replace('T', ' ');
+    formDatos.datosGenerales.fechafinal = fechaGuatemala;
+ 
+    console.log(fechaGuatemala);
     // Petición para dar de alta
-    await fetch(`http://localhost:8080/DarDeAlta?idPaciente=${indicePaciente}`, {
+    await fetch(`http://localhost:8080/DarDeAlta?idPaciente=${indicePaciente}&fechafinal=${fechaGuatemala}`, {
       method: "POST"
     });
-    
+
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
     const setStyle = (style) => {
       doc.setFontSize(style.fontSize);
@@ -200,7 +210,8 @@ const Ficha = () => {
       `Sexo: ${formDatos.datosGenerales.sexo || "-"}`,
       `Tipo de sangre: ${formDatos.datosGenerales.tipoSangre || "-"}`,
       `Expediente: ${formDatos.datosGenerales.expediente || "-"}`,
-      `Fecha de ingreso: ${formDatos.datosGenerales.fechaIngreso || "-"}`
+      `Fecha de ingreso: ${formDatos.datosGenerales.fechaIngreso || "-"}`,
+      `Fecha de salida: ${formDatos.datosGenerales.fechafinal || "-"}`
     ];
 
     generalData.forEach(text => {
