@@ -9,11 +9,14 @@ RENAME TABLE `signos_vitales` TO `Signos_Vitales`;
 RENAME TABLE `usuarios` TO `Usuarios`;
 
 ALTER TABLE Pacientes
+ADD COLUMN Fecha_final TIMESTAMP NOT NULL;
+
+ALTER TABLE Pacientes
 ADD COLUMN Estado VARCHAR(45);
 
 UPDATE Pacientes
 SET Estado = "proceso"
-WHERE Pacientes.id = 1;
+WHERE Pacientes.id = 2;
 
 UPDATE Diagnósticos
 SET Estado = 'proceso'
@@ -60,7 +63,7 @@ VALUES ('Vacia', NOW());
 
 -- utilidades
  
-SELECT * FROM Diagnósticos; -- ver tabla
+SELECT * FROM Usuarios; -- ver tabla
 
 SELECT NOW();
 
