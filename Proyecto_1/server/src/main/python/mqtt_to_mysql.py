@@ -53,31 +53,34 @@ def insertar_signos(ox, fc):
 
 def insertar_verificacion(uid):
     try:
-        uid_limpio = uid.replace(" ", "")  # Elimina espacios
-        cursor.execute("SELECT id FROM Usuarios WHERE REPLACE(UID, ' ', '') = %s", (uid_limpio,))
+        uid_formateado = uid.strip()  # Asegurarse que no tenga saltos de línea
+
+        # Buscar el ID del usuario correspondiente al UID (con espacios)
+        cursor.execute("SELECT id FROM Usuarios WHERE UID = %s", (uid_formateado,))
         result = cursor.fetchone()
 
         if not result:
-            print(f"❌ UID {uid} no está registrado en la tabla Usuarios.")
+            print(f"❌ UID '{uid_formateado}' no está registrado en la tabla Usuarios.")
             return
 
         usuario_id = result[0]
 
-        # Obtener el siguiente ID disponible
+        # Obtener el siguiente ID disponible en Verificaciones
         cursor.execute("SELECT IFNULL(MAX(id), 0) + 1 FROM Verificaciones")
         nuevo_id = cursor.fetchone()[0]
 
-        # Insertar en Verificaciones con el UID original
+        # Insertar el registro
         cursor.execute("""
             INSERT INTO Verificaciones (id, uid, Usuarios_id)
             VALUES (%s, %s, %s)
-        """, (nuevo_id, uid, usuario_id))
+        """, (nuevo_id, uid_formateado, usuario_id))
 
         conn.commit()
-        print(f"✅ Verificación registrada: ID={nuevo_id}, UID={uid}, Usuarios_id={usuario_id}")
+        print(f"✅ Verificación registrada: ID={nuevo_id}, UID='{uid_formateado}', Usuarios_id={usuario_id}")
 
     except Exception as e:
         print("❌ Error al insertar en Verificaciones:", e)
+
 
 
 def actualizar_camilla(id_camilla, estado_valor):
