@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fazecast.jSerialComm.SerialPort;
 import java.sql.Connection;
+import java.sql.Statement;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -780,13 +781,12 @@ public class MediTrackApplication {
                 idsVerificacionesCoincidentes.add(idVerificacion); // guardamos id de Verificaciones
             }
     
-            String BorrarVerificacionsql = "UPDATE Verificaciones SET UID = '' WHERE id = ?";
-            try (PreparedStatement updateStmt = conn.prepareStatement(BorrarVerificacionsql)) {
-                for (int verificacionId : idsVerificacionesCoincidentes) {
-                    updateStmt.setInt(1, verificacionId);
-                    updateStmt.executeUpdate();
-                }
+            try (Statement truncateStmt = conn.createStatement()) {
+                truncateStmt.execute("SET FOREIGN_KEY_CHECKS = 0");
+                truncateStmt.execute("TRUNCATE TABLE Verificaciones");
+                truncateStmt.execute("SET FOREIGN_KEY_CHECKS = 1");
             }
+    
     
         } catch (SQLException e) {
             e.printStackTrace();
