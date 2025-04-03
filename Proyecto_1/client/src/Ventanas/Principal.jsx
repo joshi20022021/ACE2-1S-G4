@@ -16,7 +16,7 @@ const Principal = () => {
     // Hacer la petición a la API
     const fetchPacientes = async () => {
       try {
-        const response = await fetch("http://localhost:8080/GetPacientes");
+        const response = await fetch("http://192.168.137.123:8080/GetPacientes");
         const data = await response.json();
         setPacientes(data); // Guardamos los nombres en el estado
       } catch (error) {
@@ -32,7 +32,7 @@ const Principal = () => {
     switch (route) {
       case "Formulario":
         try {
-          const response = await fetch("http://localhost:8080/GetUsuario");
+          const response = await fetch("http://192.168.137.123:8080/GetUsuario");
           if (!response.ok) throw new Error("Error en la solicitud");
           const Estado_Acceso = await response.json();
 

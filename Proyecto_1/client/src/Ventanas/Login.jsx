@@ -11,7 +11,7 @@ function Login() {
 
   const enviarUsuario = async (indice) => {
     try {
-      const response = await fetch('http://localhost:8080/Usuario', {
+      const response = await fetch('http://192.168.137.123:8080/Usuario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -35,7 +35,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/AccesoUsuario");
+      const response = await fetch("http://192.168.137.123:8080/AccesoUsuario");
       if (!response.ok) throw new Error("Error en la solicitud");
       const Medico = await response.json();
       

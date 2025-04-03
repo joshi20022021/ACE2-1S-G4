@@ -66,13 +66,13 @@ const RegistroPaciente = () => {
       formData.append("fotografia", formDatos.fotografia); // archivo tipo File
       
       // Bloqueamos acceso al formulario
-      /*const response = await fetch("http://localhost:8080/Bloqueo_Acceso");
+      /*const response = await fetch("http://192.168.137.123st:8080/Bloqueo_Acceso");
       if (!response.ok) throw new Error("Error en la solicitud");
 
       const Estado_Acceso = await response.json();
       console.log(Estado_Acceso)*/
 
-      const response = await fetch("http://localhost:8080/guardarPaciente", {
+      const response = await fetch("http://192.168.137.123st:8080/guardarPaciente", {
         method: "POST",
         body: formData,
       });
