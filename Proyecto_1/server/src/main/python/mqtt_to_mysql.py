@@ -12,6 +12,7 @@ db_config = {
 
 oxigeno = None
 frecuencia = None
+camilla_activa = None 
 
 # Conectamos a la base de datos
 try:
@@ -31,20 +32,35 @@ def get_last_diagnostico_id():
     result = cursor.fetchone()
     return result[0] if result else None
 
+def get_diagnostico_por_camilla():
+    cursor.execute("""
+        SELECT d.id 
+        FROM Diagnósticos d
+        JOIN Pacientes p ON d.Pacientes_id = p.id
+        WHERE p.Camilla_id = %s
+        ORDER BY d.id DESC LIMIT 1
+    """, (camilla_activa,))
+    result = cursor.fetchone()
+    return result[0] if result else None
+
 def insertar_signos(ox, fc):
+    global camilla_activa
     try:
+        if camilla_activa is None:
+            print("❌ No se ha definido la camilla activa.")
+            return
+
         id_signo = get_next_id()
-        diagnostico_id = get_last_diagnostico_id()
+        diagnostico_id = get_diagnostico_por_camilla()
 
         if diagnostico_id is None:
-            print("❌ No hay Diagnósticos disponibles para asociar.")
+            print("❌ No hay Diagnóstico para esta camilla.")
             return
 
         cursor.execute("""
             INSERT INTO Signos_Vitales (id, Oxigenacion, Frecuencia_Cardiaca, Diagnósticos_id)
             VALUES (%s, %s, %s, %s)
         """, (id_signo, ox, fc, diagnostico_id))
-
         conn.commit()
         print(f"✅ Insertado: id={id_signo}, Oxigenacion={ox}, Frecuencia_Cardiaca={fc}, Diagnóstico={diagnostico_id}")
 
@@ -84,21 +100,24 @@ def insertar_verificacion(uid):
 
 
 def actualizar_camilla(id_camilla, estado_valor):
-    try:
-        estado = "Ocupada" if estado_valor == "1" else "Vacia"
+    global camilla_activa
+    estado = "Ocupada" if estado_valor == "1" else "Vacia"
 
-        # Actualiza el estado y fecha de la camilla
-        cursor.execute("""
-            UPDATE Camilla
-            SET Estado = %s, Fecha = CURRENT_TIMESTAMP
-            WHERE id = %s
-        """, (estado, id_camilla))
+    # Actualiza el estado y fecha de la camilla
+    cursor.execute("""
+        UPDATE Camilla
+        SET Estado = %s, Fecha = CURRENT_TIMESTAMP
+        WHERE id = %s
+    """, (estado, id_camilla))
+    conn.commit()
 
-        conn.commit()
-        print(f"✅ Camilla actualizada: id={id_camilla}, Estado={estado}")
+    # Solo si está ocupada, asignamos esa camilla como activa
+    if estado == "Ocupada":
+        camilla_activa = int(id_camilla)
+    else:
+        camilla_activa = None  # se desactiva si se libera
 
-    except Exception as e:
-        print("❌ Error al actualizar camilla:", e)
+    print(f"✅ Camilla actualizada: id={id_camilla}, Estado={estado}")
 
 
 def on_connect(client, userdata, flags, rc):
