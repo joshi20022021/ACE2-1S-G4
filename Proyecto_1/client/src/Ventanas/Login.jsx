@@ -32,24 +32,27 @@ function Login() {
   
 
   const handleLogin =async (e) => {
+    e.preventDefault();
 
-    /*try {
-      const response = await fetch("http://192.168.137.1:8080/AccesoUsuario");
+    try {
+      const response = await fetch("http://localhost:8080/AccesoUsuario");
       if (!response.ok) throw new Error("Error en la solicitud");
       const Medico = await response.json();
-      enviarUsuario(Medico);
+      
       if (Medico !=0) {
-        toast.success("Acceso concedido, redirigiendo...");
+        console.log(Medico);
+        enviarUsuario(Medico);
+        //toast.success("Acceso concedido, redirigiendo...");
         navigate('/principal');
       } else {
-        toast.warn("Coloca la llave de acceso");
+        //toast.warn("Coloca la llave de acceso");
       }
     } catch (error) {
-      toast.error(" Error al obtener datos");
+      //toast.error(" Error al obtener datos");
       console.error("Error al obtener datos:", error);
-    }*/
+    }
 
-    e.preventDefault();
+
     
     if (email === 'Especialista@gmail.com' && password === '123456') {
       enviarUsuario(1);

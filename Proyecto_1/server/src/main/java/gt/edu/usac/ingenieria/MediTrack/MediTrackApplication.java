@@ -52,9 +52,9 @@ public class MediTrackApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MediTrackApplication.class, args);
 		
-		detectPorts();
+		// detectPorts();
 
-		new Thread(MediTrackApplication::readDataFromArduino).start();
+		// new Thread(MediTrackApplication::readDataFromArduino).start();
 	}
 
 	// Métodos de arduino
@@ -431,7 +431,7 @@ public class MediTrackApplication {
         @RequestParam("fechaIngreso") String fechaIngreso,
         @RequestParam("fotografia") MultipartFile fotografia
     ) {
-        String sql = "INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id,Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO Pacientes (Nombre_Completo, edad, Sexo, No_Exp_Med, Tipo_Sangre, Fotografía, Fecha, Usuarios_id, Camilla_id,Estado, Fecha_final) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
          PreparedStatement Contenedor = conn.prepareStatement(sql)) {
@@ -446,6 +446,7 @@ public class MediTrackApplication {
             Contenedor.setString(8, String.valueOf(Tipo_Usuario)); // tu variable global
             Contenedor.setString(9, "1"); // camilla fija o lo que uses
             Contenedor.setString(10, "proceso"); // camilla fija o lo que uses
+            Contenedor.setString(11, fechaIngreso);
 
 		    // Pasamos el arreglo de condiciones a cadena
             /*Object condicionesObj = datosPaciente.get("condiciones");
@@ -453,7 +454,6 @@ public class MediTrackApplication {
             
             Contenedor.setString(12, condicionesStr);
             */
-
             Contenedor.executeUpdate();
 
             System.out.println("Paciente guardado correctamente");
@@ -759,8 +759,8 @@ public class MediTrackApplication {
         """;
     
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
-             PreparedStatement stmt = conn.prepareStatement(selectSql);
-             ResultSet rs = stmt.executeQuery()) {
+            PreparedStatement stmt = conn.prepareStatement(selectSql);
+            ResultSet rs = stmt.executeQuery()) {
     
             List<Integer> idsVerificacionesCoincidentes = new ArrayList<>();
     

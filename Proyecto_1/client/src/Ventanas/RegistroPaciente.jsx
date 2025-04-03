@@ -115,12 +115,27 @@ const RegistroPaciente = () => {
       // Dibuja la imagen del video en el canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Convierte la imagen del canvas a una URL y la guarda en el estado
-      const photoURL = canvas.toDataURL('image/png');
-      setFotoUrl(photoURL);
+    // Convierte la imagen del canvas a un Blob
+    canvas.toBlob((blob) => {
+      // Crea un objeto File a partir del Blob
+      const file = new File([blob], 'foto.png', { type: 'image/png' });
+
+      // Guarda el objeto File en el estado
+      setFotoData(file);
+      setFotoUrl(URL.createObjectURL(file)); // Previsualización de la imagen
+
+      // Guarda el File en el estado del formulario
+      setFormDatos(prevState => ({
+        ...prevState,
+        fotografia: file // Guardamos el archivo, no la URL
+      }));
 
       // Desactiva la cámara
       setCameraActive(false);
+      if (video.srcObject) {
+        video.srcObject.getTracks().forEach((track) => track.stop());
+      }
+    }, 'image/png');
       if (video.srcObject) {
         video.srcObject.getTracks().forEach((track) => track.stop());
       }
