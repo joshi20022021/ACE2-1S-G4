@@ -21,7 +21,7 @@ const Formulario = () => {
 
       const fetchPacientes = async () => {
         try {
-          const response = await fetch("http://localhost:8080/GetPacientes");
+          const response = await fetch("http://192.168.137.123:8080/GetPacientes");
           const data = await response.json();
           setPacientes(data); // Guardamos los nombres en el estado
         } catch (error) {
@@ -95,7 +95,7 @@ const Formulario = () => {
       formData.append("observaciones", formDatos.Observaciones);
       formData.append("recomendaciones", formDatos.recomendaciones);
       formData.append("fechaIngreso", fechaIngreso); // fecha ingreso
-      const response = await fetch("http://localhost:8080/guardarDiagnostico", {
+      const response = await fetch("http://192.168.137.123:8080/guardarDiagnostico", {
         method: "POST",
         body: formData,
       });

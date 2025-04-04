@@ -14,7 +14,7 @@ const Ficha = () => {
   // Ejemplo de consumo
   const cargarHistorial = async (idPaciente) => {
     try {
-      const response = await fetch(`http://localhost:8080/GetHistorialPaciente?idPaciente=${idPaciente}`, {
+      const response = await fetch(`http://192.168.137.123:8080/GetHistorialPaciente?idPaciente=${idPaciente}`, {
         method: "POST"
       });
       const data = await response.json();
@@ -56,7 +56,7 @@ const Ficha = () => {
 
   const ListaPacientes = async () => {
     try {
-      const response = await fetch("http://localhost:8080/GetPacientes", {
+      const response = await fetch("http://192.168.137.123:8080/GetPacientes", {
         method: "GET",
       });
       if (!response.ok) {
@@ -183,7 +183,7 @@ const Ficha = () => {
  
     console.log(fechaGuatemala);
     // Petición para dar de alta
-    await fetch(`http://localhost:8080/DarDeAlta?idPaciente=${indicePaciente}&fechafinal=${fechaGuatemala}`, {
+    await fetch(`http://192.168.137.123:8080/DarDeAlta?idPaciente=${indicePaciente}&fechafinal=${fechaGuatemala}`, {
       method: "POST"
     });
 
@@ -230,7 +230,7 @@ const Ficha = () => {
 
   const generateAltaDiagnóstico = async(indiceDiagnóstico) => {
 
-    const response = await fetch("http://localhost:8080/IdDiagnosticosPaciente", {
+    const response = await fetch("http://192.168.137.123:8080/IdDiagnosticosPaciente", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -242,7 +242,7 @@ const Ficha = () => {
     const diagnosticos = await response.json();
     console.log("-->"+diagnosticos[indiceDiagnóstico]+"<--");
 
-    await fetch(`http://localhost:8080/DarDeAltaDiagnostico?idPaciente=${indicePaciente}&idDiagnostico=${diagnosticos[indiceDiagnóstico]}`, {
+    await fetch(`http://192.168.137.123:8080/DarDeAltaDiagnostico?idPaciente=${indicePaciente}&idDiagnostico=${diagnosticos[indiceDiagnóstico]}`, {
       method: "POST"
     });
 

@@ -102,7 +102,7 @@ const RegistroCamillas = () => {
     // Hacer la petición a la API
     const fetchPacientes = async () => {
       try {
-        const response = await fetch("http://localhost:8080/GetPacientes");
+        const response = await fetch("http://192.168.137.123:8080/GetPacientes");
         const data = await response.json();
         setPacientes(data); // Guardamos los nombres en el estado
       } catch (error) {
@@ -147,7 +147,7 @@ const RegistroCamillas = () => {
       const idCamilla = camillaSeleccionada.split(' ')[1];
   
       try {
-        const response = await fetch("http://localhost:8080/AsignarCamilla", {
+        const response = await fetch("http://192.168.137.123:8080/AsignarCamilla", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
