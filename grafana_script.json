@@ -18,13 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 3,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -113,7 +113,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -152,7 +152,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -258,7 +258,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -296,7 +296,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -341,7 +341,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -352,7 +352,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  MAX(sv.Frecuencia_Cardiaca) AS \"valor\"\nFROM Signos_Vitales sv\nWHERE sv.Fecha >= NOW() - INTERVAL 5 MINUTE\n",
+          "rawSql": "SELECT \n  sv.Fecha AS \"Hora_Alerta\",\n  sv.Frecuencia_Cardiaca AS \"valor\"\nFROM \n  Signos_Vitales sv\nWHERE \n  sv.Fecha >= NOW() - INTERVAL 5 MINUTE\nORDER BY \n  sv.Frecuencia_Cardiaca DESC\nLIMIT 1;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -385,7 +385,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -479,7 +479,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -517,7 +517,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -657,7 +657,7 @@
           }
         ]
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -695,7 +695,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -782,7 +782,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -820,7 +820,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -874,7 +874,7 @@
           "valueSize": 60
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -912,7 +912,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -966,7 +966,7 @@
           "valueSize": 60
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -1000,7 +1000,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -1011,7 +1011,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Tiempo (min)",
+            "axisLabel": "Tiempo (hrs)",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "barWidthFactor": 0.6,
@@ -1041,7 +1041,7 @@
             }
           },
           "mappings": [],
-          "max": 25,
+          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -1090,7 +1090,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -1101,7 +1101,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n  p.Fecha AS time,\n  TIMESTAMPDIFF(MINUTE, p.Fecha, p.Fecha_final) AS Promedio_Estadia\nFROM \n  Pacientes p\nWHERE \n  $__timeFilter(p.Fecha)\n  AND p.id = ${paciente}\n  AND p.Estado = 'Alta'\nORDER BY p.Fecha;\n",
+          "rawSql": "SELECT \n  p.Fecha AS time,\n  TIMESTAMPDIFF(HOUR, p.Fecha, p.Fecha_final) AS Promedio_Estadia\nFROM \n  Pacientes p\nWHERE \n  p.id = ${paciente}\n  AND p.Estado = 'Alta'\nORDER BY p.Fecha;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1128,7 +1128,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "eeh8rk6bbbjswc"
+        "uid": "aehwxi78ncv7ke"
       },
       "fieldConfig": {
         "defaults": {
@@ -1203,7 +1203,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.0-pre",
       "targets": [
         {
           "dataset": "ACYE2",
@@ -1257,15 +1257,15 @@
       },
       {
         "current": {
-          "text": "Edgar Can´t",
+          "text": "1",
           "value": "1"
         },
-        "definition": "SELECT id AS __value, Nombre_Completo AS __text FROM Pacientes;\n",
+        "definition": "SELECT id, Nombre_Completo FROM Pacientes WHERE Estado = 'Alta';\n",
         "description": "",
         "includeAll": true,
         "name": "paciente",
         "options": [],
-        "query": "SELECT id AS __value, Nombre_Completo AS __text FROM Pacientes;\n",
+        "query": "SELECT id, Nombre_Completo FROM Pacientes WHERE Estado = 'Alta';\n",
         "refresh": 1,
         "regex": "",
         "type": "query"
@@ -1273,12 +1273,12 @@
     ]
   },
   "time": {
-    "from": "now-90d",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "PROYECTO1_ACE2_Modificado",
-  "uid": "feh2mtrpb65fka",
-  "version": 85
+  "title": "PROYECTO1_ACE2_Modificado Copy",
+  "uid": "cehxpe7mixb0gb",
+  "version": 1
 }
