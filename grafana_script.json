@@ -301,40 +301,14 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
             },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -356,17 +330,16 @@
       },
       "id": 14,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "showHeader": true
       },
       "pluginVersion": "11.6.0",
       "targets": [
@@ -407,7 +380,7 @@
         }
       ],
       "title": "Alertas de Signos Vitales Críticos",
-      "type": "timeseries"
+      "type": "table"
     },
     {
       "datasource": {
@@ -695,7 +668,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n  p.Camilla_id AS Camilla,\n  MIN(sv.Oxigenacion) AS Min_Oxigenacion,\n  MAX(sv.Oxigenacion) AS Max_Oxigenacion,\n  AVG(sv.Oxigenacion) AS Prom_Oxigenacion,\n  MIN(sv.Frecuencia_Cardiaca) AS Min_ECG,\n  MAX(sv.Frecuencia_Cardiaca) AS Max_ECG,\n  AVG(sv.Frecuencia_Cardiaca) AS Prom_ECG\nFROM \n  Signos_Vitales sv\nJOIN Diagnósticos d ON d.id = sv.Diagnósticos_id\nJOIN Pacientes p ON p.id = d.Pacientes_id\nJOIN Camilla c ON c.id = p.Camilla_id\nWHERE \n  $__timeFilter(sv.Fecha)\n  AND p.Camilla_id IN (${camilla:csv})\n  AND c.Estado = 'Ocupada'\nGROUP BY \n  p.Camilla_id\nORDER BY \n  p.Camilla_id;\n",
+          "rawSql": "SELECT \n  p.Camilla_id AS Camilla,\n  MIN(d.Minimo) AS Min_Oxigenacion,\n  MAX(d.Maximo) AS Max_Oxigenacion,\n  AVG(d.Promedio) AS Prom_Oxigenacion,\n  MIN(d.Minimo_ECG) AS Min_ECG,\n  MAX(d.Maximo_ECG) AS Max_ECG,\n  AVG(d.Promedio_ECG) AS Prom_ECG\nFROM \n  Diagnósticos d\nJOIN Pacientes p ON p.id = d.Pacientes_id\nJOIN Camilla c ON c.id = p.Camilla_id\nWHERE \n  $__timeFilter(d.Fecha)\n  AND p.Camilla_id IN (${camilla:csv})\n  AND c.Estado = 'Ocupada'\nGROUP BY \n  p.Camilla_id\nORDER BY \n  p.Camilla_id;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1068,7 +1041,7 @@
             }
           },
           "mappings": [],
-          "max": 60,
+          "max": 25,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -1078,19 +1051,19 @@
               },
               {
                 "color": "#EF843C",
-                "value": 10
+                "value": 5
               },
               {
                 "color": "#6ED0E0",
-                "value": 20
+                "value": 10
               },
               {
                 "color": "#EAB839",
-                "value": 30
+                "value": 15
               },
               {
                 "color": "red",
-                "value": 40
+                "value": 20
               }
             ]
           }
@@ -1128,7 +1101,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    MIN(Fecha) AS time,\n    AVG(DATEDIFF(Fecha_final, Fecha)) AS Promedio_Estadia\nFROM Pacientes\nWHERE Fecha IS NOT NULL AND Fecha_final IS NOT NULL\nGROUP BY YEAR(Fecha), MONTH(Fecha)\nORDER BY time;\n",
+          "rawSql": "SELECT \n  p.Fecha AS time,\n  TIMESTAMPDIFF(MINUTE, p.Fecha, p.Fecha_final) AS Promedio_Estadia\nFROM \n  Pacientes p\nWHERE \n  $__timeFilter(p.Fecha)\n  AND p.id = ${paciente}\n  AND p.Estado = 'Alta'\nORDER BY p.Fecha;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1281,16 +1254,31 @@
         "refresh": 1,
         "regex": "",
         "type": "query"
+      },
+      {
+        "current": {
+          "text": "Edgar Can´t",
+          "value": "1"
+        },
+        "definition": "SELECT id AS __value, Nombre_Completo AS __text FROM Pacientes;\n",
+        "description": "",
+        "includeAll": true,
+        "name": "paciente",
+        "options": [],
+        "query": "SELECT id AS __value, Nombre_Completo AS __text FROM Pacientes;\n",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-6M",
+    "from": "now-90d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "PROYECTO1_ACE2_Modificado",
   "uid": "feh2mtrpb65fka",
-  "version": 80
+  "version": 85
 }
