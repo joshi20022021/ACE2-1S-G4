@@ -256,7 +256,7 @@ public class MediTrackApplication {
                     AVG(Oxigenacion)       AS promOxi
                 FROM Signos_Vitales
                 WHERE Diagnósticos_id = (
-                    SELECT MAX(id) FROM Diagnósticos_id
+                    SELECT MAX(id) FROM Diagnósticos
                 )
             """;
     
@@ -361,6 +361,17 @@ public class MediTrackApplication {
         }
     }
 
+        // Manejo de usuarios
+    @PostMapping("/Usuario")
+    public int Modficar_Usuario(@RequestParam int IndiceUsuario) {
+        Tipo_Usuario = IndiceUsuario;
+        return Tipo_Usuario;
+    }
+
+    @GetMapping("/GetUsuario")
+    public int GetUsuario() {
+        return Tipo_Usuario;
+    }
 
     @PostMapping("/GetHistorialPaciente")
     public Map<String, Object> obtenerPaciente(@RequestParam("idPaciente") int idPaciente) {
