@@ -255,6 +255,9 @@ public class MediTrackApplication {
                     MAX(Oxigenacion)       AS maxOxi,
                     AVG(Oxigenacion)       AS promOxi
                 FROM Signos_Vitales
+                WHERE Diagnósticos_id = (
+                    SELECT MAX(id) FROM Diagnósticos_id
+                )
             """;
     
             try (PreparedStatement psEst = conn.prepareStatement(sqlEstadisticas);
