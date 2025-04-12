@@ -14,7 +14,7 @@
     "chart.js": "^4.4.7",
     "framer-motion": "^12.4.2",
     "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.2",
+    "jspdf": "^3.0.1",
     "jspdf-autotable": "^3.8.4",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.9",
