@@ -1,0 +1,136 @@
+/* Graficas.css */
+
+/* Estilos generales del contenedor */
+.graficas-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+}
+
+/* Contenedor del header */
+.graficas-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+/* Estilo del título principal con gradiente de texto */
+.graficas-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(135deg,  #64f0ff 0%, #0077ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+/* Estilo del botón de regreso */
+
+.graficas-return-button {
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, #21f3f7, #010002);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 0;
+    top: 1.80rem; /* Ajusté este valor para bajar el botón */
+}
+
+
+
+.graficas-return-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.graficas-return-button:active {
+    transform: translateY(0);
+}
+
+/* Estilo de los subtítulos con gradiente de texto */
+.graficas-subtitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg,  #64f0ff 0%, #0077ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+/* Contenedor de gráficas */
+.graficas-chart-container {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Contenedor para gráficas circulares */
+.graficas-pie-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .graficas-pie-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 3rem;
+    }
+}
+
+/* Contenedor individual para cada gráfica circular */
+.graficas-pie-chart {
+    flex: 1;
+    min-width: 400px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo del contenedor del gráfico */
+.graficas-chart-wrapper {
+    height: 350px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* Estilo de los títulos de las gráficas circulares con gradiente */
+.graficas-pie-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffffff, #217fc2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    width: 100%;
+}
+
+/* Ajustes específicos para la gráfica de barras */
+.graficas-chart-container .graficas-chart-wrapper {
+    height: 400px;
+    max-width: 800px;
+}
