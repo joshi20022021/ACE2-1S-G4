@@ -146,7 +146,7 @@ const Graficas = () => {
       p5.rect(potX - 40, potY - 30, 80, 30, 5); // Parte superior
       p5.rect(potX - 30, potY, 60, 20, 0, 0, 5, 5); // Parte inferior
       
-     // bonsai
+      // Dibujar bonsái (cambia según humedad)
       if (percent < 30) {
         // Bonsái seco
         p5.fill(100, 70, 30);
@@ -166,15 +166,12 @@ const Graficas = () => {
         p5.line(potX + 5, potY - 100, potX + 20, potY - 110);
         p5.line(potX + 15, potY - 70, potX + 30, potY - 75);
         
-        // Hojas secas 
+        // Hojas secas (pocas)
         p5.fill(150, 120, 50);
         p5.noStroke();
         p5.ellipse(potX - 25, potY - 90, 10, 5);
         p5.ellipse(potX + 20, potY - 110, 8, 4);
         p5.ellipse(potX + 30, potY - 75, 12, 6);
-        p5.ellipse(potX - 5, potY - 90, 8, 4);
-        p5.ellipse(potX + 10, potY - 105, 6, 3);
-        
         
       } else if (percent < 70) {
         // Bonsái normal
@@ -214,9 +211,6 @@ const Graficas = () => {
         p5.vertex(potX + 10, potY - 140);
         p5.vertex(potX + 20, potY - 110);
         p5.vertex(potX + 5, potY - 30);
-        p5.vertex(potX - 5, potY - 30);
-        p5.vertex(potX - 10, potY - 80);
-        p5.vertex(potX + 5, potY - 100);
         p5.endShape(p5.CLOSE);
         
         // Ramas
@@ -236,7 +230,7 @@ const Graficas = () => {
         p5.ellipse(potX - 10, potY - 140, 25, 15);
         p5.ellipse(potX + 5, potY - 135, 30, 18);
         p5.ellipse(potX + 15, potY - 125, 25, 15);
-        p5.ellipse(potX - 5, potY - 120, 20, 12);
+        
         
         p5.fill(255, 200, 200);
         p5.ellipse(potX - 35, potY - 135, 5, 5);
@@ -384,7 +378,7 @@ const Graficas = () => {
         part.display();
       });
       
-      
+      // Limitar número de partículas
       if (particles.length > 50) {
         particles = particles.slice(particles.length - 50);
       }
