@@ -12,7 +12,7 @@ const Graficas = () => {
 
   // ==================== VARIABLES ====================
   const CalidadDeAire = 10;
-  const IntensidadLuminosa = 110;
+  const IntensidadLuminosa = 90;
   const TierraHumeda  = 100;
 
   // ==================== COMPONENTES ====================

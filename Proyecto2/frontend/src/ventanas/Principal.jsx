@@ -1,3 +1,4 @@
+// Principal.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Principal.css';
@@ -16,7 +17,12 @@ const Principal = () => {
         >
           Metricas en Tiempo Real
         </button>
-        <button className="principal-button button-3">Estado</button>
+        <button 
+          className="principal-button button-3"
+          onClick={() => navigate('/habitaciones')}
+        >
+          Estado de habitaciones
+        </button>
       </div>
     </>
   );
