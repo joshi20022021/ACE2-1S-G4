@@ -11,7 +11,7 @@ const Graficas = () => {
   };
 
   // ==================== VARIABLES ====================
-  const CalidadDeAire = 80;
+  const CalidadDeAire = 10;
   const IntensidadLuminosa = 110;
   const TierraHumeda  = 100;
 
@@ -318,7 +318,7 @@ const Graficas = () => {
     }
   
     const setup = (p5, canvasParentRef) => {
-      const canvas = p5.createCanvas(300, 300).parent(canvasParentRef);
+      const canvas = p5.createCanvas(300, 400).parent(canvasParentRef);
       canvas.style('border-radius', '15px');
       canvas.style('box-shadow', '0 4px 15px rgba(0,0,0,0.1)');
       p5.colorMode(p5.HSB);
