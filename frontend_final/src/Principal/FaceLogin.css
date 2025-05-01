@@ -1,0 +1,160 @@
+.facelogin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: radial-gradient(circle at center, #0a192f 0%, #020c1b 100%); /* mismo fondo que Habitaciones */
+    font-family: 'Inter', sans-serif;
+  }
+
+  .facelogin-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+  }
+  
+  .facelogin-card h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .facelogin-webcam {
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    width: 100%;
+    max-height: 300px;
+    margin-bottom: 15px;
+  }
+  
+  .facelogin-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+    margin-bottom: 20px;
+  }
+  
+  .facelogin-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .facelogin-button:hover {
+    background-color: #005ea2;
+  }
+  
+  .facelogin-status {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+  }
+  .webcam-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .facelogin-webcam {
+    border-radius: 10px;
+    border: 3px solid #ccc;
+    width: 100%;
+  }
+  
+  .facelogin-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .facelogin-modal {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 80%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    animation: popUp 0.4s ease-out;
+  }
+  
+  /* Tipos */
+  .facelogin-modal.success {
+    border: 5px solid #00c292;
+    color: #00a86b;
+  }
+  .facelogin-modal.error {
+    border: 5px solid #ff4d4f;
+    color: #d9363e;
+  }
+  .facelogin-modal.warning {
+    border: 5px solid #faad14;
+    color: #d48806;
+  }
+  
+  .facelogin-modal button {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    background: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .facelogin-modal button:hover {
+    background: #005fcc;
+  }
+  
+  /* Animaciones */
+  @keyframes popUp {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    } to {
+      opacity: 1;
+    }
+  }
+  
