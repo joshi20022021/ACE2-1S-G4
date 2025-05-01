@@ -13,7 +13,7 @@ db_config = {
 oxigeno = None
 frecuencia = None
 
-# Conectamos a la base de datos
+# Conectamos a la base de datos 
 try:
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
