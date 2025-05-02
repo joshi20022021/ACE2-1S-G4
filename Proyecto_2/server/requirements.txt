@@ -1,0 +1,19 @@
+blinker==1.9.0
+click==8.1.8
+cmake==4.0.0
+dlib==19.24.8
+face_recognition @ git+https://github.com/ageitgey/face_recognition.git@2e2dccea9dd0ce730c8d464d0f67c6eebb40c9d1
+face_recognition_models @ git+https://github.com/ageitgey/face_recognition_models.git@e67de717267507d1e9246de95692eb8be736ab61
+Flask==3.1.0
+flask-cors==5.0.1
+imutils==0.5.4
+itsdangerous==2.2.0
+Jinja2==3.1.6
+MarkupSafe==3.0.2
+mysql-connector-python==9.3.0
+numpy==2.2.5
+opencv-python==4.11.0.86
+pillow==11.2.1
+setuptools==79.0.1
+websockets==15.0.1
+Werkzeug==3.1.3
