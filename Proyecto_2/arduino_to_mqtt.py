@@ -1,14 +1,17 @@
 import serial
 import paho.mqtt.client as mqtt
 
-# Configuración del puerto serial (ajusta el COM según tu sistema)
-puerto_serial = "COM4"  # Cambia a /dev/ttyUSB0 si usas Linux
+# Configuración del puerto serial
+puerto_serial = "COM5"  # Cambia según tu sistema
 baudrate = 9600
 
 # Configuración del broker MQTT
 mqtt_broker = "3.16.139.219"
 mqtt_puerto = 1883
-mqtt_tema = "sensor/humedad"
+
+# Tópicos para cada tipo de dato
+topico_humedad = "sensor/humedad"
+topico_brillo = "sensor/brillo"
 
 # Conectar al puerto serial
 try:
@@ -35,9 +38,12 @@ try:
             linea = ser.readline().decode('utf-8').strip()
             print(f"📨 Recibido: {linea}")
 
-            # Solo publica si empieza con "Humedad:"
+            # Publicar según el tipo de dato recibido
             if linea.startswith("Humedad:"):
-                cliente.publish(mqtt_tema, linea)
+                cliente.publish(topico_humedad, linea)
+            elif linea.startswith("Brillo:"):
+                cliente.publish(topico_brillo, linea)
+
 except KeyboardInterrupt:
     print("⛔ Finalizado por el usuario.")
     ser.close()
