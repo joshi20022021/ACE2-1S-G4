@@ -180,7 +180,7 @@ El proyecto presenta un valor disruptivo significativo al integrar tecnologías 
 
 - 🔐 **Autenticación sin contacto mediante reconocimiento facial:** Reemplaza métodos tradicionales de acceso (tarjetas, contraseñas) por un sistema biométrico no intrusivo, aumentando la seguridad y reduciendo riesgos de suplantación o contagios.
 
-- 🌱 **Automatización del entorno físico basada en datos en tiempo real:** El sistema controla el riego, iluminación y ocupación de habitaciones de forma autónoma, optimizando el uso de recursos como agua y energía.
+- 🌱 **Automatización del entorno físico basada en datos en tiempo real:** El sistema controla el riego, iluminación y ocupación de oficinas de forma autónoma, optimizando el uso de recursos como agua y energía.
 
 - 📊 **Visualización dinámica con Grafana:** Los usuarios pueden monitorear condiciones ambientales y estados de ocupación en tiempo real desde un dashboard intuitivo, incluso desde entornos remotos.
 
