@@ -84,7 +84,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
     - Detección de gases y alertas ambientales.
     - Historial de acceso mediante reconocimiento facial.
   - Integración directa con MySQL y MQTT.
-- **API del Backend:**
+- **Backend enlazado a la DB en AWS:**
   - Recibe datos del frontend para interacción y visualización.
   - Sirve gráficos e información contextual de sensores.
 
