@@ -21,6 +21,8 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 ## Modelo de Entidad Relacion
 
+![Interfaz de login](img/EntidadRelacion.jpg)
+
 ## Documentacion de la api
 
 ## Scripts
