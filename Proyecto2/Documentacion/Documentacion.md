@@ -172,4 +172,33 @@ components:
 
 ## Scripts
 
-## Valor Disruptivo
+## Valor Disruptivo del Proyecto
+
+El proyecto presenta un valor disruptivo significativo al integrar tecnologías emergentes como **IoT**, **Machine Learning** y **Cloud Computing** en una solución accesible, modular y enfocada en **mejorar el bienestar y la eficiencia energética de espacios de oficina o residenciales**.
+
+### Principales elementos disruptivos:
+
+- 🔐 **Autenticación sin contacto mediante reconocimiento facial:** Reemplaza métodos tradicionales de acceso (tarjetas, contraseñas) por un sistema biométrico no intrusivo, aumentando la seguridad y reduciendo riesgos de suplantación o contagios.
+
+- 🌱 **Automatización del entorno físico basada en datos en tiempo real:** El sistema controla el riego, iluminación y ocupación de habitaciones de forma autónoma, optimizando el uso de recursos como agua y energía.
+
+- 📊 **Visualización dinámica con Grafana:** Los usuarios pueden monitorear condiciones ambientales y estados de ocupación en tiempo real desde un dashboard intuitivo, incluso desde entornos remotos.
+
+- ☁️ **Arquitectura basada en la nube y MQTT:** Permite escalabilidad, integración con servicios de terceros y comunicación eficiente entre dispositivos, superando barreras de conectividad local.
+
+- 🧠 **Base para sistemas inteligentes adaptativos:** El diseño modular abre la puerta a incorporar algoritmos de aprendizaje automático que permitan anticipar acciones, como ajustar la iluminación según patrones de uso o activar ventilación al detectar gases.
+
+---
+
+### Diferenciación frente a soluciones tradicionales:
+
+| Característica                         | Sistemas tradicionales       | Nuestro sistema                       |
+|---------------------------------------|------------------------------|---------------------------------------|
+| Acceso                                | Manual (llaves/tarjetas)     | Reconocimiento facial automático      |
+| Control ambiental                     | Manual o por horarios fijos  | Dinámico, según sensores              |
+| Visualización                         | Limitada o inexistente       | Dashboards en tiempo real con Grafana |
+| Expansibilidad                        | Baja o costosa               | Modular, adaptable y basado en estándares |
+| Almacenamiento de datos históricos    | Inexistente o local          | Base de datos en la nube (MySQL AWS)  |
+
+Este enfoque transforma la manera en que se gestionan los espacios, haciendo que hogares y oficinas no solo reaccionen, sino que **anticipen** y **aprendan** de su entorno y usuarios.
+
