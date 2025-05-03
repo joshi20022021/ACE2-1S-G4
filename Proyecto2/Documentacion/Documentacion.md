@@ -23,7 +23,83 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 ![Interfaz de login](img/EntidadRelacion.jpg)
 
-## Documentacion de la api
+## api contracts
+![Interfaz de login](img/apic.png)
+
+```yaml
+openapi: 3.0.3
+info:
+  title: Oficina Inteligente
+  version: 0.0.1
+  description: >
+    API REST para reconocimiento facial y registro de ingresos en la aplicación Oficina Inteligente.
+
+servers:
+  - url: http://localhost:5000
+    description: Servidor local Flask
+
+paths:
+  /verify:
+    post:
+      summary: Verificar rostro y registrar ingreso
+      description: >
+        Recibe una imagen en Base64, detecta rostros conocidos y:
+        - Si coincide con un usuario autorizado, registra el ingreso y devuelve su nombre.
+        - Si coincide pero el usuario no está en la base de datos, devuelve "No autorizado".
+        - Si no se detecta un rostro conocido, devuelve "Desconocido".
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerificationRequest'
+      responses:
+        '200':
+          description: Resultado del reconocimiento facial
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationResponse'
+        '400':
+          description: Solicitud inválida (imagen no proporcionada)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No image provided"
+
+components:
+  schemas:
+    VerificationRequest:
+      type: object
+      required:
+        - image
+      properties:
+        image:
+          type: string
+          description: |
+            Cadena Base64 de la imagen a verificar, por ejemplo con prefijo:
+            "data:image/jpeg;base64,..." 
+          example: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..."
+
+    VerificationResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: >
+            Nombre reconocido, o bien:
+            - "No autorizado" si el usuario existe pero no está permitido.
+            - "Desconocido" si no coincide con ningún rostro conocido.
+          example: "Juan Pérez"
+```
+
+
+
+
 
 ## Scripts
 
