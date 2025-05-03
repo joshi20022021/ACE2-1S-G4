@@ -90,10 +90,10 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 ## Modelo de Entidad Relacion
 
-![Interfaz de login](img/EntidadRelacion.jpg)
+![Interfaz de login](Img/EntidadRelacion.jpg)
 
 ## api contracts
-![Interfaz de login](img/apic.png)
+![Interfaz de login](Img/apic.png)
 
 ```yaml
 openapi: 3.0.3
