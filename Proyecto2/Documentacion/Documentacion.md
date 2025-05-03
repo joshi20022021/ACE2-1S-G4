@@ -30,7 +30,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 - **Dispositivos de control:**
   - `Arduino Mega`: Lectura de sensores, control de actuadores y comunicación con el servidor mediante MQTT.
 - **Infraestructura:**
-  - Maqueta con **6 cuartos**, **un huerto** y **una talaquera**.
+  - Maqueta con **6 areas**, **un huerto** y **una talaquera para seguridad**.
   - Red local configurada para conexión del backend y sensores.
 
 ---
