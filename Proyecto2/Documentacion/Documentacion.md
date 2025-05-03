@@ -94,7 +94,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**         | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|--------------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
-| 60mm x 20mm    | Analógica            | Enterrado en el huerto   | 0 – 1023 (ADC)         | % humedad relativa   | ![Humedad Suelo](Img/HUMEDAD.jpg) | Q12.00              | (Especificar)                |
+| 60mm x 20mm    | Analógica            | Enterrado en el huerto   | 0 – 1023 (ADC)         | % humedad relativa   | ![Humedad Suelo](Img/HUMEDAD.jpeg) | Q12.00              | (Especificar)                |
 
 **Enlace para comprar**: [Sensor de Humedad SparkFun](https://www.sparkfun.com/products/13322)
 
