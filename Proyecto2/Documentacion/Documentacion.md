@@ -96,7 +96,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 |----------------|---------------------|--------------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
 | 60mm x 20mm    | Analógica            | Enterrado en el huerto   | 0 – 1023 (ADC)         | % humedad relativa   | ![Humedad Suelo](Img/HUMEDAD.jpeg) | Q12.00              | (Especificar)                |
 
-**Enlace para comprar**: [Sensor de Humedad SparkFun](https://www.sparkfun.com/products/13322)
+**Enlace para comprar**: [Sensor de Humedad](https://oxdea.gt/product/sensor-de-humedad-del-suelo-yl38-y-yl69/)
 
 ---
 
@@ -106,8 +106,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 |----------------|---------------------|--------------------------|-------------------------------|----------------------|--------------|---------------------|---------------------------|
 | 32mm x 20mm    | Analógica / Digital | Ambiente (habitaciones) | 10–1000 ppm (amoniaco, alcohol, benceno, etc.) | ppm                  | ![MQ135](Img/MQ.jpg) | Q25.00              | (Especificar)                |
 
-**Enlace para comprar**: [Sensor MQ-135](https://www.electronicwings.com/nodemcu/mq135-gas-sensor-interfacing-with-nodemcu)
-
+**Enlace para comprar**: [Sensor MQ-135].(https://laelectronica.com.gt/sensor-de-calidad-de-aire-mq-135).
 ---
 
 ### Botones de Ocupación (Push Button)
@@ -116,7 +115,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
 | 12mm diámetro  | Digital (ON/OFF)    | En cada cuarto       | Presionado / No presionado | Booleano (1 o 0)     | ![Push Button](Img/PUSH.jpg) | Q3.00               | (Especificar)                |
 
-**Enlace para comprar**: [Botón tipo Push](https://www.sparkfun.com/products/11117)
+**Enlace para comprar**: [Botón tipo Push](https://laelectronica.com.gt/pulsador-na)
 
 ---
 
@@ -126,7 +125,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
 | 16mm diámetro  | Analógica           | Panel de control     | 0 – 1023 (ADC)         | Nivel (0–100%)       | ![Potenciómetro](Img/POTENCIO.jpg) | Q5.00               | (Especificar)                |
 
-**Enlace para comprar**: [Potenciómetro 10kΩ](https://www.sparkfun.com/products/09884)
+**Enlace para comprar**: [Potenciómetro 10kΩ](https://laelectronica.com.gt/potenciometro-rk097n-de-audio-con-switch-de-10k-ohms)
 
 ---
 
@@ -136,7 +135,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
 | 60mm x 30mm    | Video digital        | Frente a entrada     | Resolución 640x480 o más | Imagen facial       | ![Cámara USB](Img/CAMARA.jpg) | Q150.00              | (Especificar)                |
 
-**Enlace para comprar**: [Cámara USB genérica](https://www.amazon.com/USB-Camera-Module/s?k=USB+Camera+Module)
+**Enlace para comprar**: [Cámara USB genérica](https://intelite.gt/producto/camara-web-cm-cmsxj22a/)
 
 ---
 
@@ -146,7 +145,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
 | 45mm x 24mm    | Activador digital   | Integrada al sistema de riego | Encendido / Apagado | Booleano (1 o 0)     | ![Minibomba](Img/BOMBA.jpg) | Q20.00              | (Especificar)                |
 
-**Enlace para comprar**: [Mini bomba de agua DC](https://www.sparkfun.com/products/10455)
+**Enlace para comprar**: [Mini bomba de agua DC](https://www.kemik.gt/mini-bomba-de-agua-5v-cc-sumergible)
 
 ---
 
