@@ -6,7 +6,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at center, #0a192f 0%, #020c1b 100%);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     padding: 2rem;
     box-sizing: border-box;
