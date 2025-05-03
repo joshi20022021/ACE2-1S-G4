@@ -94,7 +94,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**         | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|--------------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
-| 60mm x 20mm    | Analógica            | Enterrado en el huerto   | 0 – 1023 (ADC)         | % humedad relativa   | ![Humedad Suelo](https://cdn.sparkfun.com//assets/parts/1/1/9/7/13322-01.jpg) | Q12.00              | (Especificar)                |
+| 60mm x 20mm    | Analógica            | Enterrado en el huerto   | 0 – 1023 (ADC)         | % humedad relativa   | ![Humedad Suelo](Img/HUMEDAD.jpg) | Q12.00              | (Especificar)                |
 
 **Enlace para comprar**: [Sensor de Humedad SparkFun](https://www.sparkfun.com/products/13322)
 
@@ -104,7 +104,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**         | **Rango de Medición**         | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|--------------------------|-------------------------------|----------------------|--------------|---------------------|---------------------------|
-| 32mm x 20mm    | Analógica / Digital | Ambiente (habitaciones) | 10–1000 ppm (amoniaco, alcohol, benceno, etc.) | ppm                  | ![MQ135](https://www.electronicwings.com/public/images/user_images/images/000/049/861/original/MQ135-2.jpg) | Q25.00              | (Especificar)                |
+| 32mm x 20mm    | Analógica / Digital | Ambiente (habitaciones) | 10–1000 ppm (amoniaco, alcohol, benceno, etc.) | ppm                  | ![MQ135](Img/MQ.jpg) | Q25.00              | (Especificar)                |
 
 **Enlace para comprar**: [Sensor MQ-135](https://www.electronicwings.com/nodemcu/mq135-gas-sensor-interfacing-with-nodemcu)
 
@@ -114,7 +114,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**     | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
-| 12mm diámetro  | Digital (ON/OFF)    | En cada cuarto       | Presionado / No presionado | Booleano (1 o 0)     | ![Push Button](https://cdn.sparkfun.com//assets/parts/1/1/1/7/09275-02.jpg) | Q3.00               | (Especificar)                |
+| 12mm diámetro  | Digital (ON/OFF)    | En cada cuarto       | Presionado / No presionado | Booleano (1 o 0)     | ![Push Button](Img/PUSH.jpg) | Q3.00               | (Especificar)                |
 
 **Enlace para comprar**: [Botón tipo Push](https://www.sparkfun.com/products/11117)
 
@@ -124,7 +124,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**     | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
-| 16mm diámetro  | Analógica           | Panel de control     | 0 – 1023 (ADC)         | Nivel (0–100%)       | ![Potenciómetro](https://cdn.sparkfun.com//assets/parts/1/1/1/9/09884-02.jpg) | Q5.00               | (Especificar)                |
+| 16mm diámetro  | Analógica           | Panel de control     | 0 – 1023 (ADC)         | Nivel (0–100%)       | ![Potenciómetro](Img/POTENCIO.jpg) | Q5.00               | (Especificar)                |
 
 **Enlace para comprar**: [Potenciómetro 10kΩ](https://www.sparkfun.com/products/09884)
 
@@ -134,7 +134,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**     | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
-| 60mm x 30mm    | Video digital        | Frente a entrada     | Resolución 640x480 o más | Imagen facial       | ![Cámara USB](https://cdn.sparkfun.com//assets/parts/1/1/4/6/13272-01.jpg) | Q75.00              | (Especificar)                |
+| 60mm x 30mm    | Video digital        | Frente a entrada     | Resolución 640x480 o más | Imagen facial       | ![Cámara USB](Img/CAMARA.jpg) | Q150.00              | (Especificar)                |
 
 **Enlace para comprar**: [Cámara USB genérica](https://www.amazon.com/USB-Camera-Module/s?k=USB+Camera+Module)
 
@@ -144,7 +144,7 @@ El proyecto consiste en un sistema de automatización inteligente para espacios 
 
 | **Tamaño**     | **Tipo de Lectura** | **Instalación**     | **Rango de Medición** | **Unidad de Medida** | **Imágenes** | **Precio Estimado** | **Fechas de Importación** |
 |----------------|---------------------|----------------------|------------------------|----------------------|--------------|---------------------|---------------------------|
-| 45mm x 24mm    | Activador digital   | Integrada al sistema de riego | Encendido / Apagado | Booleano (1 o 0)     | ![Minibomba](https://cdn.sparkfun.com//assets/parts/1/1/2/1/10455-03.jpg) | Q20.00              | (Especificar)                |
+| 45mm x 24mm    | Activador digital   | Integrada al sistema de riego | Encendido / Apagado | Booleano (1 o 0)     | ![Minibomba](Img/BOMBA.jpg) | Q20.00              | (Especificar)                |
 
 **Enlace para comprar**: [Mini bomba de agua DC](https://www.sparkfun.com/products/10455)
 
